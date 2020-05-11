@@ -18,6 +18,10 @@
 		05EE8F112464332800F87B39 /* MineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EE8F102464332800F87B39 /* MineViewController.swift */; };
 		05EE8F1524644B8000F87B39 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EE8F1424644B8000F87B39 /* TabBarController.swift */; };
 		05EE8F17246456ED00F87B39 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EE8F16246456ED00F87B39 /* NavigationController.swift */; };
+		4D29EFD52469A11C006AF0A4 /* TrendsPublishController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D29EFD42469A11C006AF0A4 /* TrendsPublishController.swift */; };
+		4D29EFD72469A16C006AF0A4 /* TrendsPublish.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D29EFD62469A16C006AF0A4 /* TrendsPublish.storyboard */; };
+		4D9319B82469D34800BF1BF9 /* AllCircles.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D9319B72469D34800BF1BF9 /* AllCircles.storyboard */; };
+		4D9319BA2469D6B900BF1BF9 /* AllCirclesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9319B92469D6B900BF1BF9 /* AllCirclesController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +38,10 @@
 		05EE8F102464332800F87B39 /* MineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineViewController.swift; sourceTree = "<group>"; };
 		05EE8F1424644B8000F87B39 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		05EE8F16246456ED00F87B39 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		4D29EFD42469A11C006AF0A4 /* TrendsPublishController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsPublishController.swift; sourceTree = "<group>"; };
+		4D29EFD62469A16C006AF0A4 /* TrendsPublish.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TrendsPublish.storyboard; sourceTree = "<group>"; };
+		4D9319B72469D34800BF1BF9 /* AllCircles.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AllCircles.storyboard; sourceTree = "<group>"; };
+		4D9319B92469D6B900BF1BF9 /* AllCirclesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCirclesController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +93,10 @@
 			isa = PBXGroup;
 			children = (
 				05EE8F0C246432B900F87B39 /* TrendsViewController.swift */,
+				4D29EFD42469A11C006AF0A4 /* TrendsPublishController.swift */,
+				4D29EFD62469A16C006AF0A4 /* TrendsPublish.storyboard */,
+				4D9319B72469D34800BF1BF9 /* AllCircles.storyboard */,
+				4D9319B92469D6B900BF1BF9 /* AllCirclesController.swift */,
 			);
 			path = trends;
 			sourceTree = "<group>";
@@ -172,7 +184,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D9319B82469D34800BF1BF9 /* AllCircles.storyboard in Resources */,
 				05EE8F0224641F4D00F87B39 /* LaunchScreen.storyboard in Resources */,
+				4D29EFD72469A16C006AF0A4 /* TrendsPublish.storyboard in Resources */,
 				05EE8EFF24641F4D00F87B39 /* Assets.xcassets in Resources */,
 				05EE8EFA24641F3B00F87B39 /* Main.storyboard in Resources */,
 			);
@@ -190,7 +204,9 @@
 				05EE8EF324641F3B00F87B39 /* AppDelegate.swift in Sources */,
 				05EE8F0D246432B900F87B39 /* TrendsViewController.swift in Sources */,
 				05EE8F1524644B8000F87B39 /* TabBarController.swift in Sources */,
+				4D9319BA2469D6B900BF1BF9 /* AllCirclesController.swift in Sources */,
 				05EE8EF524641F3B00F87B39 /* SceneDelegate.swift in Sources */,
+				4D29EFD52469A11C006AF0A4 /* TrendsPublishController.swift in Sources */,
 				05EE8F0F2464330500F87B39 /* CirclesViewController.swift in Sources */,
 				05EE8F112464332800F87B39 /* MineViewController.swift in Sources */,
 			);
