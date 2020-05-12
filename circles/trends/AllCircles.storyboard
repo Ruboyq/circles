@@ -11,7 +11,7 @@
         <scene sceneID="76V-b9-Gsn">
             <objects>
                 <viewController storyboardIdentifier="AllCircles" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QFZ-Wf-onj" customClass="AllCirclesController" customModule="circles" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="KOS-7o-OIk" customClass="All">
+                    <view key="view" contentMode="scaleToFill" id="KOS-7o-OIk">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>

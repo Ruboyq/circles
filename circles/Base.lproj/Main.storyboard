@@ -44,7 +44,7 @@
         <!--动态-->
         <scene sceneID="8lt-aB-cOL">
             <objects>
-                <viewController id="Kw3-38-EG4" customClass="TrendsViewController" customModule="circles" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Kw3-38-EG4" customClass="ViewController" customModule="circles" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JiX-yw-fxv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -61,7 +61,7 @@
         <!--Item-->
         <scene sceneID="24a-KH-FQh">
             <objects>
-                <navigationController id="pvo-QN-1V5" customClass="NavigationController" customModule="circles" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController id="pvo-QN-1V5" customClass="SLNavigationController" customModule="circles" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="yqr-H5-GXo"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Yqb-Mf-Szh">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
