@@ -27,7 +27,6 @@
 		05EE8EFD24641F3B00F87B39 /* circles.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 05EE8EFB24641F3B00F87B39 /* circles.xcdatamodeld */; };
 		05EE8EFF24641F4D00F87B39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05EE8EFE24641F4D00F87B39 /* Assets.xcassets */; };
 		05EE8F0224641F4D00F87B39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05EE8F0024641F4D00F87B39 /* LaunchScreen.storyboard */; };
-		05EE8F0D246432B900F87B39 /* TrendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EE8F0C246432B900F87B39 /* TrendsViewController.swift */; };
 		05EE8F0F2464330500F87B39 /* CirclesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EE8F0E2464330500F87B39 /* CirclesViewController.swift */; };
 		05EE8F112464332800F87B39 /* MineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EE8F102464332800F87B39 /* MineViewController.swift */; };
 		05EE8F1524644B8000F87B39 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EE8F1424644B8000F87B39 /* TabBarController.swift */; };
@@ -36,6 +35,11 @@
 		4D29EFD72469A16C006AF0A4 /* TrendsPublish.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D29EFD62469A16C006AF0A4 /* TrendsPublish.storyboard */; };
 		4D9319B82469D34800BF1BF9 /* AllCircles.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D9319B72469D34800BF1BF9 /* AllCircles.storyboard */; };
 		4D9319BA2469D6B900BF1BF9 /* AllCirclesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9319B92469D6B900BF1BF9 /* AllCirclesController.swift */; };
+		DF6159B024695BCD00004A82 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159AF24695BCD00004A82 /* Reachability.swift */; };
+		DF6159B224695D2D00004A82 /* LoadMoreTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159B124695D2D00004A82 /* LoadMoreTableCell.swift */; };
+		DF6159B42469864A00004A82 /* MyCirclesTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159B32469864A00004A82 /* MyCirclesTableCell.swift */; };
+		DF6159B62469A9C400004A82 /* MyCirclesCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159B52469A9C400004A82 /* MyCirclesCollectionCell.swift */; };
+		DF6159B82469C3E400004A82 /* FocusCirclesTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159B72469C3E400004A82 /* FocusCirclesTableCell.swift */; };
 		EA9DC81AE64F0E788E6B1012 /* Pods_circles.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72B6E25CBAAC66EB5AD6B2F9 /* Pods_circles.framework */; };
 /* End PBXBuildFile section */
 
@@ -62,18 +66,22 @@
 		05EE8EFE24641F4D00F87B39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		05EE8F0124641F4D00F87B39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		05EE8F0324641F4D00F87B39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		05EE8F0C246432B900F87B39 /* TrendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsViewController.swift; sourceTree = "<group>"; };
 		05EE8F0E2464330500F87B39 /* CirclesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirclesViewController.swift; sourceTree = "<group>"; };
 		05EE8F102464332800F87B39 /* MineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineViewController.swift; sourceTree = "<group>"; };
 		05EE8F1424644B8000F87B39 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		05EE8F16246456ED00F87B39 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		429CCCCDA74D30DAC185E5B2 /* Pods-circles.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-circles.debug.xcconfig"; path = "Target Support Files/Pods-circles/Pods-circles.debug.xcconfig"; sourceTree = "<group>"; };
+		4BA5E17F45846D2D145C07BF /* Pods-circles.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-circles.release.xcconfig"; path = "Target Support Files/Pods-circles/Pods-circles.release.xcconfig"; sourceTree = "<group>"; };
 		4D29EFD42469A11C006AF0A4 /* TrendsPublishController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsPublishController.swift; sourceTree = "<group>"; };
 		4D29EFD62469A16C006AF0A4 /* TrendsPublish.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TrendsPublish.storyboard; sourceTree = "<group>"; };
 		4D9319B72469D34800BF1BF9 /* AllCircles.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AllCircles.storyboard; sourceTree = "<group>"; };
 		4D9319B92469D6B900BF1BF9 /* AllCirclesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCirclesController.swift; sourceTree = "<group>"; };
-		429CCCCDA74D30DAC185E5B2 /* Pods-circles.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-circles.debug.xcconfig"; path = "Target Support Files/Pods-circles/Pods-circles.debug.xcconfig"; sourceTree = "<group>"; };
-		4BA5E17F45846D2D145C07BF /* Pods-circles.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-circles.release.xcconfig"; path = "Target Support Files/Pods-circles/Pods-circles.release.xcconfig"; sourceTree = "<group>"; };
 		72B6E25CBAAC66EB5AD6B2F9 /* Pods_circles.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_circles.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF6159AF24695BCD00004A82 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		DF6159B124695D2D00004A82 /* LoadMoreTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMoreTableCell.swift; sourceTree = "<group>"; };
+		DF6159B32469864A00004A82 /* MyCirclesTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCirclesTableCell.swift; sourceTree = "<group>"; };
+		DF6159B52469A9C400004A82 /* MyCirclesCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCirclesCollectionCell.swift; sourceTree = "<group>"; };
+		DF6159B72469C3E400004A82 /* FocusCirclesTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCirclesTableCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,7 +158,6 @@
 				052C84662469912C00973854 /* SLTableViewCell.swift */,
 				052C846C2469912D00973854 /* SLWebViewController.swift */,
 				052C84672469912D00973854 /* ViewController.swift */,
-				05EE8F0C246432B900F87B39 /* TrendsViewController.swift */,
 				4D29EFD42469A11C006AF0A4 /* TrendsPublishController.swift */,
 				4D29EFD62469A16C006AF0A4 /* TrendsPublish.storyboard */,
 				4D9319B72469D34800BF1BF9 /* AllCircles.storyboard */,
@@ -163,6 +170,11 @@
 			isa = PBXGroup;
 			children = (
 				05EE8F0E2464330500F87B39 /* CirclesViewController.swift */,
+				DF6159AF24695BCD00004A82 /* Reachability.swift */,
+				DF6159B124695D2D00004A82 /* LoadMoreTableCell.swift */,
+				DF6159B32469864A00004A82 /* MyCirclesTableCell.swift */,
+				DF6159B52469A9C400004A82 /* MyCirclesCollectionCell.swift */,
+				DF6159B72469C3E400004A82 /* FocusCirclesTableCell.swift */,
 			);
 			path = circles;
 			sourceTree = "<group>";
@@ -327,7 +339,6 @@
 				05EE8EFD24641F3B00F87B39 /* circles.xcdatamodeld in Sources */,
 				05EE8F17246456ED00F87B39 /* NavigationController.swift in Sources */,
 				05EE8EF324641F3B00F87B39 /* AppDelegate.swift in Sources */,
-				05EE8F0D246432B900F87B39 /* TrendsViewController.swift in Sources */,
 				052C84722469912E00973854 /* SLPresenter.swift in Sources */,
 				052C84742469912E00973854 /* SLPictureTransitionAnimation.swift in Sources */,
 				052C84732469912E00973854 /* SLPictureZoomView.swift in Sources */,
@@ -336,12 +347,17 @@
 				052C84702469912E00973854 /* ViewController.swift in Sources */,
 				052C846E2469912E00973854 /* SLPictureBrowsingViewController.swift in Sources */,
 				05EE8F1524644B8000F87B39 /* TabBarController.swift in Sources */,
+				DF6159B224695D2D00004A82 /* LoadMoreTableCell.swift in Sources */,
+				DF6159B82469C3E400004A82 /* FocusCirclesTableCell.swift in Sources */,
+				DF6159B024695BCD00004A82 /* Reachability.swift in Sources */,
+				DF6159B62469A9C400004A82 /* MyCirclesCollectionCell.swift in Sources */,
 				4D9319BA2469D6B900BF1BF9 /* AllCirclesController.swift in Sources */,
 				05EE8EF524641F3B00F87B39 /* SceneDelegate.swift in Sources */,
 				4D29EFD52469A11C006AF0A4 /* TrendsPublishController.swift in Sources */,
 				05EE8F0F2464330500F87B39 /* CirclesViewController.swift in Sources */,
 				052C846F2469912E00973854 /* SLTableViewCell.swift in Sources */,
 				05EE8F112464332800F87B39 /* MineViewController.swift in Sources */,
+				DF6159B42469864A00004A82 /* MyCirclesTableCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

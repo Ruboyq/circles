@@ -24,7 +24,9 @@ class TrendsPublishController: UIViewController, UIImagePickerControllerDelegate
     
     @IBOutlet weak var selectBtn: UIButton!
     
-    static var selectCircle: String = ""
+    @IBOutlet weak var selectLabel: UILabel!
+    
+    static public var selectCircle: String = ""
     
     var imgArray = [UIImageView]()
     var imgBase64Array = [String]()
@@ -127,11 +129,13 @@ class TrendsPublishController: UIViewController, UIImagePickerControllerDelegate
     
     @objc func selectCircle(){
         let sb = UIStoryboard(name: "AllCircles", bundle: nil)
-        let destination = sb.instantiateViewController(withIdentifier: "AllCircles")
+        let destination = sb.instantiateViewController(withIdentifier: "AllCircles") as! AllCirclesController
+        AllCirclesController.parentController = self
         self.present(destination, animated: true, completion: nil)
+    }
+    
+    func changeCirle(){
+        selectLabel.text = TrendsPublishController.selectCircle
     }
 
 }
-
-
-
