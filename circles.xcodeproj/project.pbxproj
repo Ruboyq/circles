@@ -18,6 +18,11 @@
 		05EE8F112464332800F87B39 /* MineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EE8F102464332800F87B39 /* MineViewController.swift */; };
 		05EE8F1524644B8000F87B39 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EE8F1424644B8000F87B39 /* TabBarController.swift */; };
 		05EE8F17246456ED00F87B39 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EE8F16246456ED00F87B39 /* NavigationController.swift */; };
+		DF6159B024695BCD00004A82 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159AF24695BCD00004A82 /* Reachability.swift */; };
+		DF6159B224695D2D00004A82 /* LoadMoreTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159B124695D2D00004A82 /* LoadMoreTableCell.swift */; };
+		DF6159B42469864A00004A82 /* MyCirclesTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159B32469864A00004A82 /* MyCirclesTableCell.swift */; };
+		DF6159B62469A9C400004A82 /* MyCirclesCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159B52469A9C400004A82 /* MyCirclesCollectionCell.swift */; };
+		DF6159B82469C3E400004A82 /* FocusCirclesTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159B72469C3E400004A82 /* FocusCirclesTableCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +39,11 @@
 		05EE8F102464332800F87B39 /* MineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineViewController.swift; sourceTree = "<group>"; };
 		05EE8F1424644B8000F87B39 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		05EE8F16246456ED00F87B39 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		DF6159AF24695BCD00004A82 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		DF6159B124695D2D00004A82 /* LoadMoreTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMoreTableCell.swift; sourceTree = "<group>"; };
+		DF6159B32469864A00004A82 /* MyCirclesTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCirclesTableCell.swift; sourceTree = "<group>"; };
+		DF6159B52469A9C400004A82 /* MyCirclesCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCirclesCollectionCell.swift; sourceTree = "<group>"; };
+		DF6159B72469C3E400004A82 /* FocusCirclesTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCirclesTableCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +103,11 @@
 			isa = PBXGroup;
 			children = (
 				05EE8F0E2464330500F87B39 /* CirclesViewController.swift */,
+				DF6159AF24695BCD00004A82 /* Reachability.swift */,
+				DF6159B124695D2D00004A82 /* LoadMoreTableCell.swift */,
+				DF6159B32469864A00004A82 /* MyCirclesTableCell.swift */,
+				DF6159B52469A9C400004A82 /* MyCirclesCollectionCell.swift */,
+				DF6159B72469C3E400004A82 /* FocusCirclesTableCell.swift */,
 			);
 			path = circles;
 			sourceTree = "<group>";
@@ -190,9 +205,14 @@
 				05EE8EF324641F3B00F87B39 /* AppDelegate.swift in Sources */,
 				05EE8F0D246432B900F87B39 /* TrendsViewController.swift in Sources */,
 				05EE8F1524644B8000F87B39 /* TabBarController.swift in Sources */,
+				DF6159B224695D2D00004A82 /* LoadMoreTableCell.swift in Sources */,
+				DF6159B82469C3E400004A82 /* FocusCirclesTableCell.swift in Sources */,
+				DF6159B024695BCD00004A82 /* Reachability.swift in Sources */,
+				DF6159B62469A9C400004A82 /* MyCirclesCollectionCell.swift in Sources */,
 				05EE8EF524641F3B00F87B39 /* SceneDelegate.swift in Sources */,
 				05EE8F0F2464330500F87B39 /* CirclesViewController.swift in Sources */,
 				05EE8F112464332800F87B39 /* MineViewController.swift in Sources */,
+				DF6159B42469864A00004A82 /* MyCirclesTableCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
