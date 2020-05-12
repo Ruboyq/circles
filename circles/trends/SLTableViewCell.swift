@@ -64,18 +64,19 @@ class SLTableViewCell: UITableViewCell {
         timeLabel.font = UIFont.systemFont(ofSize: 12)
         return timeLabel
     }()
-    //关注
-    lazy var followBtn: UIButton = {
-        let followBtn = UIButton()
-        followBtn.layer.borderColor = UIColor.init(red: 58/256.0, green: 164/256.0, blue: 240/256.0, alpha: 1.0).cgColor
-        followBtn.layer.borderWidth = 0.5
-        followBtn.layer.cornerRadius = 12
-        followBtn.clipsToBounds = true
-        followBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        followBtn.setTitleColor(UIColor.init(red: 58/256.0, green: 164/256.0, blue: 240/256.0, alpha: 1.0), for: UIControl.State.normal)
-        followBtn.addTarget(self, action: #selector(followBtnClicked(followBtn:)), for: UIControl.Event.touchUpInside)
-        followBtn.setContentCompressionResistancePriority(UILayoutPriority.required, for: NSLayoutConstraint.Axis.horizontal)
-        return followBtn
+    //所属话题
+    lazy var circleLabel: UILabel = {
+        let circleLabel = UILabel()
+        circleLabel.layer.borderColor = UIColor.init(red: 58/256.0, green: 164/256.0, blue: 240/256.0, alpha: 1.0).cgColor
+        circleLabel.layer.borderWidth = 0.5
+        circleLabel.layer.cornerRadius = 12
+        circleLabel.clipsToBounds = true
+        circleLabel.textColor = UIColor.init(red: 58/256.0, green: 164/256.0, blue: 240/256.0, alpha: 1.0)
+        circleLabel.font = UIFont.systemFont(ofSize: 14)
+//        followBtn.setTitleColor(UIColor.init(red: 58/256.0, green: 164/256.0, blue: 240/256.0, alpha: 1.0), for: UIControl.State.normal)
+//        followBtn.addTarget(self, action: #selector(followBtnClicked(followBtn:)), for: UIControl.Event.touchUpInside)
+        circleLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: NSLayoutConstraint.Axis.horizontal)
+        return circleLabel
     }()
     //标题
     lazy var textView: SLTextView = {
@@ -93,6 +94,45 @@ class SLTableViewCell: UITableViewCell {
     }()
     //图片视图数组
     var picsArray: [AnimatedImageView] = []
+    lazy var praiseLabel: UILabel = {
+        let praiseNum = UILabel()
+        praiseNum.textColor = UIColor.black;
+        praiseNum.font = UIFont.systemFont(ofSize: 16)
+        return praiseNum
+    }()
+    
+    lazy var praiseImg: UIImageView = {
+        let praiseImg = UIImageView.init()
+        praiseImg.image = UIImage(named: "logobar")
+        praiseImg.contentMode = .scaleAspectFit
+        return praiseImg
+    }()
+    lazy var commentLabel: UILabel = {
+        let commentLabel = UILabel()
+        commentLabel.textColor = UIColor.black;
+        commentLabel.font = UIFont.systemFont(ofSize: 16)
+        return commentLabel
+    }()
+    
+    lazy var commentImg: UIImageView = {
+        let commentImg = UIImageView.init()
+        commentImg.image = UIImage(named: "logobar")
+        commentImg.contentMode = .scaleAspectFit
+        return commentImg
+    }()
+    lazy var shareLabel: UILabel = {
+        let commentLabel = UILabel()
+        commentLabel.textColor = UIColor.black;
+        commentLabel.font = UIFont.systemFont(ofSize: 16)
+        return commentLabel
+    }()
+    
+    lazy var shareImg: UIImageView = {
+        let commentImg = UIImageView.init()
+        commentImg.image = UIImage(named: "logobar")
+        commentImg.contentMode = .scaleAspectFit
+        return commentImg
+    }()
     //当前cell索引
     var cellIndexPath: IndexPath?
     // 代理
@@ -109,7 +149,7 @@ class SLTableViewCell: UITableViewCell {
         self.contentView.addSubview(self.headImage)
         self.contentView.addSubview(self.nickLabel)
         self.contentView.addSubview(self.timeLabel)
-        self.contentView.addSubview(self.followBtn)
+        self.contentView.addSubview(self.circleLabel)
         self.contentView.addSubview(self.textView)
         for i in 0..<9 {
             let imageView = AnimatedImageView(frame: CGRect.zero)
@@ -125,6 +165,12 @@ class SLTableViewCell: UITableViewCell {
             imageView.addGestureRecognizer(tap)
             self.picsArray.append(imageView)
         }
+        self.contentView.addSubview(self.praiseLabel)
+        self.contentView.addSubview(self.praiseImg)
+        self.contentView.addSubview(self.commentLabel)
+        self.contentView.addSubview(self.commentImg)
+        self.contentView.addSubview(self.shareLabel)
+        self.contentView.addSubview(self.shareImg)
         self.headImage.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(15)
             make.top.equalToSuperview().offset(15)
@@ -134,15 +180,15 @@ class SLTableViewCell: UITableViewCell {
             make.left.equalTo(self.headImage.snp.right).offset(5)
             make.top.equalTo(self.headImage.snp.top).offset(2)
             make.height.equalTo(20)
-            make.right.lessThanOrEqualTo(self.followBtn.snp.left).offset(-5)
+            make.right.lessThanOrEqualTo(self.circleLabel.snp.left).offset(-5)
         }
         self.timeLabel.snp.makeConstraints { (make) in
             make.left.equalTo(self.headImage.snp.right).offset(5)
             make.top.equalTo(self.nickLabel.snp.bottom).offset(2)
             make.height.equalTo(10)
-            make.right.lessThanOrEqualTo(self.followBtn.snp.left).offset(-5)
+            make.right.lessThanOrEqualTo(self.circleLabel.snp.left).offset(-5)
         }
-        self.followBtn.snp.makeConstraints { (make) in
+        self.circleLabel.snp.makeConstraints { (make) in
             make.left.greaterThanOrEqualTo(self.nickLabel.snp.right).offset(5)
             make.right.equalTo(self.contentView).offset(-15)
             make.centerY.equalTo(self.headImage.snp.centerY)
@@ -150,11 +196,41 @@ class SLTableViewCell: UITableViewCell {
         }
         self.textView.snp.makeConstraints { (make) in
             make.left.equalTo(self.headImage.snp.left)
-            make.right.equalTo(self.followBtn.snp.right)
+            make.right.equalTo(self.circleLabel.snp.right)
             make.top.equalTo(self.headImage.snp.bottom).offset(15)
             //            make.bottom.equalTo(self.picsArray[0].snp.top).offset(-15)
         }
-        
+        let imageWidth = (UIScreen.main.bounds.size.width - 15 * 2 - 5 * 2)/3;
+        self.praiseImg.snp.makeConstraints { (make) in
+            make.left.equalTo(self.headImage.snp.left).offset(imageWidth/6)
+            make.bottom.equalToSuperview().offset(-10)
+            make.height.width.equalTo(35)
+        }
+        self.praiseLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(self.praiseImg.snp.right).offset(5)
+            make.bottom.equalToSuperview().offset(-15)
+            make.height.equalTo(20)
+        }
+        self.commentImg.snp.makeConstraints { (make) in
+            make.left.equalToSuperview().offset(UIScreen.main.bounds.size.width/2-imageWidth/3)
+            make.bottom.equalToSuperview().offset(-10)
+            make.height.width.equalTo(35)
+        }
+        self.commentLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(self.commentImg.snp.right).offset(5)
+            make.bottom.equalToSuperview().offset(-15)
+            make.height.equalTo(20)
+        }
+        self.shareImg.snp.makeConstraints { (make) in
+            make.right.equalToSuperview().offset(-(2*imageWidth/3+5))
+            make.bottom.equalToSuperview().offset(-10)
+            make.height.width.equalTo(35)
+        }
+        self.shareLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(self.shareImg.snp.right).offset(5)
+            make.bottom.equalToSuperview().offset(-15)
+            make.height.equalTo(20)
+        }
     }
     
     // MARK: ReloadData
@@ -165,7 +241,10 @@ class SLTableViewCell: UITableViewCell {
         self.headImage.kf.setImage(with: url!, placeholder:placeholderImage ,options: [.processor(roundCornerProcessor)])
         self.nickLabel.text = model.nickName
         self.timeLabel.text =  model.time! + " 来自 " + model.source!
-        self.followBtn.setTitle("      关注     ", for: UIControl.State.normal)
+        self.praiseLabel.text = "123"
+        self.commentLabel.text = "123"
+        self.shareLabel.text = "123"
+        self.circleLabel.text = "      "+"游戏"+"     "
         self.textView.attributedText = layout?.attributedString
         //图片宽、高
         let width: CGFloat = (UIScreen.main.bounds.size.width - 15 * 2 - 5 * 2)/3
@@ -236,13 +315,22 @@ class SLTableViewCell: UITableViewCell {
                     make.top.left.width.height.equalTo(0)
                 }
             }
+            if(model.images.count - 1 == index){
+//                self.praiseLabel.text = "123"
+//                self.praiseLabel.snp.makeConstraints { (make) in
+//                    make.left.equalTo(self.headImage.snp.right).offset(5)
+//                    make.top.equalTo(imageView.snp.bottom).offset(15)
+//                    make.height.equalTo(20)
+//                    make.right.lessThanOrEqualTo(imageView.snp.right).offset(-5)
+//                }
+            }
         }
     }
     
     // MARK: Events
-    @objc func followBtnClicked(followBtn: UIButton) {
-        print("已关注")
-    }
+//    @objc func followBtnClicked(followBtn: UIButton) {
+//        print("已关注")
+//    }
     @objc func tapPicture(tap: UITapGestureRecognizer) {
         let animationView: AnimatedImageView = tap.view as! AnimatedImageView
         if (self.delegate?.responds(to: #selector(SLTableViewCellDelegate.tableViewCell(_:tapImageAction:indexPath:))))! {

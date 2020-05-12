@@ -146,6 +146,8 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         }
         cell.delegate = self.presenter
         cell.cellIndexPath = indexPath
+        print("from cellforrowat:")
+        print(layout?.cellHeight ?? "none")
         cell.configureCell(model: model, layout: layout)
         return cell;
     }

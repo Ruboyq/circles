@@ -77,7 +77,7 @@ class SLPresenter: NSObject{
                 self.dataArray.add(model)
                 //元组
                 let attStrAndHeight:(attributedString:NSMutableAttributedString, height:CGFloat) = self.matchesResultOfTitle(title: model.title!, expan: false)
-                let layout:SLLayout = SLLayout(attributedString: attStrAndHeight.attributedString, cellHeight: (15 + 35 + 15 + attStrAndHeight.height + 15 + self.heightOfImages(images: model.images)), expan: false)
+                let layout:SLLayout = SLLayout(attributedString: attStrAndHeight.attributedString, cellHeight: (15 + 35 + 15 + attStrAndHeight.height + 15 + self.heightOfImages(images: model.images) + 35), expan: false)
                 self.layoutArray.add(layout)
             }
             //操作完成，调用主线程来刷新界面
