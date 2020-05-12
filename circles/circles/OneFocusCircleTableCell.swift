@@ -8,10 +8,11 @@
 
 import UIKit
 
-class MyCirclesTableCell: UITableViewCell {
+class OneFocusCircleTableCell: UITableViewCell {
     
-    var circle: Int!
+    var circle: String!
     var imageview: UIImageView!
+    var circleTextLabel: UILabel!
     var button: UIButton!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -21,9 +22,14 @@ class MyCirclesTableCell: UITableViewCell {
         self.contentView.addSubview(imageview)
         imageview.frame = CGRect(x: 25, y: 5, width: 50, height: 50)
         //设置圆形半径
-        imageview.layer.cornerRadius = imageview.frame.size.width / 2
+        //imageview.layer.cornerRadius = imageview.frame.size.width / 2
         //实现效果
-        imageview.clipsToBounds = true
+        //imageview.clipsToBounds = true
+        
+        circleTextLabel = UILabel()
+        circleTextLabel.textColor = .black
+        circleTextLabel.frame = CGRect(x: imageview.frame.maxX + 20, y: 5, width: 60, height: 50)
+        self.contentView.addSubview(circleTextLabel)
         
         // 创建一个常规的button
         button = UIButton(type: .custom)
