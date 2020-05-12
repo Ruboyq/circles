@@ -249,7 +249,7 @@ extension SLPresenter : SLTableViewCellDelegate {
             //元组
             let attStrAndHeight:(attributedString:NSMutableAttributedString, height:CGFloat) = self.matchesResultOfTitle(title: model.title!, expan: layout.expan)
             layout.attributedString = attStrAndHeight.attributedString
-            layout.cellHeight = (15 + 35 + 15 + attStrAndHeight.height + 15 + self.heightOfImages(images: model.images))
+            layout.cellHeight = (15 + 35 + 15 + attStrAndHeight.height + 15 + self.heightOfImages(images: model.images)+35)
             self.layoutArray.replaceObject(at: indexPath.row, with: layout)
             self.fullTextBlock!(indexPath)
         }
@@ -266,6 +266,14 @@ extension SLPresenter : SLTableViewCellDelegate {
         pictureBrowsingViewController.currentPage = indexOfImages
         pictureBrowsingViewController.currentIndexPath = indexPath
         navigationController.topViewController?.present(pictureBrowsingViewController, animated: true, completion: nil)
+    }
+    
+    func tableViewCell(_ tableViewCell: SLTableViewCell, tapCommentImg trendId: String, indexPath: IndexPath) {
+        print(trendId)
+        let sb = UIStoryboard(name: "TrendComment", bundle: nil)
+        let destination = sb.instantiateViewController(withIdentifier: "TrendComment") as! TrendCommentController
+        let navigationController: SLNavigationController = UIViewController.currentViewController()?.navigationController as! SLNavigationController
+        navigationController.topViewController?.present(destination, animated: true, completion: nil)
     }
 }
 

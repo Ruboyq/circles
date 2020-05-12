@@ -20,6 +20,7 @@ enum SLTextLinkType: Int {
 @objc protocol SLTableViewCellDelegate : NSObjectProtocol {
     func tableViewCell(_ tableViewCell: SLTableViewCell, tapImageAction indexOfImages:NSInteger, indexPath: IndexPath)  //点击图片
     func tableViewCell(_ tableViewCell: SLTableViewCell, clickedLinks url:String,  characterRange: NSRange, linkType: SLTextLinkType.RawValue, indexPath: IndexPath)  //点击文本链接
+    func tableViewCell(_ tableViewCell: SLTableViewCell, tapCommentImg trendId:String, indexPath: IndexPath)  //点击图片
 }
 
 //标题富文本视图
@@ -103,8 +104,11 @@ class SLTableViewCell: UITableViewCell {
     
     lazy var praiseImg: UIImageView = {
         let praiseImg = UIImageView.init()
-        praiseImg.image = UIImage(named: "logobar")
+        praiseImg.image = UIImage(named: "trends_like")
         praiseImg.contentMode = .scaleAspectFit
+        praiseImg.isUserInteractionEnabled = true
+        let praiseTap: UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(tapPraiseImg(praiseTap:)))
+        praiseImg.addGestureRecognizer(praiseTap)
         return praiseImg
     }()
     lazy var commentLabel: UILabel = {
@@ -116,28 +120,35 @@ class SLTableViewCell: UITableViewCell {
     
     lazy var commentImg: UIImageView = {
         let commentImg = UIImageView.init()
-        commentImg.image = UIImage(named: "logobar")
+        commentImg.image = UIImage(named: "trends_comment")
         commentImg.contentMode = .scaleAspectFit
+        commentImg.isUserInteractionEnabled = true
+        let commentTap: UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(tapCommentImg(commentTap:)))
+        commentImg.addGestureRecognizer(commentTap)
         return commentImg
     }()
     lazy var shareLabel: UILabel = {
-        let commentLabel = UILabel()
-        commentLabel.textColor = UIColor.black;
-        commentLabel.font = UIFont.systemFont(ofSize: 16)
-        return commentLabel
+        let shareLabel = UILabel()
+        shareLabel.textColor = UIColor.black;
+        shareLabel.font = UIFont.systemFont(ofSize: 16)
+        return shareLabel
     }()
     
     lazy var shareImg: UIImageView = {
-        let commentImg = UIImageView.init()
-        commentImg.image = UIImage(named: "logobar")
-        commentImg.contentMode = .scaleAspectFit
-        return commentImg
+        let shareImg = UIImageView.init()
+        shareImg.image = UIImage(named: "trends_share")
+        shareImg.contentMode = .scaleAspectFit
+        shareImg.isUserInteractionEnabled = true
+        let shareTap: UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(tapShareImg(shareTap:)))
+        shareImg.addGestureRecognizer(shareTap)
+        return shareImg
     }()
     //当前cell索引
     var cellIndexPath: IndexPath?
     // 代理
     weak var delegate: SLTableViewCellDelegate?
-    
+    // 是否点赞
+    var isPraised:Int?
     //初始化
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
@@ -202,9 +213,9 @@ class SLTableViewCell: UITableViewCell {
         }
         let imageWidth = (UIScreen.main.bounds.size.width - 15 * 2 - 5 * 2)/3;
         self.praiseImg.snp.makeConstraints { (make) in
-            make.left.equalTo(self.headImage.snp.left).offset(imageWidth/6)
+            make.left.equalTo(self.headImage.snp.left).offset(imageWidth/4)
             make.bottom.equalToSuperview().offset(-10)
-            make.height.width.equalTo(35)
+            make.height.width.equalTo(30)
         }
         self.praiseLabel.snp.makeConstraints { (make) in
             make.left.equalTo(self.praiseImg.snp.right).offset(5)
@@ -212,9 +223,9 @@ class SLTableViewCell: UITableViewCell {
             make.height.equalTo(20)
         }
         self.commentImg.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(UIScreen.main.bounds.size.width/2-imageWidth/3)
+            make.left.equalToSuperview().offset(UIScreen.main.bounds.size.width/2-imageWidth/4)
             make.bottom.equalToSuperview().offset(-10)
-            make.height.width.equalTo(35)
+            make.height.width.equalTo(30)
         }
         self.commentLabel.snp.makeConstraints { (make) in
             make.left.equalTo(self.commentImg.snp.right).offset(5)
@@ -222,9 +233,9 @@ class SLTableViewCell: UITableViewCell {
             make.height.equalTo(20)
         }
         self.shareImg.snp.makeConstraints { (make) in
-            make.right.equalToSuperview().offset(-(2*imageWidth/3+5))
+            make.left.equalToSuperview().offset(imageWidth * 2 + 15 + 5 * 2 + imageWidth/4)
             make.bottom.equalToSuperview().offset(-10)
-            make.height.width.equalTo(35)
+            make.height.width.equalTo(30)
         }
         self.shareLabel.snp.makeConstraints { (make) in
             make.left.equalTo(self.shareImg.snp.right).offset(5)
@@ -244,6 +255,7 @@ class SLTableViewCell: UITableViewCell {
         self.praiseLabel.text = "123"
         self.commentLabel.text = "123"
         self.shareLabel.text = "123"
+        self.isPraised = 0;
         self.circleLabel.text = "      "+"游戏"+"     "
         self.textView.attributedText = layout?.attributedString
         //图片宽、高
@@ -315,22 +327,26 @@ class SLTableViewCell: UITableViewCell {
                     make.top.left.width.height.equalTo(0)
                 }
             }
-            if(model.images.count - 1 == index){
-//                self.praiseLabel.text = "123"
-//                self.praiseLabel.snp.makeConstraints { (make) in
-//                    make.left.equalTo(self.headImage.snp.right).offset(5)
-//                    make.top.equalTo(imageView.snp.bottom).offset(15)
-//                    make.height.equalTo(20)
-//                    make.right.lessThanOrEqualTo(imageView.snp.right).offset(-5)
-//                }
-            }
         }
     }
     
     // MARK: Events
-//    @objc func followBtnClicked(followBtn: UIButton) {
-//        print("已关注")
-//    }
+    @objc func tapPraiseImg(praiseTap: UITapGestureRecognizer) {
+        if (self.isPraised == 0){
+            self.praiseLabel.text = "\(Int(self.praiseLabel.text!)! + 1)";
+            self.praiseImg.image = UIImage(named: "trends_liked");
+            self.isPraised = 1
+        } else if (self.isPraised == 1){
+            self.praiseLabel.text = "\(Int(self.praiseLabel.text!)! - 1)";
+            self.praiseImg.image = UIImage(named: "trends_like");
+            self.isPraised = 0
+        }
+    }
+    @objc func tapCommentImg(commentTap: UITapGestureRecognizer) {
+        self.delegate?.tableViewCell(self, tapCommentImg: "123456", indexPath: self.cellIndexPath!)
+    }
+    @objc func tapShareImg(shareTap: UITapGestureRecognizer) {
+    }
     @objc func tapPicture(tap: UITapGestureRecognizer) {
         let animationView: AnimatedImageView = tap.view as! AnimatedImageView
         if (self.delegate?.responds(to: #selector(SLTableViewCellDelegate.tableViewCell(_:tapImageAction:indexPath:))))! {
