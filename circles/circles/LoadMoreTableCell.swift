@@ -15,7 +15,7 @@ class LoadMoreTableCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        loadingView = UIActivityIndicatorView(style: .gray)
+        loadingView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
         self.contentView.addSubview(loadingView)
         
     }
