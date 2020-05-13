@@ -50,10 +50,7 @@ class ViewController: UIViewController {
     @objc func showPublish(){
         let sb = UIStoryboard(name: "TrendsPublish", bundle: nil)
         let destination = sb.instantiateViewController(withIdentifier: "PublishView")
-        //页面传参
-        //destination.info = ListViewController.listData[indexPath.row]
         self.navigationController?.pushViewController(destination, animated: true)
-        //self.present(destination, animated: true, completion: nil)
     }
     
     // MARK: UI
@@ -63,7 +60,7 @@ class ViewController: UIViewController {
         let imageView = UIImageView(image: logo);
         imageView.contentMode = .scaleAspectFit
         self.navigationItem.titleView = imageView;
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "发布", style: .plain, target: self, action: #selector(showPublish))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "trends_edit"), style: .plain, target: self, action: #selector(showPublish))
         //性能监测工具
 //        PerformanceMonitor.shared().start()
         //中间者 处理数据和事件
@@ -146,6 +143,8 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         }
         cell.delegate = self.presenter
         cell.cellIndexPath = indexPath
+        print("from cellforrowat:")
+        print(layout?.cellHeight ?? "none")
         cell.configureCell(model: model, layout: layout)
         return cell;
     }

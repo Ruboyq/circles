@@ -21,13 +21,14 @@
 		052C847F2469914100973854 /* Data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 052C847A2469914000973854 /* Data.plist */; };
 		052C84802469914100973854 /* photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 052C847B2469914000973854 /* photo@2x.png */; };
 		052C84812469914100973854 /* placeholderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 052C847C2469914000973854 /* placeholderImage.png */; };
+		054A15C1246B0E2E009E20F4 /* TrendCommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054A15C0246B0E2E009E20F4 /* TrendCommentController.swift */; };
+		054A15C3246B0ECE009E20F4 /* TrendComment.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 054A15C2246B0ECE009E20F4 /* TrendComment.storyboard */; };
 		05EE8EF324641F3B00F87B39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EE8EF224641F3B00F87B39 /* AppDelegate.swift */; };
 		05EE8EF524641F3B00F87B39 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EE8EF424641F3B00F87B39 /* SceneDelegate.swift */; };
 		05EE8EFA24641F3B00F87B39 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05EE8EF824641F3B00F87B39 /* Main.storyboard */; };
 		05EE8EFD24641F3B00F87B39 /* circles.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 05EE8EFB24641F3B00F87B39 /* circles.xcdatamodeld */; };
 		05EE8EFF24641F4D00F87B39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05EE8EFE24641F4D00F87B39 /* Assets.xcassets */; };
 		05EE8F0224641F4D00F87B39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05EE8F0024641F4D00F87B39 /* LaunchScreen.storyboard */; };
-		05EE8F0D246432B900F87B39 /* TrendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EE8F0C246432B900F87B39 /* TrendsViewController.swift */; };
 		05EE8F0F2464330500F87B39 /* CirclesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EE8F0E2464330500F87B39 /* CirclesViewController.swift */; };
 		05EE8F112464332800F87B39 /* MineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EE8F102464332800F87B39 /* MineViewController.swift */; };
 		05EE8F1524644B8000F87B39 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EE8F1424644B8000F87B39 /* TabBarController.swift */; };
@@ -40,6 +41,8 @@
 		DF6159B224695D2D00004A82 /* LoadMoreTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159B124695D2D00004A82 /* LoadMoreTableCell.swift */; };
 		DF6159B42469864A00004A82 /* OneFocusCircleTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159B32469864A00004A82 /* OneFocusCircleTableCell.swift */; };
 		DF6159B62469A9C400004A82 /* FocusCircleSmallCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159B52469A9C400004A82 /* FocusCircleSmallCollectionCell.swift */; };
+		DF6159B42469864A00004A82 /* MyCirclesTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159B32469864A00004A82 /* MyCirclesTableCell.swift */; };
+		DF6159B62469A9C400004A82 /* MyCirclesCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159B52469A9C400004A82 /* MyCirclesCollectionCell.swift */; };
 		DF6159B82469C3E400004A82 /* FocusCirclesTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159B72469C3E400004A82 /* FocusCirclesTableCell.swift */; };
 		DF6159BA246A5EBA00004A82 /* FocusCirclesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159B9246A5EBA00004A82 /* FocusCirclesViewController.swift */; };
 		DF6159BC246A7EBE00004A82 /* CirclesTrendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159BB246A7EBE00004A82 /* CirclesTrendsViewController.swift */; };
@@ -63,6 +66,8 @@
 		052C847A2469914000973854 /* Data.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Data.plist; sourceTree = "<group>"; };
 		052C847B2469914000973854 /* photo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo@2x.png"; sourceTree = "<group>"; };
 		052C847C2469914000973854 /* placeholderImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholderImage.png; sourceTree = "<group>"; };
+		054A15C0246B0E2E009E20F4 /* TrendCommentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendCommentController.swift; sourceTree = "<group>"; };
+		054A15C2246B0ECE009E20F4 /* TrendComment.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TrendComment.storyboard; sourceTree = "<group>"; };
 		05EE8EEF24641F3B00F87B39 /* circles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = circles.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05EE8EF224641F3B00F87B39 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		05EE8EF424641F3B00F87B39 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -71,7 +76,6 @@
 		05EE8EFE24641F4D00F87B39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		05EE8F0124641F4D00F87B39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		05EE8F0324641F4D00F87B39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		05EE8F0C246432B900F87B39 /* TrendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsViewController.swift; sourceTree = "<group>"; };
 		05EE8F0E2464330500F87B39 /* CirclesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirclesViewController.swift; sourceTree = "<group>"; };
 		05EE8F102464332800F87B39 /* MineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineViewController.swift; sourceTree = "<group>"; };
 		05EE8F1424644B8000F87B39 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -87,6 +91,8 @@
 		DF6159B124695D2D00004A82 /* LoadMoreTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMoreTableCell.swift; sourceTree = "<group>"; };
 		DF6159B32469864A00004A82 /* OneFocusCircleTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneFocusCircleTableCell.swift; sourceTree = "<group>"; };
 		DF6159B52469A9C400004A82 /* FocusCircleSmallCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCircleSmallCollectionCell.swift; sourceTree = "<group>"; };
+		DF6159B32469864A00004A82 /* MyCirclesTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCirclesTableCell.swift; sourceTree = "<group>"; };
+		DF6159B52469A9C400004A82 /* MyCirclesCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCirclesCollectionCell.swift; sourceTree = "<group>"; };
 		DF6159B72469C3E400004A82 /* FocusCirclesTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCirclesTableCell.swift; sourceTree = "<group>"; };
 		DF6159B9246A5EBA00004A82 /* FocusCirclesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCirclesViewController.swift; sourceTree = "<group>"; };
 		DF6159BB246A7EBE00004A82 /* CirclesTrendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirclesTrendsViewController.swift; sourceTree = "<group>"; };
@@ -168,11 +174,12 @@
 				052C84662469912C00973854 /* SLTableViewCell.swift */,
 				052C846C2469912D00973854 /* SLWebViewController.swift */,
 				052C84672469912D00973854 /* ViewController.swift */,
-				05EE8F0C246432B900F87B39 /* TrendsViewController.swift */,
 				4D29EFD42469A11C006AF0A4 /* TrendsPublishController.swift */,
 				4D29EFD62469A16C006AF0A4 /* TrendsPublish.storyboard */,
 				4D9319B72469D34800BF1BF9 /* AllCircles.storyboard */,
 				4D9319B92469D6B900BF1BF9 /* AllCirclesController.swift */,
+				054A15C0246B0E2E009E20F4 /* TrendCommentController.swift */,
+				054A15C2246B0ECE009E20F4 /* TrendComment.storyboard */,
 			);
 			path = trends;
 			sourceTree = "<group>";
@@ -290,6 +297,7 @@
 			files = (
 				4D9319B82469D34800BF1BF9 /* AllCircles.storyboard in Resources */,
 				052C847F2469914100973854 /* Data.plist in Resources */,
+				054A15C3246B0ECE009E20F4 /* TrendComment.storyboard in Resources */,
 				052C847D2469914100973854 /* 爱你@3x.png in Resources */,
 				05EE8F0224641F4D00F87B39 /* LaunchScreen.storyboard in Resources */,
 				4D29EFD72469A16C006AF0A4 /* TrendsPublish.storyboard in Resources */,
@@ -355,7 +363,6 @@
 				DF6159BE246A8C9900004A82 /* CircleTableCell.swift in Sources */,
 				05EE8F17246456ED00F87B39 /* NavigationController.swift in Sources */,
 				05EE8EF324641F3B00F87B39 /* AppDelegate.swift in Sources */,
-				05EE8F0D246432B900F87B39 /* TrendsViewController.swift in Sources */,
 				052C84722469912E00973854 /* SLPresenter.swift in Sources */,
 				052C84742469912E00973854 /* SLPictureTransitionAnimation.swift in Sources */,
 				052C84732469912E00973854 /* SLPictureZoomView.swift in Sources */,
@@ -365,6 +372,7 @@
 				052C84702469912E00973854 /* ViewController.swift in Sources */,
 				052C846E2469912E00973854 /* SLPictureBrowsingViewController.swift in Sources */,
 				DF6159BA246A5EBA00004A82 /* FocusCirclesViewController.swift in Sources */,
+				054A15C1246B0E2E009E20F4 /* TrendCommentController.swift in Sources */,
 				05EE8F1524644B8000F87B39 /* TabBarController.swift in Sources */,
 				DF6159B224695D2D00004A82 /* LoadMoreTableCell.swift in Sources */,
 				DF6159B82469C3E400004A82 /* FocusCirclesTableCell.swift in Sources */,
