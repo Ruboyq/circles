@@ -16,6 +16,8 @@ class FocusCircleSmallCollectionCell: UICollectionViewCell {
     
     var vc: UIViewController!
     
+    var sizeWH: Int!
+    
     func initUI(vc: UIViewController)  {
         self.vc = vc
         
@@ -24,15 +26,9 @@ class FocusCircleSmallCollectionCell: UICollectionViewCell {
         self.layer.masksToBounds = true
         
         iconView = UIImageView()
+        iconView.frame = CGRect(x: 10, y: 10, width: sizeWH-20, height: sizeWH-20)
         self.contentView.addSubview(iconView)
-        iconView.frame = CGRect(x: 10, y: 10, width: 60, height: 60)
-        
-        titleLabel = UILabel()
-        titleLabel.textColor = .black
-        titleLabel.frame = CGRect(x: 10, y: iconView.frame.maxY, width: 60, height: 20)
-        titleLabel.textAlignment = NSTextAlignment.center
-        self.contentView.addSubview(titleLabel)
-        
+       
         self.contentView.clipsToBounds = true
     }
     
@@ -42,7 +38,6 @@ class FocusCircleSmallCollectionCell: UICollectionViewCell {
             if newValue {
                 print(circle ?? "")
                 let destination = CirclesTrendsViewController()
-                //self.present(destination, animated: true, completion: nil)
                 //self.navigationController?.pushViewController(resume, animated: true)
                 //vc.present(destination, animated: true, completion: nil)
                 destination.circle = circle

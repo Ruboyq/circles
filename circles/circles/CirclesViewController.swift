@@ -4,7 +4,7 @@ class CirclesViewController: UIViewController {
     
     var tableView: UITableView!
     var trendsListData: [String] = [String]()
-    var cirClesDateList: [String] = [String]()
+    static var circlesDataList: [String] = [String]()
     
     var refreshControl: UIRefreshControl!
     var isLoading: Bool = false
@@ -16,7 +16,6 @@ class CirclesViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        //navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "编辑", style: .plain, target: self, action: #selector(editAction))
         let logo = UIImage(named: "logo");
         let imageView = UIImageView(image: logo);
         imageView.contentMode = .scaleAspectFit
@@ -25,29 +24,30 @@ class CirclesViewController: UIViewController {
         trendsListData.append("asdfa")
         trendsListData.append("adfaef")
         
-        cirClesDateList.append("game")
-        cirClesDateList.append("pet")
-        cirClesDateList.append("parent_child")
+        CirclesViewController.circlesDataList.append("game")
+        CirclesViewController.circlesDataList.append("pe")
+        CirclesViewController.circlesDataList.append("law")
         
         initUI()
-//        print("yue shu ")
-//        self.tableView.snp.makeConstraints { (make) in
-//            make.leading.top.equalToSuperview()
-//            make.left.equalToSuperview()
-//            make.right.equalToSuperview()
-//        }
-        
         addPullToRefresh()
         NotificationCenter.default.addObserver(self, selector: #selector(receiverNotification), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
+    //视图已经出现
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("视图出现")
+        self.initUI()
+    }
+    
     func initUI() {
+        print("init UI")
         tableView = UITableView(frame: self.view.bounds, style: .grouped)
         tableView.dataSource = self
         tableView.delegate = self
         //tableView.rowHeight = 140
         //tableView.estimatedRowHeight = 140
-        let headerView: UIView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 10))
+        let headerView: UIView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: self.view.bounds.width, height: 1))
         tableView.tableHeaderView = headerView
         //tableView.tableFooterView = headerView
         tableView.sectionHeaderHeight = 0
@@ -123,7 +123,7 @@ extension CirclesViewController: UITableViewDataSource {
             } else {
                 let cell =  tableView.dequeueReusableCell(withIdentifier: "FocusCirclesTableCell", for: indexPath) as! FocusCirclesTableCell
                 cell.setViewController(vc: self)
-                cell.setCirclesDateList(cirClesDateList: cirClesDateList)
+                cell.setCirclesDateList(cirClesDateList: CirclesViewController.circlesDataList)
                 return cell
             }
         } else if indexPath.section == 1 {
@@ -153,7 +153,7 @@ extension CirclesViewController: UITableViewDelegate{
             if indexPath.row == 0 {
                 return 50
             } else {
-                return 100
+                return 80
             }
         } else if indexPath.section == 1 {
             if indexPath.row == 0 {
@@ -172,27 +172,12 @@ extension CirclesViewController: UITableViewDelegate{
         if indexPath.section == 0 {
             if indexPath.row == 0 {
                 let destination = FocusCirclesViewController()
+                destination.supervc = self
                 //self.present(destination, animated: true, completion: nil)
                 self.navigationController?.pushViewController(destination, animated: true)
             }
         }
     }
-    
-//    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-//        return .delete
-//    }
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            trendsListData.remove(at: indexPath.row)
-//            tableView.reloadData()
-//        }
-//    }
-//    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-//        return true
-//    }
-//    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-//        trendsListData.swapAt(sourceIndexPath.row, destinationIndexPath.row)
-//    }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.section == 2 {

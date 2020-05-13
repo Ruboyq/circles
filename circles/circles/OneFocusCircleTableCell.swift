@@ -33,7 +33,17 @@ class OneFocusCircleTableCell: UITableViewCell {
         
         // 创建一个常规的button
         button = UIButton(type: .custom)
-        button.frame = CGRect(x: UIScreen.main.bounds.width - 100, y: 15, width: 80, height: 30)
+        //print(self.superview?.frame.width)
+        
+        //let inOrient = UIApplication.shared.statusBarOrientation
+        let inOrient = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation
+        if inOrient?.isPortrait ?? true {
+            button.frame = CGRect(x: UIScreen.main.bounds.width - 100, y: 15, width: 70, height: 30)
+        } else {
+            button.frame = CGRect(x: UIScreen.main.bounds.width - 160, y: 15, width: 70, height: 30)
+        }
+        
+        //button.frame = CGRect(x: UIScreen.main.bounds.width - 140, y: 15, width: 70, height: 30)
         button.setTitle("已关注", for: .normal)
         //字体
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15)

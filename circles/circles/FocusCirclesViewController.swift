@@ -13,6 +13,7 @@ class FocusCirclesViewController: UIViewController {
     var tableView: UITableView!
     var circlesDataList: [String] = [String]()
     
+    var supervc: CirclesViewController!
     var refreshControl: UIRefreshControl!
     
     let reachability = try! Reachability()
@@ -24,9 +25,7 @@ class FocusCirclesViewController: UIViewController {
         
         //navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "编辑", style: .plain, target: self, action: #selector(editAction))
         
-        circlesDataList.append("asdfa")
-        circlesDataList.append("adfaef")
-        circlesDataList.append("adggfaedsf")
+        circlesDataList = CirclesViewController.circlesDataList
         
         initUI()
         addPullToRefresh()
@@ -39,16 +38,15 @@ class FocusCirclesViewController: UIViewController {
         tableView.delegate = self
         //tableView.rowHeight = 140
         //tableView.estimatedRowHeight = 140
-        let headerView: UIView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: self.view.frame.width, height: 10))
+        let headerView: UIView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: self.view.frame.width, height: 1))
         tableView.tableHeaderView = headerView
-        //tableView.tableFooterView = headerView
         tableView.sectionHeaderHeight = 0
         tableView.sectionFooterHeight = 10
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.singleLine
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
-        tableView.register(FocusCirclesTableCell.self, forCellReuseIdentifier: "FocusCirclesTableCell")
         tableView.register(OneFocusCircleTableCell.self, forCellReuseIdentifier: "OneFocusCircleTableCell")
+        tableView.register(AllCirclesTableCell.self, forCellReuseIdentifier: "AllCirclesTableCell")
         tableView.tableFooterView = UIView()
         
         tableView.setEditing(false, animated: false)
@@ -56,7 +54,9 @@ class FocusCirclesViewController: UIViewController {
     }
     
     @objc func receiverNotification(){
+        //self.supervc.initUI()
         self.initUI()
+        
     }
     
     func addPullToRefresh() {
@@ -88,13 +88,13 @@ extension FocusCirclesViewController: UITableViewDataSource {
         if section == 0{
             return circlesDataList.count + 1
         } else {
-            return 1
+            return 2
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            if indexPath.row == 0{
+            if indexPath.row == 0 {
                 let cell =  tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
                 cell.textLabel?.text = "我关注的圈子"
                 cell.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.black)
@@ -102,7 +102,7 @@ extension FocusCirclesViewController: UITableViewDataSource {
                 return cell
             } else {
                 let cell =  tableView.dequeueReusableCell(withIdentifier: "OneFocusCircleTableCell", for: indexPath) as! OneFocusCircleTableCell
-                cell.imageview.image = UIImage(named: "logo")
+                cell.imageview.image = UIImage(named: circlesDataList[indexPath.row-1]+"_n")
                 cell.circleTextLabel.text = circlesDataList[indexPath.row-1]
                 //cell.selectionStyle = .default
                 return cell
@@ -115,9 +115,8 @@ extension FocusCirclesViewController: UITableViewDataSource {
                 //cell.selectionStyle = .default
                 return cell
             } else {
-                let cell =  tableView.dequeueReusableCell(withIdentifier: "FocusCirclesTableCell", for: indexPath) as! FocusCirclesTableCell
+                let cell =  tableView.dequeueReusableCell(withIdentifier: "AllCirclesTableCell", for: indexPath) as! AllCirclesTableCell
                 cell.setViewController(vc: self)
-                cell.setCirclesDateList(cirClesDateList: circlesDataList)
                 //self.navigationController
                 return cell
             }
@@ -137,7 +136,12 @@ extension FocusCirclesViewController: UITableViewDelegate{
             if indexPath.row == 0 {
                 return 50
             } else {
-                return 50
+                let inOrient = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation
+                if inOrient?.isPortrait ?? true {
+                    return UIScreen.main.bounds.width*4/3-70
+                } else {
+                    return UIScreen.main.bounds.width*4/5+50
+                }
             }
         }
     }
@@ -146,9 +150,11 @@ extension FocusCirclesViewController: UITableViewDelegate{
         tableView.deselectRow(at: indexPath, animated: false)
         print(indexPath.row)
         if indexPath.section == 0 {
-            //let resume = ResumeViewController()
-            //self.present(resume, animated: true, completion: nil)
-            //self.navigationController?.pushViewController(resume, animated: true)
+            if indexPath.row > 0 {
+                let destination = CirclesTrendsViewController()
+                destination.circle = circlesDataList[indexPath.row-1]
+                self.navigationController?.pushViewController(destination, animated: true)
+            }
         }
     }
     

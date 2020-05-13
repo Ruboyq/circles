@@ -31,12 +31,13 @@ class CirclesTrendsViewController: UIViewController {
     }
     
     func initUI() {
-        tableView = UITableView(frame: self.view.bounds, style: .grouped)
+        print(self.view.frame)
+        tableView = UITableView(frame: self.view.frame, style: .grouped)
         tableView.dataSource = self
         tableView.delegate = self
         //tableView.rowHeight = 140
         //tableView.estimatedRowHeight = 140
-        let headerView: UIView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: self.view.frame.width, height: 10))
+        let headerView: UIView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: self.view.frame.width, height: 1))
         tableView.tableHeaderView = headerView
         //tableView.tableFooterView = headerView
         tableView.sectionHeaderHeight = 0
@@ -92,8 +93,8 @@ extension CirclesTrendsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell =  tableView.dequeueReusableCell(withIdentifier: "CircleTableCell", for: indexPath) as! CircleTableCell
-            cell.imageview.image = UIImage(named: "logo")
-            cell.circleTextLabel.text = circle
+            cell.imageview.image = UIImage(named: circle)
+            cell.circle = circle
             //cell.selectionStyle = .default
             return cell
             

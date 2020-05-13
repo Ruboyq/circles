@@ -12,7 +12,6 @@ class CircleTableCell: UITableViewCell {
     
     var circle: String!
     var imageview: UIImageView!
-    var circleTextLabel: UILabel!
     var button: UIButton!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -20,22 +19,15 @@ class CircleTableCell: UITableViewCell {
         
         imageview = UIImageView()
         self.contentView.addSubview(imageview)
-        imageview.frame = CGRect(x: UIScreen.main.bounds.width/2 - 40, y: 30, width: 80, height: 80)
+        imageview.frame = CGRect(x: UIScreen.main.bounds.width/2 - 50, y: 30, width: 100, height: 100)
         //设置圆形半径
-        imageview.layer.cornerRadius = imageview.frame.size.width / 2
+        //imageview.layer.cornerRadius = imageview.frame.size.width / 2
         //实现效果
-        imageview.clipsToBounds = true
-        
-        circleTextLabel = UILabel()
-        circleTextLabel.textColor = .black
-        circleTextLabel.textAlignment = NSTextAlignment.center
-        circleTextLabel.frame = CGRect(x: UIScreen.main.bounds.width/2 - 40, y: imageview.frame.maxY, width: 80, height: 30)
-        self.contentView.addSubview(circleTextLabel)
-        
+        //imageview.clipsToBounds = true
         
         // 创建一个常规的button
         button = UIButton(type: .custom)
-        button.frame = CGRect(x: UIScreen.main.bounds.width/2 - 40, y: circleTextLabel.frame.maxY+5, width: 80, height: 30)
+        button.frame = CGRect(x: UIScreen.main.bounds.width/2 - 40, y: imageview!.frame.maxY+5, width: 80, height: 30)
         button.setTitle("已关注", for: .normal)
         //字体
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
