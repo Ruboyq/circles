@@ -14,9 +14,15 @@ class OneFocusCircleTableCell: UITableViewCell {
     var imageview: UIImageView!
     var circleTextLabel: UILabel!
     var button: UIButton!
+    var vc: UIViewController!
+    
+    var api: ApiDataUtil!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        api = ApiDataUtil()
+        api.initUtil()
         
         imageview = UIImageView()
         self.contentView.addSubview(imageview)
@@ -73,17 +79,7 @@ class OneFocusCircleTableCell: UITableViewCell {
     
     //无参数点击事件
     @objc func buttonClick(){
-          print("点击了button")
+        print("点击了button:\(String(describing: circle))")
+        api.deleteCircle(vc: vc, circle: circle)
     }
-    
-    //带参数点击事件
-    @objc func buttonClick2(button:UIButton ){
-        button.isSelected = !button.isSelected
-        if button.isSelected {
-            button.setTitle("Selected", for: .normal)
-        }else{
-            button.setTitle("NoSelected", for: .normal)
-        }
-    }
-    
 }

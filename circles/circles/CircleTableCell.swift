@@ -13,6 +13,9 @@ class CircleTableCell: UITableViewCell {
     var circle: String!
     var imageview: UIImageView!
     var button: UIButton!
+    var vc: UIViewController!
+    
+    var api: ApiDataUtil!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -28,7 +31,6 @@ class CircleTableCell: UITableViewCell {
         // 创建一个常规的button
         button = UIButton(type: .custom)
         button.frame = CGRect(x: UIScreen.main.bounds.width/2 - 40, y: imageview!.frame.maxY+5, width: 80, height: 30)
-        button.setTitle("已关注", for: .normal)
         //字体
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         //设置圆角
@@ -39,15 +41,27 @@ class CircleTableCell: UITableViewCell {
         //button.layer.borderWidth = 1.5
         //button.set
         button.setTitleColor(UIColor.black, for: .normal)
-        button.backgroundColor = UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1)
+        
         //无参数点击事件
         button.addTarget(self, action: #selector(buttonClick), for: .touchUpInside)
         //带button参数传递
         //button.addTarget(self, action: #selector(buttonClick(button:)), for: .touchUpInside)
         self.contentView.addSubview(button)
         
-        self.contentView.clipsToBounds = true
+        api = ApiDataUtil()
+        api.initUtil()
         
+        self.contentView.clipsToBounds = true
+    }
+    func setCircle(circle: String) {
+        self.circle = circle
+        if ApiDataUtil.circlesDataList.contains(circle) {
+            button.backgroundColor = UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1)
+            button.setTitle("已关注", for: .normal)
+        } else {
+            button.backgroundColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1)
+            button.setTitle("+关注", for: .normal)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -56,7 +70,12 @@ class CircleTableCell: UITableViewCell {
     
     //无参数点击事件
     @objc func buttonClick(){
-          print("点击了button")
+        print("点击了button:\(String(describing: circle))")
+        if ApiDataUtil.circlesDataList.contains(circle) {
+            api.deleteCircle(vc: vc, circle: circle)
+        } else {
+            api.addCircle(vc: vc, circle: circle)
+        }
     }
     
     //带参数点击事件

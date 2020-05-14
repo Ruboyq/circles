@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FocusCircleSmallCollectionCell: UICollectionViewCell {
+class FocusCircleCollectionCell: UICollectionViewCell {
     
     var circle: String!
     var iconView: UIImageView!
@@ -26,7 +26,7 @@ class FocusCircleSmallCollectionCell: UICollectionViewCell {
         self.layer.masksToBounds = true
         
         iconView = UIImageView()
-        iconView.frame = CGRect(x: 10, y: 10, width: sizeWH-20, height: sizeWH-20)
+        iconView.frame = CGRect(x: 5, y: 5, width: sizeWH-10, height: sizeWH-10)
         self.contentView.addSubview(iconView)
        
         self.contentView.clipsToBounds = true
@@ -36,7 +36,6 @@ class FocusCircleSmallCollectionCell: UICollectionViewCell {
     override var isSelected: Bool {
         willSet {
             if newValue {
-                print(circle ?? "")
                 let destination = CirclesTrendsViewController()
                 //self.navigationController?.pushViewController(resume, animated: true)
                 //vc.present(destination, animated: true, completion: nil)

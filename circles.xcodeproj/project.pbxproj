@@ -37,6 +37,7 @@
 		4D29EFD72469A16C006AF0A4 /* TrendsPublish.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D29EFD62469A16C006AF0A4 /* TrendsPublish.storyboard */; };
 		4D9319B82469D34800BF1BF9 /* AllCircles.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D9319B72469D34800BF1BF9 /* AllCircles.storyboard */; };
 		4D9319BA2469D6B900BF1BF9 /* AllCirclesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9319B92469D6B900BF1BF9 /* AllCirclesController.swift */; };
+		DF5BBDB8246D86EF0008D6EF /* CommonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5BBDB7246D86EF0008D6EF /* CommonService.swift */; };
 		DF6159B024695BCD00004A82 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159AF24695BCD00004A82 /* Reachability.swift */; };
 		DF6159B224695D2D00004A82 /* LoadMoreTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159B124695D2D00004A82 /* LoadMoreTableCell.swift */; };
 		DF6159B82469C3E400004A82 /* FocusCirclesTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159B72469C3E400004A82 /* FocusCirclesTableCell.swift */; };
@@ -44,8 +45,9 @@
 		DF6159BC246A7EBE00004A82 /* CirclesTrendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159BB246A7EBE00004A82 /* CirclesTrendsViewController.swift */; };
 		DF6159BE246A8C9900004A82 /* CircleTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6159BD246A8C9900004A82 /* CircleTableCell.swift */; };
 		DFF43A43246C5CE3008A268E /* AllCirclesTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF43A42246C5CE3008A268E /* AllCirclesTableCell.swift */; };
-		DFF43A45246C5D58008A268E /* FocusCircleSmallCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF43A44246C5D58008A268E /* FocusCircleSmallCollectionCell.swift */; };
+		DFF43A45246C5D58008A268E /* FocusCircleCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF43A44246C5D58008A268E /* FocusCircleCollectionCell.swift */; };
 		DFF43A47246C5D96008A268E /* OneFocusCircleTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF43A46246C5D96008A268E /* OneFocusCircleTableCell.swift */; };
+		DFF43A49246D4CF5008A268E /* ApiDataUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF43A48246D4CF5008A268E /* ApiDataUtil.swift */; };
 		EA9DC81AE64F0E788E6B1012 /* Pods_circles.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72B6E25CBAAC66EB5AD6B2F9 /* Pods_circles.framework */; };
 /* End PBXBuildFile section */
 
@@ -85,6 +87,7 @@
 		4D9319B72469D34800BF1BF9 /* AllCircles.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AllCircles.storyboard; sourceTree = "<group>"; };
 		4D9319B92469D6B900BF1BF9 /* AllCirclesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCirclesController.swift; sourceTree = "<group>"; };
 		72B6E25CBAAC66EB5AD6B2F9 /* Pods_circles.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_circles.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF5BBDB7246D86EF0008D6EF /* CommonService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonService.swift; sourceTree = "<group>"; };
 		DF6159AF24695BCD00004A82 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		DF6159B124695D2D00004A82 /* LoadMoreTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMoreTableCell.swift; sourceTree = "<group>"; };
 		DF6159B72469C3E400004A82 /* FocusCirclesTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCirclesTableCell.swift; sourceTree = "<group>"; };
@@ -92,8 +95,9 @@
 		DF6159BB246A7EBE00004A82 /* CirclesTrendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirclesTrendsViewController.swift; sourceTree = "<group>"; };
 		DF6159BD246A8C9900004A82 /* CircleTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleTableCell.swift; sourceTree = "<group>"; };
 		DFF43A42246C5CE3008A268E /* AllCirclesTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCirclesTableCell.swift; sourceTree = "<group>"; };
-		DFF43A44246C5D58008A268E /* FocusCircleSmallCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCircleSmallCollectionCell.swift; sourceTree = "<group>"; };
+		DFF43A44246C5D58008A268E /* FocusCircleCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCircleCollectionCell.swift; sourceTree = "<group>"; };
 		DFF43A46246C5D96008A268E /* OneFocusCircleTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneFocusCircleTableCell.swift; sourceTree = "<group>"; };
+		DFF43A48246D4CF5008A268E /* ApiDataUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiDataUtil.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,13 +190,15 @@
 				05EE8F0E2464330500F87B39 /* CirclesViewController.swift */,
 				DF6159AF24695BCD00004A82 /* Reachability.swift */,
 				DF6159B124695D2D00004A82 /* LoadMoreTableCell.swift */,
+				DFF43A44246C5D58008A268E /* FocusCircleCollectionCell.swift */,
 				DF6159B72469C3E400004A82 /* FocusCirclesTableCell.swift */,
 				DF6159B9246A5EBA00004A82 /* FocusCirclesViewController.swift */,
 				DF6159BB246A7EBE00004A82 /* CirclesTrendsViewController.swift */,
 				DF6159BD246A8C9900004A82 /* CircleTableCell.swift */,
 				DFF43A42246C5CE3008A268E /* AllCirclesTableCell.swift */,
-				DFF43A44246C5D58008A268E /* FocusCircleSmallCollectionCell.swift */,
 				DFF43A46246C5D96008A268E /* OneFocusCircleTableCell.swift */,
+				DFF43A48246D4CF5008A268E /* ApiDataUtil.swift */,
+				DF5BBDB7246D86EF0008D6EF /* CommonService.swift */,
 			);
 			path = circles;
 			sourceTree = "<group>";
@@ -362,6 +368,7 @@
 				052C84722469912E00973854 /* SLPresenter.swift in Sources */,
 				052C84742469912E00973854 /* SLPictureTransitionAnimation.swift in Sources */,
 				052C84732469912E00973854 /* SLPictureZoomView.swift in Sources */,
+				DF5BBDB8246D86EF0008D6EF /* CommonService.swift in Sources */,
 				052C84762469912E00973854 /* SLNavigationController.swift in Sources */,
 				052C84712469912E00973854 /* SLPictureBrowsingCell.swift in Sources */,
 				DFF43A43246C5CE3008A268E /* AllCirclesTableCell.swift in Sources */,
@@ -369,6 +376,7 @@
 				052C84702469912E00973854 /* ViewController.swift in Sources */,
 				052C846E2469912E00973854 /* SLPictureBrowsingViewController.swift in Sources */,
 				DF6159BA246A5EBA00004A82 /* FocusCirclesViewController.swift in Sources */,
+				DFF43A49246D4CF5008A268E /* ApiDataUtil.swift in Sources */,
 				054A15C1246B0E2E009E20F4 /* TrendCommentController.swift in Sources */,
 				DFF43A47246C5D96008A268E /* OneFocusCircleTableCell.swift in Sources */,
 				05EE8F1524644B8000F87B39 /* TabBarController.swift in Sources */,
@@ -377,7 +385,7 @@
 				DF6159B024695BCD00004A82 /* Reachability.swift in Sources */,
 				4D9319BA2469D6B900BF1BF9 /* AllCirclesController.swift in Sources */,
 				05EE8EF524641F3B00F87B39 /* SceneDelegate.swift in Sources */,
-				DFF43A45246C5D58008A268E /* FocusCircleSmallCollectionCell.swift in Sources */,
+				DFF43A45246C5D58008A268E /* FocusCircleCollectionCell.swift in Sources */,
 				4D29EFD52469A11C006AF0A4 /* TrendsPublishController.swift in Sources */,
 				05EE8F0F2464330500F87B39 /* CirclesViewController.swift in Sources */,
 				052C846F2469912E00973854 /* SLTableViewCell.swift in Sources */,

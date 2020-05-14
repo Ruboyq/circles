@@ -15,9 +15,7 @@ class CirclesTrendsViewController: UIViewController {
     var circle: String!
     
     var refreshControl: UIRefreshControl!
-    
-    let reachability = try! Reachability()
-    var urlSession: URLSession!
+    var api: ApiDataUtil!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,13 +23,14 @@ class CirclesTrendsViewController: UIViewController {
         
         //navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "编辑", style: .plain, target: self, action: #selector(editAction))
         
+        api = ApiDataUtil()
+        api.initUtil()
+        
         self.initUI()
-        addPullToRefresh()
         NotificationCenter.default.addObserver(self, selector: #selector(receiverNotification), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     func initUI() {
-        print(self.view.frame)
         tableView = UITableView(frame: self.view.frame, style: .grouped)
         tableView.dataSource = self
         tableView.delegate = self
@@ -50,9 +49,15 @@ class CirclesTrendsViewController: UIViewController {
         
         tableView.setEditing(false, animated: false)
         self.view.addSubview(tableView)
+        addPullToRefresh()
     }
     
     @objc func receiverNotification(){
+        self.initUI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         self.initUI()
     }
     
@@ -68,6 +73,7 @@ class CirclesTrendsViewController: UIViewController {
         print("pull refresh")
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 1) {
             //self.getResumes(num: 3, isEnd: false, state: 1)
+            self.api.refreshMyCircles(vc: self, state: 2)
             DispatchQueue.main.async {
                 self.tableView.reloadData()
                 self.refreshControl.endRefreshing()
@@ -93,8 +99,9 @@ extension CirclesTrendsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell =  tableView.dequeueReusableCell(withIdentifier: "CircleTableCell", for: indexPath) as! CircleTableCell
-            cell.imageview.image = UIImage(named: circle)
-            cell.circle = circle
+            cell.imageview.image = UIImage(named: ApiDataUtil.circlesMap[circle] ?? "")
+            cell.setCircle(circle: circle)
+            cell.vc = self
             //cell.selectionStyle = .default
             return cell
             

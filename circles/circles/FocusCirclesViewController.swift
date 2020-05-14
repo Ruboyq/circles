@@ -16,23 +16,23 @@ class FocusCirclesViewController: UIViewController {
     var supervc: CirclesViewController!
     var refreshControl: UIRefreshControl!
     
-    let reachability = try! Reachability()
-    var urlSession: URLSession!
+    var api: ApiDataUtil!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         //navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "编辑", style: .plain, target: self, action: #selector(editAction))
-        
-        circlesDataList = CirclesViewController.circlesDataList
+        api = ApiDataUtil()
+        api.initUtil()
         
         initUI()
-        addPullToRefresh()
         NotificationCenter.default.addObserver(self, selector: #selector(receiverNotification), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     func initUI() {
+        circlesDataList = ApiDataUtil.circlesDataList
+        
         tableView = UITableView(frame: self.view.bounds, style: .grouped)
         tableView.dataSource = self
         tableView.delegate = self
@@ -51,6 +51,7 @@ class FocusCirclesViewController: UIViewController {
         
         tableView.setEditing(false, animated: false)
         self.view.addSubview(tableView)
+        addPullToRefresh()
     }
     
     @objc func receiverNotification(){
@@ -59,18 +60,24 @@ class FocusCirclesViewController: UIViewController {
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.initUI()
+    }
+    
     func addPullToRefresh() {
         refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(handleRefresh2(_:)), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(handleRefresh3(_:)), for: .valueChanged)
         refreshControl.tintColor = .blue
         refreshControl.attributedTitle = NSAttributedString(string: "下拉刷新中")
         self.tableView.addSubview(refreshControl)
     }
     
-    @objc func handleRefresh2(_ sender: UIRefreshControl) {
+    @objc func handleRefresh3(_ sender: UIRefreshControl) {
         print("pull refresh")
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 1) {
             //self.getResumes(num: 3, isEnd: false, state: 1)
+            self.api.refreshMyCircles(vc: self, state: 2)
             DispatchQueue.main.async {
                 self.tableView.reloadData()
                 self.refreshControl.endRefreshing()
@@ -102,8 +109,11 @@ extension FocusCirclesViewController: UITableViewDataSource {
                 return cell
             } else {
                 let cell =  tableView.dequeueReusableCell(withIdentifier: "OneFocusCircleTableCell", for: indexPath) as! OneFocusCircleTableCell
-                cell.imageview.image = UIImage(named: circlesDataList[indexPath.row-1]+"_n")
+                let imageName = ApiDataUtil.circlesMap[circlesDataList[indexPath.row-1]] ?? ""
+                cell.imageview.image = UIImage(named: imageName+"_n")
                 cell.circleTextLabel.text = circlesDataList[indexPath.row-1]
+                cell.vc = self
+                cell.circle = circlesDataList[indexPath.row-1]
                 //cell.selectionStyle = .default
                 return cell
             }
@@ -158,50 +168,5 @@ extension FocusCirclesViewController: UITableViewDelegate{
         }
     }
     
-}
-
-extension FocusCirclesViewController {
-    func checkNetwork() {
-        reachability.whenReachable = { reachability in
-            if reachability.connection == .wifi {
-                print("Reachable via WiFi")
-            } else {
-                print("Reachable via Cellular")
-            }
-        }
-        reachability.whenUnreachable = { _ in
-            print("Not reachable")
-        }
-        do {
-            try reachability.startNotifier()
-        } catch {
-            print("Unable to start notifier")
-        }
-    }
-    
-    func setupSession() {
-        let config = URLSessionConfiguration.default
-        config.timeoutIntervalForRequest = 5
-        //config.protocolClasses = [MyURLProtocol.self]
-        urlSession = URLSession(configuration: config, delegate: self, delegateQueue: nil)
-    }
-    
-    
-    
-}
-
-extension FocusCirclesViewController: URLSessionDelegate {
-    
-    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        
-        if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
-            if let trust = challenge.protectionSpace.serverTrust {
-                let credentials = URLCredential(trust: trust)
-                completionHandler(URLSession.AuthChallengeDisposition.useCredential, credentials)
-                return
-            }
-        }
-        completionHandler(URLSession.AuthChallengeDisposition.performDefaultHandling, nil)
-    }
 }
 

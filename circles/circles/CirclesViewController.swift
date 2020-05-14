@@ -3,14 +3,11 @@ import UIKit
 class CirclesViewController: UIViewController {
     
     var tableView: UITableView!
-    var trendsListData: [String] = [String]()
-    static var circlesDataList: [String] = [String]()
     
     var refreshControl: UIRefreshControl!
     var isLoading: Bool = false
     
-    let reachability = try! Reachability()
-    var urlSession: URLSession!
+    var api: ApiDataUtil!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,15 +18,11 @@ class CirclesViewController: UIViewController {
         imageView.contentMode = .scaleAspectFit
         self.navigationItem.titleView = imageView;
         
-        trendsListData.append("asdfa")
-        trendsListData.append("adfaef")
-        
-        CirclesViewController.circlesDataList.append("game")
-        CirclesViewController.circlesDataList.append("pe")
-        CirclesViewController.circlesDataList.append("law")
+        api = ApiDataUtil()
+        api.initUtil()
+        api.refreshMyCircles(vc: self, state: 1)
         
         initUI()
-        addPullToRefresh()
         NotificationCenter.default.addObserver(self, selector: #selector(receiverNotification), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
@@ -62,6 +55,8 @@ class CirclesViewController: UIViewController {
         
         tableView.setEditing(false, animated: false)
         self.view.addSubview(tableView)
+        
+        addPullToRefresh()
     }
     
     @objc func receiverNotification(){
@@ -106,7 +101,7 @@ extension CirclesViewController: UITableViewDataSource {
         if section == 0{
             return 2
         } else if section == 1{
-            return trendsListData.count
+            return ApiDataUtil.trendsListData.count
         } else {
             return 1
         }
@@ -123,7 +118,7 @@ extension CirclesViewController: UITableViewDataSource {
             } else {
                 let cell =  tableView.dequeueReusableCell(withIdentifier: "FocusCirclesTableCell", for: indexPath) as! FocusCirclesTableCell
                 cell.setViewController(vc: self)
-                cell.setCirclesDateList(cirClesDateList: CirclesViewController.circlesDataList)
+                //cell.setCirclesDateList(cirClesDateList: ApiUtil.circlesDataList)
                 return cell
             }
         } else if indexPath.section == 1 {
@@ -203,6 +198,7 @@ extension CirclesViewController {
         print("pull refresh")
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 1) {
             //self.getResumes(num: 3, isEnd: false, state: 1)
+            self.api.refreshMyCircles(vc: self, state: 2)
             DispatchQueue.main.async {
                 self.tableView.reloadData()
                 self.refreshControl.endRefreshing()
@@ -212,52 +208,16 @@ extension CirclesViewController {
     
     func loadMore() {
         print("loading")
-        
-    }
-}
-
-
-extension CirclesViewController {
-    func checkNetwork() {
-        reachability.whenReachable = { reachability in
-            if reachability.connection == .wifi {
-                print("Reachable via WiFi")
-            } else {
-                print("Reachable via Cellular")
-            }
-        }
-        reachability.whenUnreachable = { _ in
-            print("Not reachable")
-        }
-        do {
-            try reachability.startNotifier()
-        } catch {
-            print("Unable to start notifier")
-        }
-    }
-    
-    func setupSession() {
-        let config = URLSessionConfiguration.default
-        config.timeoutIntervalForRequest = 5
-        //config.protocolClasses = [MyURLProtocol.self]
-        urlSession = URLSession(configuration: config, delegate: self, delegateQueue: nil)
-    }
-    
-    
-    
-}
-
-extension CirclesViewController: URLSessionDelegate {
-    
-    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        
-        if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
-            if let trust = challenge.protectionSpace.serverTrust {
-                let credentials = URLCredential(trust: trust)
-                completionHandler(URLSession.AuthChallengeDisposition.useCredential, credentials)
-                return
-            }
-        }
-        completionHandler(URLSession.AuthChallengeDisposition.performDefaultHandling, nil)
+//        if !isLoading {
+//            print("loading more")
+//            isLoading = true
+//            DispatchQueue.global().async {
+//                self.api.refreshMyCircles(vc: self, state: 2)
+//                DispatchQueue.main.async {
+//                    self.isLoading = false
+//                    self.tableView.reloadData()
+//                }
+//            }
+//        }
     }
 }

@@ -20,7 +20,7 @@ class AllCirclesTableCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        cirClesDateList = ["digit", "tv", "fashion", "pe", "campus", "pchild", "science", "cartoon", "game", "law", "story", "chao"]
+        cirClesDateList = ["数码", "影视", "时尚", "体育", "校园", "亲子", "科学", "动漫", "游戏", "法律", "故事", "萌宠"]
         
         let inOrient = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation
         if inOrient?.isPortrait ?? true {
@@ -37,7 +37,7 @@ class AllCirclesTableCell: UITableViewCell {
         collectionLayout.minimumInteritemSpacing = 5
         //列间距
         collectionLayout.minimumLineSpacing = 5
-        collectionLayout.sectionInset = UIEdgeInsets(top: 0, left: margin, bottom: 0, right: margin)
+        collectionLayout.sectionInset = UIEdgeInsets(top: 5, left: margin, bottom: 0, right: margin)
         
         let rect = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: sizeWH*4+30)
         let collectionView = UICollectionView(frame: rect, collectionViewLayout: collectionLayout)
@@ -45,7 +45,7 @@ class AllCirclesTableCell: UITableViewCell {
         collectionView.delegate = self
         collectionView.backgroundColor = .white
         //注册cell或者叫item
-        collectionView.register(FocusCircleSmallCollectionCell.self, forCellWithReuseIdentifier: "FocusCircleSmallCollectionCell")
+        collectionView.register(FocusCircleCollectionCell.self, forCellWithReuseIdentifier: "FocusCircleCollectionCell")
         self.contentView.addSubview(collectionView)
         
         self.contentView.clipsToBounds = true
@@ -68,11 +68,11 @@ extension AllCirclesTableCell: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FocusCircleSmallCollectionCell", for: indexPath) as! FocusCircleSmallCollectionCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FocusCircleCollectionCell", for: indexPath) as! FocusCircleCollectionCell
         cell.sizeWH = Int(sizeWH)
         cell.circle = cirClesDateList[indexPath.row]
         cell.initUI(vc: self.vc)
-        cell.iconView.image = UIImage(named: cirClesDateList[indexPath.row])
+        cell.iconView.image = UIImage(named: ApiDataUtil.circlesMap[cirClesDateList[indexPath.row]] ?? "")
         return cell
     }
 

@@ -35,7 +35,7 @@ class FocusCirclesTableCell: UITableViewCell {
         collectionView.delegate = self
         collectionView.backgroundColor = .white
         //注册cell或者叫item
-        collectionView.register(FocusCircleSmallCollectionCell.self, forCellWithReuseIdentifier: "FocusCircleSmallCollectionCell")
+        collectionView.register(FocusCircleCollectionCell.self, forCellWithReuseIdentifier: "FocusCircleCollectionCell")
         
         scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: CGFloat.init(heightOfCell))) // Frame属性
         scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: CGFloat.init(heightOfCell)) // ContentSize属性
@@ -45,6 +45,9 @@ class FocusCirclesTableCell: UITableViewCell {
         scrollView.addSubview(collectionView)
         self.contentView.addSubview(scrollView)
         
+        self.cirClesDateList = ApiDataUtil.circlesDataList
+        self.scrollView.contentSize = CGSize(width: (widthOfCell+10) * (cirClesDateList.count+1), height: heightOfCell)
+        
         self.contentView.clipsToBounds = true
         
     }
@@ -53,17 +56,11 @@ class FocusCirclesTableCell: UITableViewCell {
         self.vc = vc
     }
     
-    func setCirclesDateList(cirClesDateList: [String]){
-        self.cirClesDateList = cirClesDateList
-        self.scrollView.contentSize = CGSize(width: (widthOfCell+10) * (cirClesDateList.count+1), height: heightOfCell)
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
 }
-
 
 extension FocusCirclesTableCell: UICollectionViewDataSource {
     
@@ -72,10 +69,10 @@ extension FocusCirclesTableCell: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FocusCircleSmallCollectionCell", for: indexPath) as! FocusCircleSmallCollectionCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FocusCircleCollectionCell", for: indexPath) as! FocusCircleCollectionCell
         cell.sizeWH = 80
         cell.initUI(vc: self.vc)
-        cell.iconView.image = UIImage(named: cirClesDateList[indexPath.row])
+        cell.iconView.image = UIImage(named: ApiDataUtil.circlesMap[cirClesDateList[indexPath.row]] ?? "")
         cell.circle = cirClesDateList[indexPath.row]
         return cell
     }
