@@ -2,6 +2,7 @@ import UIKit
 
 class TrendsPublishController: UIViewController, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
+    static var apiurl:String = "http://192.168.3.4:8080"
     @IBOutlet weak var contextTextView: UITextView!
     
     @IBOutlet weak var pic0: UIImageView!
@@ -26,7 +27,7 @@ class TrendsPublishController: UIViewController, UIImagePickerControllerDelegate
     
     @IBOutlet weak var selectLabel: UILabel!
     
-    static public var selectCircle: String = ""
+    static public var selectCircleStr: String = ""
     
     var imgArray = [UIImageView]()
     var imgBase64Array = [String]()
@@ -124,7 +125,46 @@ class TrendsPublishController: UIViewController, UIImagePickerControllerDelegate
     }
     
     @objc func realPublish(){
-        print("123123")
+        if contextTextView.text.isEmpty || selectLabel.text!.isEmpty {
+            let alertController = UIAlertController(title: "提示", message: "需要填写内容并选择圈子哦～",preferredStyle: .alert)
+            let cancelAction1 = UIAlertAction(title: "确定", style: .default, handler: nil)
+            alertController.addAction(cancelAction1)
+            self.present(alertController, animated: true, completion: nil)
+            return
+        }
+        var images_str:String = ""
+        for i in 0...8 {
+            if imgBase64Array[i] != "" {
+                if i==0 {
+                    images_str += imgBase64Array[i]
+                }else{
+                    images_str += ","+imgBase64Array[i]
+                }
+            }else{
+                break
+            }
+        }
+        let furl:String = TrendsPublishController.apiurl + "/trend/publish"
+        let url = URL(string: furl)
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Accept")
+        let parameters:[String:String] = ["uid": MineViewController.uid, "circle": TrendsPublishController.selectCircleStr, "images":images_str, "content":contextTextView.text]
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        let session = URLSession.shared
+        session.dataTask(with: request) { (data, response, error) in
+            print(data ?? "ok")
+        }.resume()
+        let alertController = UIAlertController(title: "提示", message: "发布成功",preferredStyle: .alert)
+        let cancelAction1 = UIAlertAction(title: "确定", style: .default, handler: {action in self.navigationController?.popViewController(animated: true)})
+        alertController.addAction(cancelAction1)
+        self.present(alertController, animated: true, completion: nil)
+        TrendsPublishController.selectCircleStr = ""
     }
     
     @objc func selectCircle(){
@@ -135,7 +175,7 @@ class TrendsPublishController: UIViewController, UIImagePickerControllerDelegate
     }
     
     func changeCirle(){
-        selectLabel.text = TrendsPublishController.selectCircle
+        selectLabel.text = TrendsPublishController.selectCircleStr
     }
 
 }
