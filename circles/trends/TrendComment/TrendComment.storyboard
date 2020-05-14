@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Trend Comment Controller-->
+        <!--帖子评论-->
         <scene sceneID="iVH-Pj-dtf">
             <objects>
                 <viewController storyboardIdentifier="TrendComment" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Au4-Nc-r0G" customClass="TrendCommentController" customModule="circles" customModuleProvider="target" sceneMemberID="viewController">
@@ -16,28 +16,51 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="56w-2I-Epx">
-                                <rect key="frame" x="0.0" y="44" width="414" height="771"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="710"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oZS-Q8-PhT">
-                                <rect key="frame" x="20" y="828" width="287" height="34"/>
+                                <rect key="frame" x="20" y="787" width="287" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e9Q-Nx-kPN">
-                                <rect key="frame" x="323" y="823" width="71" height="45"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logobar" translatesAutoresizingMaskIntoConstraints="NO" id="e9Q-Nx-kPN">
+                                <rect key="frame" x="323" y="782" width="71" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="XOu-OB-W9I"/>
                     </view>
+                    <navigationItem key="navigationItem" title="帖子评论" id="alw-Ek-Cye"/>
+                    <connections>
+                        <outlet property="tableView" destination="56w-2I-Epx" id="CB0-Af-mwR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BM4-o5-THW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2.8985507246376816" y="-76.339285714285708"/>
+            <point key="canvasLocation" x="-568.1159420289855" y="-78.348214285714278"/>
+        </scene>
+        <!--Trend Comment Navi-->
+        <scene sceneID="f25-sR-zFY">
+            <objects>
+                <navigationController storyboardIdentifier="TrendCommentNavi" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0cQ-df-gdf" customClass="TrendCommentNavi" customModule="circles" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0gD-OP-JIT">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Au4-Nc-r0G" kind="relationship" relationship="rootViewController" id="1fj-h0-Tgb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xV6-RY-cVX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1310" y="-78"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="logobar" width="25" height="22"/>
+    </resources>
 </document>

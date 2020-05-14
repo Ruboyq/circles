@@ -1,5 +1,5 @@
 //
-//  TrendCommentController.swift
+//  TrendCommentNavi.swift
 //  circles
 //
 //  Created by yjp on 2020/5/12.
@@ -8,8 +8,12 @@
 
 import UIKit
 
-class TrendCommentController: UIViewController {
+class TrendCommentNavi: UINavigationController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Do any additional setup after loading the view.
     }
+
+
 }

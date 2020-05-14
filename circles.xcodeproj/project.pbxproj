@@ -23,6 +23,12 @@
 		052C84812469914100973854 /* placeholderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 052C847C2469914000973854 /* placeholderImage.png */; };
 		054A15C1246B0E2E009E20F4 /* TrendCommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054A15C0246B0E2E009E20F4 /* TrendCommentController.swift */; };
 		054A15C3246B0ECE009E20F4 /* TrendComment.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 054A15C2246B0ECE009E20F4 /* TrendComment.storyboard */; };
+		054A15C6246BA3AF009E20F4 /* TrendCommentNavi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054A15C5246BA3AF009E20F4 /* TrendCommentNavi.swift */; };
+		054A15C8246BDEA5009E20F4 /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054A15C7246BDEA5009E20F4 /* CommentModel.swift */; };
+		054A15CB246BDF93009E20F4 /* CoreDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054A15CA246BDF93009E20F4 /* CoreDataHandler.swift */; };
+		054A15CD246BDFFE009E20F4 /* MyURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054A15CC246BDFFE009E20F4 /* MyURLProtocol.swift */; };
+		054A15D3246BE2A0009E20F4 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054A15D2246BE2A0009E20F4 /* CommentCell.swift */; };
+		054A15D5246BE2D6009E20F4 /* BaseTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054A15D4246BE2D6009E20F4 /* BaseTool.swift */; };
 		05EE8EF324641F3B00F87B39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EE8EF224641F3B00F87B39 /* AppDelegate.swift */; };
 		05EE8EF524641F3B00F87B39 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EE8EF424641F3B00F87B39 /* SceneDelegate.swift */; };
 		05EE8EFA24641F3B00F87B39 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05EE8EF824641F3B00F87B39 /* Main.storyboard */; };
@@ -62,6 +68,12 @@
 		052C847C2469914000973854 /* placeholderImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholderImage.png; sourceTree = "<group>"; };
 		054A15C0246B0E2E009E20F4 /* TrendCommentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendCommentController.swift; sourceTree = "<group>"; };
 		054A15C2246B0ECE009E20F4 /* TrendComment.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TrendComment.storyboard; sourceTree = "<group>"; };
+		054A15C5246BA3AF009E20F4 /* TrendCommentNavi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendCommentNavi.swift; sourceTree = "<group>"; };
+		054A15C7246BDEA5009E20F4 /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
+		054A15CA246BDF93009E20F4 /* CoreDataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHandler.swift; sourceTree = "<group>"; };
+		054A15CC246BDFFE009E20F4 /* MyURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyURLProtocol.swift; sourceTree = "<group>"; };
+		054A15D2246BE2A0009E20F4 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		054A15D4246BE2D6009E20F4 /* BaseTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTool.swift; sourceTree = "<group>"; };
 		05EE8EEF24641F3B00F87B39 /* circles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = circles.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05EE8EF224641F3B00F87B39 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		05EE8EF424641F3B00F87B39 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -113,6 +125,21 @@
 			path = trends/Resource;
 			sourceTree = "<group>";
 		};
+		054A15C4246B9FF4009E20F4 /* TrendComment */ = {
+			isa = PBXGroup;
+			children = (
+				054A15C0246B0E2E009E20F4 /* TrendCommentController.swift */,
+				054A15C2246B0ECE009E20F4 /* TrendComment.storyboard */,
+				054A15C5246BA3AF009E20F4 /* TrendCommentNavi.swift */,
+				054A15C7246BDEA5009E20F4 /* CommentModel.swift */,
+				054A15CA246BDF93009E20F4 /* CoreDataHandler.swift */,
+				054A15CC246BDFFE009E20F4 /* MyURLProtocol.swift */,
+				054A15D2246BE2A0009E20F4 /* CommentCell.swift */,
+				054A15D4246BE2D6009E20F4 /* BaseTool.swift */,
+			);
+			path = TrendComment;
+			sourceTree = "<group>";
+		};
 		05EE8EE624641F3A00F87B39 = {
 			isa = PBXGroup;
 			children = (
@@ -153,6 +180,7 @@
 		05EE8F092464320D00F87B39 /* trends */ = {
 			isa = PBXGroup;
 			children = (
+				054A15C4246B9FF4009E20F4 /* TrendComment */,
 				052C846D2469912E00973854 /* SLNavigationController.swift */,
 				052C84682469912D00973854 /* SLPictureBrowsingCell.swift */,
 				052C84652469912C00973854 /* SLPictureBrowsingViewController.swift */,
@@ -166,8 +194,6 @@
 				4D29EFD62469A16C006AF0A4 /* TrendsPublish.storyboard */,
 				4D9319B72469D34800BF1BF9 /* AllCircles.storyboard */,
 				4D9319B92469D6B900BF1BF9 /* AllCirclesController.swift */,
-				054A15C0246B0E2E009E20F4 /* TrendCommentController.swift */,
-				054A15C2246B0ECE009E20F4 /* TrendComment.storyboard */,
 			);
 			path = trends;
 			sourceTree = "<group>";
@@ -343,11 +369,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				052C84752469912E00973854 /* SLWebViewController.swift in Sources */,
+				054A15CB246BDF93009E20F4 /* CoreDataHandler.swift in Sources */,
 				05EE8EFD24641F3B00F87B39 /* circles.xcdatamodeld in Sources */,
 				05EE8F17246456ED00F87B39 /* NavigationController.swift in Sources */,
 				05EE8EF324641F3B00F87B39 /* AppDelegate.swift in Sources */,
 				052C84722469912E00973854 /* SLPresenter.swift in Sources */,
+				054A15C8246BDEA5009E20F4 /* CommentModel.swift in Sources */,
 				052C84742469912E00973854 /* SLPictureTransitionAnimation.swift in Sources */,
+				054A15D5246BE2D6009E20F4 /* BaseTool.swift in Sources */,
 				052C84732469912E00973854 /* SLPictureZoomView.swift in Sources */,
 				052C84762469912E00973854 /* SLNavigationController.swift in Sources */,
 				052C84712469912E00973854 /* SLPictureBrowsingCell.swift in Sources */,
@@ -360,10 +389,13 @@
 				DF6159B024695BCD00004A82 /* Reachability.swift in Sources */,
 				DF6159B62469A9C400004A82 /* MyCirclesCollectionCell.swift in Sources */,
 				4D9319BA2469D6B900BF1BF9 /* AllCirclesController.swift in Sources */,
+				054A15C6246BA3AF009E20F4 /* TrendCommentNavi.swift in Sources */,
 				05EE8EF524641F3B00F87B39 /* SceneDelegate.swift in Sources */,
 				4D29EFD52469A11C006AF0A4 /* TrendsPublishController.swift in Sources */,
+				054A15D3246BE2A0009E20F4 /* CommentCell.swift in Sources */,
 				05EE8F0F2464330500F87B39 /* CirclesViewController.swift in Sources */,
 				052C846F2469912E00973854 /* SLTableViewCell.swift in Sources */,
+				054A15CD246BDFFE009E20F4 /* MyURLProtocol.swift in Sources */,
 				05EE8F112464332800F87B39 /* MineViewController.swift in Sources */,
 				DF6159B42469864A00004A82 /* MyCirclesTableCell.swift in Sources */,
 			);

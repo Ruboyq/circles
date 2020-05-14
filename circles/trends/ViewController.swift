@@ -46,7 +46,7 @@ class ViewController: UIViewController {
     }()
     var dataArray = NSMutableArray()
     var layoutArray = NSMutableArray()
-    
+    var refreshControl: UIRefreshControl!
     @objc func showPublish(){
         let sb = UIStoryboard(name: "TrendsPublish", bundle: nil)
         let destination = sb.instantiateViewController(withIdentifier: "PublishView")
@@ -97,8 +97,15 @@ class ViewController: UIViewController {
 //        self.navigationItem.title = "One Piece"
 //        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "ClearCache", style: UIBarButtonItem.Style.done, target: self, action: #selector(clearCache))
         self.view.addSubview(self.tableView)
+        addPullToRefresh()
     }
-    
+    func addPullToRefresh() {
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh(_:)), for: .valueChanged)
+        refreshControl.tintColor = .blue
+        refreshControl.attributedTitle = NSAttributedString(string: "下拉刷新中")
+        self.tableView.addSubview(refreshControl)
+    }
     // MARK: Events
     @objc func clearCache() {
         ImageCache.default.clearMemoryCache()
@@ -109,6 +116,22 @@ class ViewController: UIViewController {
     
 }
 
+extension ViewController{
+    @objc func handleRefresh(_ sender: UIRefreshControl) {
+        print("handleRefresh")
+        DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 2) {
+            self.presenter.getData { (dataArray, layoutArray) in
+                //            print("刷新")
+                self.dataArray = dataArray
+                self.layoutArray = layoutArray
+                self.tableView.reloadData()
+            }
+            DispatchQueue.main.async {
+                self.refreshControl.endRefreshing()
+            }
+        }
+    }
+}
 // MARK: UITableViewDelegate, UITableViewDataSource
 extension ViewController : UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -143,8 +166,6 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         }
         cell.delegate = self.presenter
         cell.cellIndexPath = indexPath
-        print("from cellforrowat:")
-        print(layout?.cellHeight ?? "none")
         cell.configureCell(model: model, layout: layout)
         return cell;
     }

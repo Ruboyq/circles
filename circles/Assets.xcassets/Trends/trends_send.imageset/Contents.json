@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "trends_liked@1x.png",
+      "filename" : "trends_send@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "trends_likedk@2x.png",
+      "filename" : "trends_send@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "trends_liked@3x.png",
+      "filename" : "trends_send@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

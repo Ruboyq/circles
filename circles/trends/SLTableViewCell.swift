@@ -149,6 +149,7 @@ class SLTableViewCell: UITableViewCell {
     weak var delegate: SLTableViewCellDelegate?
     // 是否点赞
     var isPraised:Int?
+    var trendId:String?
     //初始化
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
@@ -246,17 +247,25 @@ class SLTableViewCell: UITableViewCell {
     
     // MARK: ReloadData
     func configureCell(model: SLModel, layout: SLLayout?) -> Void {
-        let url = URL(string:model.headPic)
-        let placeholderImage = UIImage(named: "placeholderImage")!
-        let roundCornerProcessor = RoundCornerImageProcessor(cornerRadius: 350)
-        self.headImage.kf.setImage(with: url!, placeholder:placeholderImage ,options: [.processor(roundCornerProcessor)])
+//        let url = URL(string:model.headPic)
+//        let placeholderImage = UIImage(named: "placeholderImage")!
+//        let roundCornerProcessor = RoundCornerImageProcessor(cornerRadius: 350)
+//        self.headImage.kf.setImage(with: url!, placeholder:placeholderImage ,options: [.processor(roundCornerProcessor)])
+//        let data = Data(base64Encoded: model.headPic, options: .ignoreUnknownCharacters)!
+//        let img = UIImage.init(data: data)
+        let decodedData = NSData(base64Encoded:model.headPic, options:NSData.Base64DecodingOptions())
+
+        let decodedimage = UIImage(data: decodedData! as Data)! as UIImage
+        self.headImage.image = decodedimage
         self.nickLabel.text = model.nickName
-        self.timeLabel.text =  model.time! + " 来自 " + model.source!
-        self.praiseLabel.text = "123"
-        self.commentLabel.text = "123"
-        self.shareLabel.text = "123"
-        self.isPraised = 0;
-        self.circleLabel.text = "      "+"游戏"+"     "
+//        self.timeLabel.text =  model.time! + " 来自 " + model.source!
+        self.timeLabel.text =  model.time!
+        self.praiseLabel.text = model.praiseNum
+        self.commentLabel.text = model.commentNum
+        self.shareLabel.text = model.shareNum
+        self.isPraised = model.isPraised
+        self.circleLabel.text = "      "+model.source!+"     "
+        self.trendId = model.trendId
         self.textView.attributedText = layout?.attributedString
         //图片宽、高
         let width: CGFloat = (UIScreen.main.bounds.size.width - 15 * 2 - 5 * 2)/3
@@ -277,50 +286,73 @@ class SLTableViewCell: UITableViewCell {
                         make.width.height.equalTo(height)
                     }
                 }
-                
-                //URL编码
-                let encodingStr = model.images[index].addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-                let imageUrl = URL(string:encodingStr!)
-                // 高分辨率的图片采取降采样的方法提高性能
-                let processor = DownsamplingImageProcessor(size: CGSize(width: width, height: width))
-                //性能优化 取消之前的下载任务
-                imageView.kf.cancelDownloadTask()
-                imageView.kf.setImage(with: imageUrl!, placeholder: nil, options: [.processor(processor), .scaleFactor(UIScreen.main.scale), .cacheOriginalImage, .onlyLoadFirstFrame] , progressBlock: { (receivedSize, totalSize) in
-                    //下载进度
-                }) { (result) in
-                    switch result {
-                    case .success(let value):
-                        let image: Image = value.image
-                        //                        var data  = Data(contentsOf: imageUrl!)
-                        //                        let data = image.kf.gifRepresentation()?.kf.imageFormat
-                        //                        print("===== \( value.source)")
-                        imageView.image = image
-                        if (image.size.height/image.size.width > 3) {
-                            //大长图 仅展示顶部部分内容
-                            let proportion: CGFloat = height/(width * image.size.height/image.size.width)
-                            imageView.layer.contentsRect = CGRect(x: 0, y: 0, width: 1, height: proportion)
-                        } else if image.size.width >= image.size.height {
-                            // 宽>高
-                            let proportion: CGFloat = width/(height * image.size.width/image.size.height)
-                            imageView.layer.contentsRect = CGRect(x: (1 - proportion)/2, y: 0, width: proportion, height: 1)
-                        }else if image.size.width < image.size.height {
-                            //宽<高
-                            let proportion: CGFloat = height/(width * image.size.height/image.size.width)
-                            imageView.layer.contentsRect = CGRect(x: 0, y: (1 - proportion)/2, width: 1, height: proportion)
-                        }
-                        //淡出动画
-                        if value.cacheType == CacheType.none {
-                            let fadeTransition: CATransition = CATransition()
-                            fadeTransition.duration = 0.15
-                            fadeTransition.timingFunction = CAMediaTimingFunction.init(name: CAMediaTimingFunctionName.easeOut)
-                            fadeTransition.type = CATransitionType.fade
-                            imageView.layer.add(fadeTransition, forKey: "contents")
-                        }
-                    case .failure(let error):
-                        print(error)
-                    }
+                let imgData = Data(base64Encoded: model.images[index], options: .ignoreUnknownCharacters)!
+                let image: Image = Image.init(data: imgData)!
+//                let image = UIImage.init(data: imgData)
+                imageView.image = image
+                if (image.size.height/image.size.width > 3) {
+                    //大长图 仅展示顶部部分内容
+                    let proportion: CGFloat = height/(width * image.size.height/image.size.width)
+                    imageView.layer.contentsRect = CGRect(x: 0, y: 0, width: 1, height: proportion)
+                } else if image.size.width >= image.size.height {
+                    // 宽>高
+                    let proportion: CGFloat = width/(height * image.size.width/image.size.height)
+                    imageView.layer.contentsRect = CGRect(x: (1 - proportion)/2, y: 0, width: proportion, height: 1)
+                }else if image.size.width < image.size.height {
+                    //宽<高
+                    let proportion: CGFloat = height/(width * image.size.height/image.size.width)
+                    imageView.layer.contentsRect = CGRect(x: 0, y: (1 - proportion)/2, width: 1, height: proportion)
                 }
-                
+                //淡出动画
+//                if value.cacheType == CacheType.none {
+                    let fadeTransition: CATransition = CATransition()
+                    fadeTransition.duration = 0.15
+                    fadeTransition.timingFunction = CAMediaTimingFunction.init(name: CAMediaTimingFunctionName.easeOut)
+                    fadeTransition.type = CATransitionType.fade
+                    imageView.layer.add(fadeTransition, forKey: "contents")
+//                }
+                //URL编码
+//                let encodingStr = model.images[index].addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+//                let imageUrl = URL(string:encodingStr!)
+//                // 高分辨率的图片采取降采样的方法提高性能
+//                let processor = DownsamplingImageProcessor(size: CGSize(width: width, height: width))
+//                //性能优化 取消之前的下载任务
+//                imageView.kf.cancelDownloadTask()
+//                imageView.kf.setImage(with: imageUrl!, placeholder: nil, options: [.processor(processor), .scaleFactor(UIScreen.main.scale), .cacheOriginalImage, .onlyLoadFirstFrame] , progressBlock: { (receivedSize, totalSize) in
+//                    //下载进度
+//                }) { (result) in
+//                    switch result {
+//                    case .success(let value):
+//                        let image: Image = value.image
+//                        //                        var data  = Data(contentsOf: imageUrl!)
+//                        //                        let data = image.kf.gifRepresentation()?.kf.imageFormat
+//                        //                        print("===== \( value.source)")
+//                        imageView.image = image
+//                        if (image.size.height/image.size.width > 3) {
+//                            //大长图 仅展示顶部部分内容
+//                            let proportion: CGFloat = height/(width * image.size.height/image.size.width)
+//                            imageView.layer.contentsRect = CGRect(x: 0, y: 0, width: 1, height: proportion)
+//                        } else if image.size.width >= image.size.height {
+//                            // 宽>高
+//                            let proportion: CGFloat = width/(height * image.size.width/image.size.height)
+//                            imageView.layer.contentsRect = CGRect(x: (1 - proportion)/2, y: 0, width: proportion, height: 1)
+//                        }else if image.size.width < image.size.height {
+//                            //宽<高
+//                            let proportion: CGFloat = height/(width * image.size.height/image.size.width)
+//                            imageView.layer.contentsRect = CGRect(x: 0, y: (1 - proportion)/2, width: 1, height: proportion)
+//                        }
+//                        //淡出动画
+//                        if value.cacheType == CacheType.none {
+//                            let fadeTransition: CATransition = CATransition()
+//                            fadeTransition.duration = 0.15
+//                            fadeTransition.timingFunction = CAMediaTimingFunction.init(name: CAMediaTimingFunctionName.easeOut)
+//                            fadeTransition.type = CATransitionType.fade
+//                            imageView.layer.add(fadeTransition, forKey: "contents")
+//                        }
+//                    case .failure(let error):
+//                        print(error)
+//                    }
+//                }
             } else {
                 imageView.isHidden = true
                 imageView.snp.remakeConstraints { (make) in
@@ -343,7 +375,7 @@ class SLTableViewCell: UITableViewCell {
         }
     }
     @objc func tapCommentImg(commentTap: UITapGestureRecognizer) {
-        self.delegate?.tableViewCell(self, tapCommentImg: "123456", indexPath: self.cellIndexPath!)
+        self.delegate?.tableViewCell(self, tapCommentImg: self.trendId!, indexPath: self.cellIndexPath!)
     }
     @objc func tapShareImg(shareTap: UITapGestureRecognizer) {
     }
