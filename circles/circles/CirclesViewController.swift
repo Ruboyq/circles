@@ -18,12 +18,26 @@ class CirclesViewController: UIViewController {
         imageView.contentMode = .scaleAspectFit
         self.navigationItem.titleView = imageView;
         
-        api = ApiDataUtil()
-        api.initUtil()
+        api = ApiDataUtil.init()
         api.refreshMyCircles(vc: self, state: 1)
+        let api2 = ApiDataUtil.init()
+        api2.getUserNumOfCircles(vc: self, state: 1)
         
         initUI()
         NotificationCenter.default.addObserver(self, selector: #selector(receiverNotification), name: UIDevice.orientationDidChangeNotification, object: nil)
+        
+        //通过使用通知中心，实现监听和处理程序退出事件的功能
+        //获得一个应用实例。应用实例的核心作用是提供程序运行期间的控制和协作。每个程序必有，有且只有一个
+        let app = UIApplication.shared
+        //通知中心是基础框架的子系统。向所有监听程序退出事件的对象广播消息
+        NotificationCenter.default.addObserver(self, selector: #selector(doSomething(_:)), name: UIApplication.willResignActiveNotification, object: app)
+    }
+    
+    //创建一个方法用来响应程序退出事件，使程序在退出之前保存用户数据
+    @objc func doSomething(_ sender: AnyObject) {
+        print("Saving data before exit.")
+        let appd = AppDelegate()
+        appd.saveContext()
     }
     
     //视图已经出现
@@ -199,6 +213,8 @@ extension CirclesViewController {
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 1) {
             //self.getResumes(num: 3, isEnd: false, state: 1)
             self.api.refreshMyCircles(vc: self, state: 2)
+            let api2 = ApiDataUtil.init()
+            api2.getUserNumOfCircles(vc: self, state: 1)
             DispatchQueue.main.async {
                 self.tableView.reloadData()
                 self.refreshControl.endRefreshing()

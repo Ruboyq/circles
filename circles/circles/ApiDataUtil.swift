@@ -14,6 +14,12 @@ struct CirclesResponseData: Codable {
     var data: [String] = [String]()
 }
 
+struct UserNumCirclesResponseData: Codable {
+    var code: Int = 0
+    var msg: String = ""
+    var data: [String: Int] = [String:Int]()
+}
+
 struct CommonResponseData: Codable {
     var code: Int = 0
     var msg: String = ""
@@ -29,12 +35,14 @@ public class ApiDataUtil: NSObject, URLSessionDelegate {
     
     public static var trendsListData: [String] = [String]()
     public static var circlesDataList: [String] = [String]()
+    public static var userNumCirclesMap:[String: Int] = [String:Int]()
     
     let reachability = try! Reachability()
     var urlSession: URLSession!
     var dataTask: URLSessionDataTask?
     
-    func initUtil() {
+    public override init() {
+        super.init()
         setupSession()
     }
     
@@ -117,6 +125,37 @@ public class ApiDataUtil: NSObject, URLSessionDelegate {
         dataTask?.resume()
     }
     
+    func getUserNumOfCircles(vc: UIViewController, state: Int) {
+        dataTask?.cancel()
+        let url = URL(string: baseurl+"circles/userNumOfCircle")
+        var request = URLRequest(url: url!, cachePolicy: .reloadIgnoringCacheData)
+        request.httpMethod = "POST"
+        
+        dataTask = urlSession.dataTask(with: request, completionHandler: { (data, response, error) in
+            defer {
+                self.dataTask = nil
+            }
+            if let error = error {
+                print("DataTask error: " + error.localizedDescription + "\n")
+            } else if let data = data,
+                let response = response as? HTTPURLResponse, response.statusCode == 200 {
+                do {
+                    print(String(data: data, encoding: .utf8) ?? "")
+                    let tmpModel = try JSONDecoder().decode(UserNumCirclesResponseData.self, from: data)
+                    ApiDataUtil.userNumCirclesMap = tmpModel.data
+                } catch {
+                    print("Error: \(error)")
+                }
+            }
+            DispatchQueue.main.async {
+                if state == 1 {
+                    vc.viewDidAppear(true)
+                }
+            }
+        })
+        dataTask?.resume()
+    }
+    
     func deleteCircle(vc: UIViewController, circle: String) {
         if !checkNetwork() {
             CommonService.showMsgbox(vc: vc, _message: "网络无法连接")
@@ -152,6 +191,9 @@ public class ApiDataUtil: NSObject, URLSessionDelegate {
                         break
                     }
                     i += 1
+                }
+                if ApiDataUtil.userNumCirclesMap[circle] ?? 0 > 0 {
+                    ApiDataUtil.userNumCirclesMap[circle] = ApiDataUtil.userNumCirclesMap[circle]! - 1
                 }
                 DispatchQueue.main.async {
                     vc.viewDidAppear(true)
@@ -190,6 +232,7 @@ public class ApiDataUtil: NSObject, URLSessionDelegate {
                 print(String(data: data, encoding: .utf8) ?? "")
                 
                 ApiDataUtil.circlesDataList.append(circle)
+                ApiDataUtil.userNumCirclesMap[circle] = ApiDataUtil.userNumCirclesMap[circle]! + 1
                 DispatchQueue.main.async {
                     vc.viewDidAppear(true)
                 }

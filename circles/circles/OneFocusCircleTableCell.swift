@@ -13,6 +13,7 @@ class OneFocusCircleTableCell: UITableViewCell {
     var circle: String!
     var imageview: UIImageView!
     var circleTextLabel: UILabel!
+    var numTextLabel: UILabel!
     var button: UIButton!
     var vc: UIViewController!
     
@@ -21,8 +22,7 @@ class OneFocusCircleTableCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        api = ApiDataUtil()
-        api.initUtil()
+        api = ApiDataUtil.init()
         
         imageview = UIImageView()
         self.contentView.addSubview(imageview)
@@ -34,8 +34,13 @@ class OneFocusCircleTableCell: UITableViewCell {
         
         circleTextLabel = UILabel()
         circleTextLabel.textColor = .black
-        circleTextLabel.frame = CGRect(x: imageview.frame.maxX + 20, y: 5, width: 60, height: 50)
+        circleTextLabel.frame = CGRect(x: imageview.frame.maxX + 5, y: 5, width: 40, height: 50)
         self.contentView.addSubview(circleTextLabel)
+        numTextLabel = UILabel()
+        numTextLabel.textColor = .gray
+        numTextLabel.font = UIFont.systemFont(ofSize: 15)
+        numTextLabel.frame = CGRect(x: circleTextLabel.frame.maxX + 5, y: 5, width: 60, height: 50)
+        self.contentView.addSubview(numTextLabel)
         
         // 创建一个常规的button
         button = UIButton(type: .custom)

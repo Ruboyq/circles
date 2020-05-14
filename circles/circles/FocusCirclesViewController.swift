@@ -23,9 +23,7 @@ class FocusCirclesViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         //navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "编辑", style: .plain, target: self, action: #selector(editAction))
-        api = ApiDataUtil()
-        api.initUtil()
-        
+        api = ApiDataUtil.init()
         initUI()
         NotificationCenter.default.addObserver(self, selector: #selector(receiverNotification), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
@@ -78,7 +76,10 @@ class FocusCirclesViewController: UIViewController {
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 1) {
             //self.getResumes(num: 3, isEnd: false, state: 1)
             self.api.refreshMyCircles(vc: self, state: 2)
+            let api2 = ApiDataUtil.init()
+            api2.getUserNumOfCircles(vc: self, state: 1)
             DispatchQueue.main.async {
+                self.circlesDataList = ApiDataUtil.circlesDataList
                 self.tableView.reloadData()
                 self.refreshControl.endRefreshing()
             }
@@ -112,6 +113,7 @@ extension FocusCirclesViewController: UITableViewDataSource {
                 let imageName = ApiDataUtil.circlesMap[circlesDataList[indexPath.row-1]] ?? ""
                 cell.imageview.image = UIImage(named: imageName+"_n")
                 cell.circleTextLabel.text = circlesDataList[indexPath.row-1]
+                cell.numTextLabel.text = (ApiDataUtil.userNumCirclesMap[circlesDataList[indexPath.row-1]]?.description ?? "0")+"人关注"
                 cell.vc = self
                 cell.circle = circlesDataList[indexPath.row-1]
                 //cell.selectionStyle = .default
