@@ -3,39 +3,44 @@ import UIKit
 class CirclesViewController: UIViewController {
     
     var tableView: UITableView!
-    var trendsListData: [String] = [String]()
     
     var refreshControl: UIRefreshControl!
     var isLoading: Bool = false
     
-    let reachability = try! Reachability()
-    var urlSession: URLSession!
+    var api: ApiDataUtil!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        //navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "编辑", style: .plain, target: self, action: #selector(editAction))
+        let logo = UIImage(named: "logo");
+        let imageView = UIImageView(image: logo);
+        imageView.contentMode = .scaleAspectFit
+        self.navigationItem.titleView = imageView;
         
-        trendsListData.append("asdfa")
-        trendsListData.append("adfaef")
-        trendsListData.append("adggfaedsf")
-        trendsListData.append("asdfa")
-        trendsListData.append("adfaef")
-        trendsListData.append("adggfaedsf")
-        trendsListData.append("asdfa")
-        trendsListData.append("adfaef")
-        trendsListData.append("adggfaedsf")
-        trendsListData.append("asdfa")
-        trendsListData.append("adfaef")
-        trendsListData.append("adggfaedsf")
+        api = ApiDataUtil()
+        api.initUtil()
+        api.refreshMyCircles(vc: self, state: 1)
         
+        initUI()
+        NotificationCenter.default.addObserver(self, selector: #selector(receiverNotification), name: UIDevice.orientationDidChangeNotification, object: nil)
+    }
+    
+    //视图已经出现
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("视图出现")
+        self.initUI()
+    }
+    
+    func initUI() {
+        print("init UI")
         tableView = UITableView(frame: self.view.bounds, style: .grouped)
         tableView.dataSource = self
         tableView.delegate = self
         //tableView.rowHeight = 140
         //tableView.estimatedRowHeight = 140
-        let headerView: UIView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: self.view.frame.width, height: 10))
+        let headerView: UIView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: self.view.bounds.width, height: 1))
         tableView.tableHeaderView = headerView
         //tableView.tableFooterView = headerView
         tableView.sectionHeaderHeight = 0
@@ -44,7 +49,7 @@ class CirclesViewController: UIViewController {
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
         tableView.register(FocusCirclesTableCell.self, forCellReuseIdentifier: "FocusCirclesTableCell")
-        tableView.register(MyCirclesTableCell.self, forCellReuseIdentifier: "MyCirclesTableCell")
+        tableView.register(OneFocusCircleTableCell.self, forCellReuseIdentifier: "OneFocusCircleTableCell")
         tableView.register(LoadMoreTableCell.self, forCellReuseIdentifier: "LoadMoreTableCell")
         tableView.tableFooterView = UIView()
         
@@ -52,6 +57,29 @@ class CirclesViewController: UIViewController {
         self.view.addSubview(tableView)
         
         addPullToRefresh()
+    }
+    
+    @objc func receiverNotification(){
+        let orient = UIDevice.current.orientation
+        switch orient {
+        case .portrait :
+            print("屏幕正常竖向")
+            break
+        case .portraitUpsideDown:
+            print("屏幕倒立")
+            break
+        case .landscapeLeft:
+            print("屏幕左旋转")
+            break
+        case .landscapeRight:
+            print("屏幕右旋转")
+            break
+        default:
+            break
+        }
+        //self.tableView.frame = self.view.bounds
+        //self.tableView.reloadData()
+        self.initUI()
     }
     
     func addPullToRefresh() {
@@ -62,10 +90,6 @@ class CirclesViewController: UIViewController {
         self.tableView.addSubview(refreshControl)
     }
     
-    
-    @objc func editAction() {
-        
-    }
 }
 
 extension CirclesViewController: UITableViewDataSource {
@@ -73,21 +97,11 @@ extension CirclesViewController: UITableViewDataSource {
         return 3
     }
     
-    //    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    //        if section == 0{
-    //            return "我关注的圈子"
-    //        } else if section == 1{
-    //            return "圈内动态"
-    //        } else {
-    //            return nil
-    //        }
-    //    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0{
             return 2
         } else if section == 1{
-            return trendsListData.count
+            return ApiDataUtil.trendsListData.count
         } else {
             return 1
         }
@@ -103,8 +117,8 @@ extension CirclesViewController: UITableViewDataSource {
                 return cell
             } else {
                 let cell =  tableView.dequeueReusableCell(withIdentifier: "FocusCirclesTableCell", for: indexPath) as! FocusCirclesTableCell
-                let cirClesDateList: [String] = ["游戏", "娱乐", "校园","游戏", "娱乐", "校园","游戏", "娱乐", "校园"]
-                cell.setCirclesDateList(cirClesDateList: cirClesDateList)
+                cell.setViewController(vc: self)
+                //cell.setCirclesDateList(cirClesDateList: ApiUtil.circlesDataList)
                 return cell
             }
         } else if indexPath.section == 1 {
@@ -115,7 +129,7 @@ extension CirclesViewController: UITableViewDataSource {
                 //cell.selectionStyle = .default
                 return cell
             } else {
-                let cell =  tableView.dequeueReusableCell(withIdentifier: "MyCirclesTableCell", for: indexPath) as! MyCirclesTableCell
+                let cell =  tableView.dequeueReusableCell(withIdentifier: "OneFocusCircleTableCell", for: indexPath) as! OneFocusCircleTableCell
                 cell.imageview.image = UIImage(named: "logo")
                 //cell.selectionStyle = .default
                 return cell
@@ -134,7 +148,7 @@ extension CirclesViewController: UITableViewDelegate{
             if indexPath.row == 0 {
                 return 50
             } else {
-                return 100
+                return 80
             }
         } else if indexPath.section == 1 {
             if indexPath.row == 0 {
@@ -151,28 +165,14 @@ extension CirclesViewController: UITableViewDelegate{
         tableView.deselectRow(at: indexPath, animated: false)
         print(indexPath.row)
         if indexPath.section == 0 {
-            
-            //let resume = ResumeViewController()
-            //self.present(resume, animated: true, completion: nil)
-            //self.navigationController?.pushViewController(resume, animated: true)
+            if indexPath.row == 0 {
+                let destination = FocusCirclesViewController()
+                destination.supervc = self
+                //self.present(destination, animated: true, completion: nil)
+                self.navigationController?.pushViewController(destination, animated: true)
+            }
         }
     }
-    
-//    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-//        return .delete
-//    }
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            trendsListData.remove(at: indexPath.row)
-//            tableView.reloadData()
-//        }
-//    }
-//    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-//        return true
-//    }
-//    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-//        trendsListData.swapAt(sourceIndexPath.row, destinationIndexPath.row)
-//    }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.section == 2 {
@@ -198,6 +198,7 @@ extension CirclesViewController {
         print("pull refresh")
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 1) {
             //self.getResumes(num: 3, isEnd: false, state: 1)
+            self.api.refreshMyCircles(vc: self, state: 2)
             DispatchQueue.main.async {
                 self.tableView.reloadData()
                 self.refreshControl.endRefreshing()
@@ -207,52 +208,16 @@ extension CirclesViewController {
     
     func loadMore() {
         print("loading")
-        
-    }
-}
-
-
-extension CirclesViewController {
-    func checkNetwork() {
-        reachability.whenReachable = { reachability in
-            if reachability.connection == .wifi {
-                print("Reachable via WiFi")
-            } else {
-                print("Reachable via Cellular")
-            }
-        }
-        reachability.whenUnreachable = { _ in
-            print("Not reachable")
-        }
-        do {
-            try reachability.startNotifier()
-        } catch {
-            print("Unable to start notifier")
-        }
-    }
-    
-    func setupSession() {
-        let config = URLSessionConfiguration.default
-        config.timeoutIntervalForRequest = 5
-        //config.protocolClasses = [MyURLProtocol.self]
-        urlSession = URLSession(configuration: config, delegate: self, delegateQueue: nil)
-    }
-    
-    
-    
-}
-
-extension CirclesViewController: URLSessionDelegate {
-    
-    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        
-        if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
-            if let trust = challenge.protectionSpace.serverTrust {
-                let credentials = URLCredential(trust: trust)
-                completionHandler(URLSession.AuthChallengeDisposition.useCredential, credentials)
-                return
-            }
-        }
-        completionHandler(URLSession.AuthChallengeDisposition.performDefaultHandling, nil)
+//        if !isLoading {
+//            print("loading more")
+//            isLoading = true
+//            DispatchQueue.global().async {
+//                self.api.refreshMyCircles(vc: self, state: 2)
+//                DispatchQueue.main.async {
+//                    self.isLoading = false
+//                    self.tableView.reloadData()
+//                }
+//            }
+//        }
     }
 }

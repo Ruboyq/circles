@@ -8,27 +8,27 @@
 
 import UIKit
 
-class MyCirclesCollectionCell: UICollectionViewCell {
+class FocusCircleCollectionCell: UICollectionViewCell {
     
     var circle: String!
     var iconView: UIImageView!
     var titleLabel: UILabel!
     
-    func initUI()  {
+    var vc: UIViewController!
+    
+    var sizeWH: Int!
+    
+    func initUI(vc: UIViewController)  {
+        self.vc = vc
+        
         self.backgroundColor = .white
         self.layer.cornerRadius = 5;
         self.layer.masksToBounds = true
         
         iconView = UIImageView()
+        iconView.frame = CGRect(x: 5, y: 5, width: sizeWH-10, height: sizeWH-10)
         self.contentView.addSubview(iconView)
-        iconView.frame = CGRect(x: 0, y: 0, width: 75, height: 75)
-        
-        titleLabel = UILabel()
-        titleLabel.textColor = .black
-        titleLabel.frame = CGRect(x: 0, y: iconView.frame.maxY, width: 75, height: 20)
-        titleLabel.textAlignment = NSTextAlignment.center
-        self.contentView.addSubview(titleLabel)
-        
+       
         self.contentView.clipsToBounds = true
     }
     
@@ -36,7 +36,11 @@ class MyCirclesCollectionCell: UICollectionViewCell {
     override var isSelected: Bool {
         willSet {
             if newValue {
-                print(circle ?? "")
+                let destination = CirclesTrendsViewController()
+                //self.navigationController?.pushViewController(resume, animated: true)
+                //vc.present(destination, animated: true, completion: nil)
+                destination.circle = circle
+                vc.navigationController?.pushViewController(destination, animated: true)
             } else {
                 
             }

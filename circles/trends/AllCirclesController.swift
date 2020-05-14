@@ -66,43 +66,43 @@ class AllCirclesController: UIViewController, UIGestureRecognizerDelegate, UINav
         let anotherCharacter: String = tap.name!
         switch anotherCharacter {
             case "0":
-                TrendsPublishController.selectCircle = "校园"
+                TrendsPublishController.selectCircleStr = "校园"
                 break
             case "1":
-                TrendsPublishController.selectCircle = "动漫"
+                TrendsPublishController.selectCircleStr = "动漫"
                 break
             case "2":
-                TrendsPublishController.selectCircle = "CHAO"
+                TrendsPublishController.selectCircleStr = "CHAO"
                 break
             case "3":
-                TrendsPublishController.selectCircle = "数码"
+                TrendsPublishController.selectCircleStr = "数码"
                 break
             case "4":
-                TrendsPublishController.selectCircle = "时尚"
+                TrendsPublishController.selectCircleStr = "时尚"
                 break
             case "5":
-                TrendsPublishController.selectCircle = "游戏"
+                TrendsPublishController.selectCircleStr = "游戏"
                 break
             case "6":
-                TrendsPublishController.selectCircle = "法律"
+                TrendsPublishController.selectCircleStr = "法律"
                 break
             case "7":
-                TrendsPublishController.selectCircle = "亲子"
+                TrendsPublishController.selectCircleStr = "亲子"
                 break
             case "8":
-                TrendsPublishController.selectCircle = "体育"
+                TrendsPublishController.selectCircleStr = "体育"
                 break
             case "9":
-                TrendsPublishController.selectCircle = "科学"
+                TrendsPublishController.selectCircleStr = "科学"
                 break
             case "10":
-                TrendsPublishController.selectCircle = "故事"
+                TrendsPublishController.selectCircleStr = "故事"
                 break
             case "11":
-                TrendsPublishController.selectCircle = "影视"
+                TrendsPublishController.selectCircleStr = "影视"
                 break
             default:
-                TrendsPublishController.selectCircle = ""
+                TrendsPublishController.selectCircleStr = ""
         }
         AllCirclesController.parentController.changeCirle()
         self.dismiss(animated: true, completion:nil)
