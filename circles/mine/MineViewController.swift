@@ -1,5 +1,6 @@
 import UIKit
 import CoreLocation
+import CoreData
 
 class MineViewController: UIViewController, CLLocationManagerDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate  {
     
@@ -42,6 +43,18 @@ class MineViewController: UIViewController, CLLocationManagerDelegate, UIGesture
     }
     
     @objc func logoutEvent() {
+        MineViewController.uid = "-1"
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+        do {
+            if let fetchedResults = try managedObjectContext.fetch(fetchRequest) as? [NSManagedObject] {
+                for fetchedResult in fetchedResults {
+                    managedObjectContext.delete(fetchedResult)
+                }
+                try managedObjectContext.save()
+            }
+        } catch {}
         self.dismiss(animated: true, completion:nil)
     }
     

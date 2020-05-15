@@ -44,6 +44,8 @@
 		4D29EFD72469A16C006AF0A4 /* TrendsPublish.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D29EFD62469A16C006AF0A4 /* TrendsPublish.storyboard */; };
 		4D77F06F246E7B2000E509F9 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D77F06E246E7B2000E509F9 /* LoginController.swift */; };
 		4D77F071246E7B5500E509F9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D77F070246E7B5500E509F9 /* Main.storyboard */; };
+		4D8208E9246EE5D90039D6F1 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8208E7246EE5D90039D6F1 /* User+CoreDataClass.swift */; };
+		4D8208EA246EE5D90039D6F1 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8208E8246EE5D90039D6F1 /* User+CoreDataProperties.swift */; };
 		4D9319B82469D34800BF1BF9 /* AllCircles.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D9319B72469D34800BF1BF9 /* AllCircles.storyboard */; };
 		4D9319BA2469D6B900BF1BF9 /* AllCirclesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9319B92469D6B900BF1BF9 /* AllCirclesController.swift */; };
 		DF5BBDB8246D86EF0008D6EF /* CommonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5BBDB7246D86EF0008D6EF /* CommonService.swift */; };
@@ -103,6 +105,8 @@
 		4D29EFD62469A16C006AF0A4 /* TrendsPublish.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TrendsPublish.storyboard; sourceTree = "<group>"; };
 		4D77F06E246E7B2000E509F9 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		4D77F070246E7B5500E509F9 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		4D8208E7246EE5D90039D6F1 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
+		4D8208E8246EE5D90039D6F1 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4D9319B72469D34800BF1BF9 /* AllCircles.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AllCircles.storyboard; sourceTree = "<group>"; };
 		4D9319B92469D6B900BF1BF9 /* AllCirclesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCirclesController.swift; sourceTree = "<group>"; };
 		72B6E25CBAAC66EB5AD6B2F9 /* Pods_circles.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_circles.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -163,6 +167,8 @@
 		05EE8EE624641F3A00F87B39 = {
 			isa = PBXGroup;
 			children = (
+				4D8208E7246EE5D90039D6F1 /* User+CoreDataClass.swift */,
+				4D8208E8246EE5D90039D6F1 /* User+CoreDataProperties.swift */,
 				05EE8EF124641F3B00F87B39 /* circles */,
 				05EE8EF024641F3B00F87B39 /* Products */,
 				BE1A2F26307BADE10C2B6040 /* Pods */,
@@ -409,6 +415,7 @@
 			files = (
 				052C84752469912E00973854 /* SLWebViewController.swift in Sources */,
 				054A15CB246BDF93009E20F4 /* CoreDataHandler.swift in Sources */,
+				4D8208EA246EE5D90039D6F1 /* User+CoreDataProperties.swift in Sources */,
 				05EE8EFD24641F3B00F87B39 /* circles.xcdatamodeld in Sources */,
 				DF6159BE246A8C9900004A82 /* CircleTableCell.swift in Sources */,
 				05EE8F17246456ED00F87B39 /* NavigationController.swift in Sources */,
@@ -421,6 +428,7 @@
 				DF5BBDB8246D86EF0008D6EF /* CommonService.swift in Sources */,
 				052C84762469912E00973854 /* SLNavigationController.swift in Sources */,
 				052C84712469912E00973854 /* SLPictureBrowsingCell.swift in Sources */,
+				4D8208E9246EE5D90039D6F1 /* User+CoreDataClass.swift in Sources */,
 				DFF43A43246C5CE3008A268E /* AllCirclesTableCell.swift in Sources */,
 				DF6159BC246A7EBE00004A82 /* CirclesTrendsViewController.swift in Sources */,
 				052C84702469912E00973854 /* ViewController.swift in Sources */,

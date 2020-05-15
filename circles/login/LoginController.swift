@@ -1,4 +1,5 @@
 import UIKit
+import CoreData
 
 class LoginController: UIViewController, URLSessionDelegate {
     
@@ -38,35 +39,38 @@ class LoginController: UIViewController, URLSessionDelegate {
         var data: UserData
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        if MineViewController.uid != "-1" {
+            let sb = UIStoryboard(name: "MainIn", bundle: nil)
+            let destination = sb.instantiateViewController(withIdentifier: "Mainboard")
+            destination.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+            self.present(destination, animated: true, completion: nil)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        let managedObectContext = appDelegate.persistentContainer.viewContext
-//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-//        do {
-//            let fetchedResults = try managedObectContext.fetch(fetchRequest) as? [User]
-//            if let results = fetchedResults {
-//                for result in results {
-//                    MineViewController.uid = result.uid
-//                    MineViewController.username = result.username
-//                    MineViewController.headImageStr = result.headImageStr
-//                    MineViewController.sex = result.sex
-//                    break
-//                }
-//            }
-//        } catch  {}
-//        if MineViewController.uid != -1 && MineViewController.uid != nil {
-//            let sb = UIStoryboard(name: "MainIn", bundle: nil)
-//            let destination = sb.instantiateViewController(withIdentifier: "Mainboard")
-//            destination.modalPresentationStyle = UIModalPresentationStyle.fullScreen
-//            self.present(destination, animated: true, completion: nil)
-//        }
-        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedObectContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+        do {
+            let fetchedResults = try managedObectContext.fetch(fetchRequest) as? [User]
+            if let results = fetchedResults {
+                for result in results {
+                    MineViewController.uid = result.uid!
+                    MineViewController.username = result.username!
+                    MineViewController.headImageStr = result.headImageStr!
+                    MineViewController.sex = result.sex!
+                    break
+                }
+            }
+        } catch  {}
         loginBtn.addTarget(self, action: #selector(loginEvent), for: .touchDown)
         regBtn.addTarget(self, action: #selector(regEvent), for: .touchDown)
         usernameText.placeholder = "用户名"
         pwdText.placeholder = "密码"
+        pwdText.isSecureTextEntry = true
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 5
         //config.protocolClasses = [MyURLProtocol.self]
@@ -103,6 +107,7 @@ class LoginController: UIViewController, URLSessionDelegate {
                             destination.modalPresentationStyle = UIModalPresentationStyle.fullScreen
                             self.present(destination, animated: true, completion: nil)
                         }
+                        self.saveUserInfo()
                     } else {
                         DispatchQueue.main.async {
                             let alertController = UIAlertController(title: "提示", message: "用户名或密码错误",preferredStyle: .alert)
@@ -123,6 +128,22 @@ class LoginController: UIViewController, URLSessionDelegate {
         })
         dataTask?.resume()
         
+    }
+    
+    @objc func saveUserInfo(){
+        DispatchQueue.main.async {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let managedObjectContext = appDelegate.persistentContainer.viewContext
+            let entity = NSEntityDescription.entity(forEntityName: "User", in: managedObjectContext)
+            let oneinfo = NSManagedObject(entity: entity!, insertInto: managedObjectContext)
+            oneinfo.setValue(MineViewController.uid, forKey: "uid")
+            oneinfo.setValue(MineViewController.username, forKey: "username")
+            oneinfo.setValue(MineViewController.headImageStr, forKey: "headImageStr")
+            oneinfo.setValue(MineViewController.sex, forKey: "sex")
+            do {
+                try managedObjectContext.save()
+            } catch  {}
+        }
     }
     
     @objc func regEvent(){
@@ -155,12 +176,7 @@ class LoginController: UIViewController, URLSessionDelegate {
                             destination.modalPresentationStyle = UIModalPresentationStyle.fullScreen
                             self.present(destination, animated: true, completion: nil)
                         }
-//                        let entity = NSEntityDescription.entity(forEntityName: "Info", in: managedObjectContext)
-//                        let oneinfo = NSManagedObject(entity: entity!, insertInto: managedObjectContext)
-//                        oneinfo.setValue(MineViewController.uid, forKey: "uid")
-//                        oneinfo.setValue(MineViewController.username, forKey: "username")
-//                        oneinfo.setValue(MineViewController.headImageStr, forKey: "headImageStr")
-//                        oneinfo.setValue(MineViewController.sex, forKey: "sex")
+                        self.saveUserInfo()
                     } else {
                         DispatchQueue.main.async {
                             let alertController = UIAlertController(title: "提示", message: "用户名已经存在啦",preferredStyle: .alert)
