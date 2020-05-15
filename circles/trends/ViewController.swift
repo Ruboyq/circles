@@ -61,6 +61,7 @@ class ViewController: UIViewController {
         imageView.contentMode = .scaleAspectFit
         self.navigationItem.titleView = imageView;
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "trends_edit"), style: .plain, target: self, action: #selector(showPublish))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "trends_edit_blank"), style: .plain, target: self, action: nil)
         //性能监测工具
 //        PerformanceMonitor.shared().start()
         //中间者 处理数据和事件
