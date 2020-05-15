@@ -23,8 +23,7 @@ class CirclesTrendsViewController: UIViewController {
         
         //navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "编辑", style: .plain, target: self, action: #selector(editAction))
         
-        api = ApiDataUtil()
-        api.initUtil()
+        api = ApiDataUtil.init()
         
         self.initUI()
         NotificationCenter.default.addObserver(self, selector: #selector(receiverNotification), name: UIDevice.orientationDidChangeNotification, object: nil)
@@ -71,9 +70,8 @@ class CirclesTrendsViewController: UIViewController {
     
     @objc func handleRefresh2(_ sender: UIRefreshControl) {
         print("pull refresh")
+        self.api.initOrRefreshData(vc: self)
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 1) {
-            //self.getResumes(num: 3, isEnd: false, state: 1)
-            self.api.refreshMyCircles(vc: self, state: 2)
             DispatchQueue.main.async {
                 self.tableView.reloadData()
                 self.refreshControl.endRefreshing()
@@ -104,11 +102,11 @@ extension CirclesTrendsViewController: UITableViewDataSource {
             cell.vc = self
             //cell.selectionStyle = .default
             return cell
-            
         } else {
             let cell =  tableView.dequeueReusableCell(withIdentifier: "OneFocusCircleTableCell", for: indexPath) as! OneFocusCircleTableCell
             cell.circle = circle
             cell.imageView?.image = UIImage(named: String(circle))
+            cell.numTextLabel.text = (ApiDataUtil.userNumCirclesMap[circle]?.description ?? "0")+"人关注"
             cell.circleTextLabel.text = circle
             //self.navigationController
             return cell

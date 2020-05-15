@@ -12,6 +12,7 @@ class CircleTableCell: UITableViewCell {
     
     var circle: String!
     var imageview: UIImageView!
+    var numTextLabel: UILabel!
     var button: UIButton!
     var vc: UIViewController!
     
@@ -22,15 +23,22 @@ class CircleTableCell: UITableViewCell {
         
         imageview = UIImageView()
         self.contentView.addSubview(imageview)
-        imageview.frame = CGRect(x: UIScreen.main.bounds.width/2 - 50, y: 30, width: 100, height: 100)
+        imageview.frame = CGRect(x: UIScreen.main.bounds.width/2 - 50, y: 20, width: 100, height: 100)
         //设置圆形半径
         //imageview.layer.cornerRadius = imageview.frame.size.width / 2
         //实现效果
         //imageview.clipsToBounds = true
         
+        numTextLabel = UILabel()
+        numTextLabel.textColor = .gray
+        numTextLabel.font = UIFont.systemFont(ofSize: 16)
+        numTextLabel.textAlignment = .center
+        numTextLabel.frame = CGRect(x: UIScreen.main.bounds.width/2 - 40, y: imageview!.frame.maxY, width: 80, height: 30)
+        self.contentView.addSubview(numTextLabel)
+        
         // 创建一个常规的button
         button = UIButton(type: .custom)
-        button.frame = CGRect(x: UIScreen.main.bounds.width/2 - 40, y: imageview!.frame.maxY+5, width: 80, height: 30)
+        button.frame = CGRect(x: UIScreen.main.bounds.width/2 - 40, y: numTextLabel!.frame.maxY+5, width: 80, height: 30)
         //字体
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         //设置圆角
@@ -48,13 +56,13 @@ class CircleTableCell: UITableViewCell {
         //button.addTarget(self, action: #selector(buttonClick(button:)), for: .touchUpInside)
         self.contentView.addSubview(button)
         
-        api = ApiDataUtil()
-        api.initUtil()
+        api = ApiDataUtil.init()
         
         self.contentView.clipsToBounds = true
     }
     func setCircle(circle: String) {
         self.circle = circle
+        self.numTextLabel.text = (ApiDataUtil.userNumCirclesMap[circle]?.description ?? "0")+"人关注"
         if ApiDataUtil.circlesDataList.contains(circle) {
             button.backgroundColor = UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1)
             button.setTitle("已关注", for: .normal)
