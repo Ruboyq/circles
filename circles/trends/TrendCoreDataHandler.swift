@@ -11,10 +11,6 @@ import CoreData
 class TrendCoreDataHandler {
     // MARK: - Core Data stack
 
-    lazy var oldMan: NSPredicate = {
-        return NSPredicate(format: "age > 30")
-    }()
-
     
     func fetchAll() -> [Trend] {
         let fetchRequest: NSFetchRequest = Trend.fetchRequest()
@@ -53,7 +49,7 @@ class TrendCoreDataHandler {
         }
     }
     
-    func addTrend(headPic: String, nickName: String, time: String, source: String, title:String, images:String, praiseNum:String, commentNum:String, shareNum:String, isPraised:Int, trendId:String, uId:String) {
+    func addTrend(headPic: String, nickName: String, time: String, source: String, title:String, images:String, praiseNum:String, commentNum:String, shareNum:String, isPraised:Int, trendId:String, uId:String, useuid:String) {
         let trend = NSEntityDescription.insertNewObject(forEntityName: "Trend", into: persistentContainer.viewContext) as! Trend
         trend.headPic = headPic
         trend.nickName = nickName
@@ -66,10 +62,12 @@ class TrendCoreDataHandler {
         trend.shareNum = shareNum
         trend.isPraised = Int16(isPraised)
         trend.trendId = trendId
+        trend.uId = uId
+        trend.useuid = useuid
         saveContext()
     }
     
-    func deleteAllResume() {
+    func deleteAllTrends() {
         for tmp in fetchAll() {
             context.delete(tmp)
         }
@@ -86,7 +84,7 @@ class TrendCoreDataHandler {
     // MARK: - Core Data Property
     
     lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Trend")
+        let container = NSPersistentContainer(name: "circles")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.

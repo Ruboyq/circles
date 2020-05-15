@@ -1,11 +1,3 @@
-//
-//  ViewController.swift
-//  SwiftStudy
-//
-//  Created by wsl on 2019/5/16.
-//  Copyright © 2019 https://github.com/wsl2ls All rights reserved.
-//
-
 import UIKit
 import SnapKit
 import Alamofire
@@ -81,9 +73,38 @@ class ViewController: UIViewController {
         //限制内存缓存最多可容纳150张图像
         ImageCache.default.memoryStorage.config.countLimit = 150
         setupUI()
+        //通过使用通知中心，实现监听和处理程序退出事件的功能
+        //获得一个应用实例。应用实例的核心作用是提供程序运行期间的控制和协作。每个程序必有，有且只有一个
+        let app = UIApplication.shared
+        //通知中心是基础框架的子系统。向所有监听程序退出事件的对象广播消息
+        NotificationCenter.default.addObserver(self, selector: #selector(saveTrends(_:)), name: UIApplication.willResignActiveNotification, object: app)
+    }
+    //创建一个方法用来响应程序退出事件，使程序在退出之前保存用户数据
+    @objc func saveTrends(_ sender: AnyObject) {
+        print("Saving data before exit.")
+        //从coredata存储数据
+        let data = TrendCoreDataHandler()
+        data.deleteAllTrends()
+        
+        self.dataArray.forEach { (item) in
+            let model = item as! SLModel
+            var images:String = ""
+            for (index,image) in model.images.enumerated(){
+                if index < model.images.count - 1 {
+                    images = images+image+","
+                }
+                else if index == model.images.count - 1{
+                    images = images+image
+                }
+            }
+            data.addTrend(headPic: model.headPic, nickName: model.nickName!, time: model.time!, source: model.source!, title: model.title!, images: images, praiseNum: model.praiseNum!, commentNum: model.commentNum!, shareNum: model.shareNum!, isPraised: model.isPraised!, trendId: model.trendId!, uId: model.uId!, useuid: ViewController.uId!)
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     //安全距离什么时候被改变
     override func viewSafeAreaInsetsDidChange() {
@@ -97,8 +118,6 @@ class ViewController: UIViewController {
         }
     }
     func setupUI() {
-        //        self.navigationItem.title = "One Piece"
-        //        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "ClearCache", style: UIBarButtonItem.Style.done, target: self, action: #selector(clearCache))
         self.view.addSubview(self.tableView)
         addPullToRefresh()
     }
@@ -128,9 +147,9 @@ extension ViewController{
                 self.dataArray = dataArray
                 self.layoutArray = layoutArray
                 self.tableView.reloadData()
-            }
-            DispatchQueue.main.async {
-                self.refreshControl.endRefreshing()
+                DispatchQueue.main.async {
+                    self.refreshControl.endRefreshing()
+                }
             }
         }
     }

@@ -65,14 +65,14 @@ class TrendCommentController: UIViewController {
         tableView.delegate = self
         
         tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
-        tableView.separatorStyle = .singleLine
+        tableView.separatorStyle = .none
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         tableView.separatorColor = BaseTool.UIColorRGB_Alpha(R: 202, G: 83, B: 128, alpha: 1)
         //        tableView.rowHeight = UITableView.automaticDimension
         //        tableView.estimatedRowHeight = 150
 //        tableView.rowHeight = 130
         
-        tableView.separatorEffect = UIBlurEffect(style: .dark)
+//        tableView.separatorEffect = UIBlurEffect(style: .dark)
         
         addPullToRefresh()
     }
@@ -238,6 +238,10 @@ extension TrendCommentController {
         guard let url = urlComponents?.url else {
             return
         }
+        DispatchQueue.main.async {
+            self.view.bringSubviewToFront(self.indicatorView)
+            self.indicatorView.startAnimating()
+        }
         dataTask = urlSession.dataTask(with: url, completionHandler: { (data, response, error) in
             defer {
                 self.dataTask = nil
@@ -257,6 +261,7 @@ extension TrendCommentController {
                         self.commentArray.append(comment)
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
+                            self.indicatorView.stopAnimating()
                         }
                     }
                 } catch {

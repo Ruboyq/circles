@@ -151,6 +151,7 @@ class SLTableViewCell: UITableViewCell {
     var isPraised:Int?
     var trendId:String?
     var commonService = CommonService()
+    var title:String?
     //初始化
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
@@ -265,8 +266,12 @@ class SLTableViewCell: UITableViewCell {
         self.commentLabel.text = model.commentNum
         self.shareLabel.text = model.shareNum
         self.isPraised = model.isPraised
+        self.title = model.title
         if(model.isPraised == 1){
             self.praiseImg.image = UIImage(named: "trends_liked");
+        }
+        else{
+            self.praiseImg.image = UIImage(named: "trends_like");
         }
         self.circleLabel.text = "      "+model.source!+"     "
         self.trendId = model.trendId
@@ -402,7 +407,8 @@ class SLTableViewCell: UITableViewCell {
         self.delegate?.tableViewCell(self, tapCommentImg: self.trendId!, indexPath: self.cellIndexPath!)
     }
     @objc func tapShareImg(shareTap: UITapGestureRecognizer) {
-        
+        CommonService.showMsgbox(vc: ViewController.currentViewController()!, _message: "复制分享给好友！【你爱的圈子APP】"+self.title!)
+         self.shareLabel.text = "\(Int(self.shareLabel.text!)! + 1)";
     }
     @objc func tapPicture(tap: UITapGestureRecognizer) {
         let animationView: AnimatedImageView = tap.view as! AnimatedImageView
