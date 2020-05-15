@@ -7,24 +7,104 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--我的-->
+        <!--Mine View Controller-->
         <scene sceneID="xTz-GR-E2T">
             <objects>
                 <viewController id="2rb-zp-Wgs" customClass="MineViewController" customModule="circles" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EBo-xI-SOi">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XRq-7v-BEZ">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <subviews>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C0t-SD-GiI">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="533"/>
+                                    </containerView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="hVK-wC-ReJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="210"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="210" id="0c3-ha-a7h"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="爱你.png" translatesAutoresizingMaskIntoConstraints="NO" id="cjd-zR-Vny">
+                                        <rect key="frame" x="167" y="55" width="80" height="80"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="FO7-kc-Naq"/>
+                                            <constraint firstAttribute="height" constant="80" id="Y7d-dd-kw6"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="昵称" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uPK-Bo-r9f">
+                                        <rect key="frame" x="189.5" y="143" width="35" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="n1L-Wa-1kc"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IyX-eV-vbP">
+                                        <rect key="frame" x="0.0" y="218" width="414" height="210"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="210" id="8p0-dt-h9L"/>
+                                        </constraints>
+                                    </tableView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zuv-ic-t7A">
+                                        <rect key="frame" x="170" y="456" width="74" height="47"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="47" id="e8b-F7-kFW"/>
+                                        </constraints>
+                                        <state key="normal" title="退出登录">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="C0t-SD-GiI" firstAttribute="top" secondItem="Kaj-CQ-n7y" secondAttribute="top" id="3Tu-a0-e8P"/>
+                                    <constraint firstItem="C0t-SD-GiI" firstAttribute="bottom" secondItem="zuv-ic-t7A" secondAttribute="bottom" constant="30" id="AWr-ky-ZEW"/>
+                                    <constraint firstItem="uPK-Bo-r9f" firstAttribute="centerX" secondItem="hVK-wC-ReJ" secondAttribute="centerX" id="CF8-bF-sr2"/>
+                                    <constraint firstItem="C0t-SD-GiI" firstAttribute="top" secondItem="hVK-wC-ReJ" secondAttribute="bottom" constant="-210" id="EUm-Rg-xwl"/>
+                                    <constraint firstItem="C0t-SD-GiI" firstAttribute="leading" secondItem="Kaj-CQ-n7y" secondAttribute="leading" id="GoO-xw-hi5"/>
+                                    <constraint firstItem="hVK-wC-ReJ" firstAttribute="width" secondItem="C0t-SD-GiI" secondAttribute="width" id="HVH-gj-qpA"/>
+                                    <constraint firstItem="hVK-wC-ReJ" firstAttribute="centerX" secondItem="C0t-SD-GiI" secondAttribute="centerX" id="R6E-kj-nTK"/>
+                                    <constraint firstItem="IyX-eV-vbP" firstAttribute="width" secondItem="C0t-SD-GiI" secondAttribute="width" id="SMW-yx-VKh"/>
+                                    <constraint firstItem="C0t-SD-GiI" firstAttribute="width" secondItem="Les-Ps-aS1" secondAttribute="width" id="TiV-dA-JzZ"/>
+                                    <constraint firstItem="hVK-wC-ReJ" firstAttribute="top" secondItem="cjd-zR-Vny" secondAttribute="bottom" constant="-135" id="TqS-SM-Fqq"/>
+                                    <constraint firstItem="C0t-SD-GiI" firstAttribute="trailing" secondItem="Kaj-CQ-n7y" secondAttribute="trailing" constant="414" id="WJU-5l-noo"/>
+                                    <constraint firstItem="IyX-eV-vbP" firstAttribute="top" secondItem="hVK-wC-ReJ" secondAttribute="bottom" constant="8" id="YuY-md-cgS"/>
+                                    <constraint firstItem="C0t-SD-GiI" firstAttribute="bottom" secondItem="Kaj-CQ-n7y" secondAttribute="bottom" id="cBo-IQ-4S8"/>
+                                    <constraint firstItem="cjd-zR-Vny" firstAttribute="centerX" secondItem="C0t-SD-GiI" secondAttribute="centerX" id="dvj-gL-hGD"/>
+                                    <constraint firstItem="zuv-ic-t7A" firstAttribute="top" secondItem="IyX-eV-vbP" secondAttribute="bottom" constant="28" id="l8R-0u-Tvt"/>
+                                    <constraint firstItem="IyX-eV-vbP" firstAttribute="centerX" secondItem="C0t-SD-GiI" secondAttribute="centerX" id="oNV-nj-5cP"/>
+                                    <constraint firstItem="uPK-Bo-r9f" firstAttribute="top" secondItem="cjd-zR-Vny" secondAttribute="bottom" constant="8" id="uAw-I9-Ect"/>
+                                    <constraint firstItem="zuv-ic-t7A" firstAttribute="centerX" secondItem="C0t-SD-GiI" secondAttribute="centerX" id="w1n-26-K3k"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="Kaj-CQ-n7y"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="Les-Ps-aS1"/>
+                            </scrollView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Pa8-nW-KtL" firstAttribute="bottom" secondItem="XRq-7v-BEZ" secondAttribute="bottom" id="2l8-cw-qpf"/>
+                            <constraint firstItem="XRq-7v-BEZ" firstAttribute="top" secondItem="Pa8-nW-KtL" secondAttribute="top" id="Bv0-w6-yj6"/>
+                            <constraint firstItem="Pa8-nW-KtL" firstAttribute="trailing" secondItem="XRq-7v-BEZ" secondAttribute="trailing" id="qqU-rw-mnz"/>
+                            <constraint firstItem="XRq-7v-BEZ" firstAttribute="leading" secondItem="Pa8-nW-KtL" secondAttribute="leading" id="su6-WA-tth"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Pa8-nW-KtL"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="我的" image="logobar" id="IJ3-Ue-0FG"/>
                     <navigationItem key="navigationItem" id="wQS-dS-3q3"/>
+                    <connections>
+                        <outlet property="headImage" destination="cjd-zR-Vny" id="ZWD-l7-kl1"/>
+                        <outlet property="tableView" destination="IyX-eV-vbP" id="ESv-XO-0Y0"/>
+                        <outlet property="usernameLable" destination="uPK-Bo-r9f" id="EVt-h0-UlZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9hd-vf-4GH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-349" y="1169"/>
+            <point key="canvasLocation" x="-349.27536231884062" y="1167.8571428571429"/>
         </scene>
-        <!--圈子-->
+        <!--Circles View Controller-->
         <scene sceneID="FTg-Ku-Jxb">
             <objects>
                 <viewController id="qEx-PL-ICH" customClass="CirclesViewController" customModule="circles" customModuleProvider="target" sceneMemberID="viewController">
@@ -34,14 +114,13 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="Uo5-qc-Z83"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="圈子" image="logobar" id="Fig-Uu-UYT"/>
                     <navigationItem key="navigationItem" id="UJN-wt-5pj"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MjV-yc-F1H" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-349" y="505"/>
         </scene>
-        <!--动态-->
+        <!--View Controller-->
         <scene sceneID="8lt-aB-cOL">
             <objects>
                 <viewController id="Kw3-38-EG4" customClass="ViewController" customModule="circles" customModuleProvider="target" sceneMemberID="viewController">
@@ -51,18 +130,17 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="nx0-2m-V6R"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="动态" image="logobar" id="aDK-j5-VCd"/>
                     <navigationItem key="navigationItem" id="jq0-fs-TLy"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H7j-2T-WzQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-349" y="-143"/>
         </scene>
-        <!--Item-->
+        <!--动态-->
         <scene sceneID="24a-KH-FQh">
             <objects>
                 <navigationController id="pvo-QN-1V5" customClass="SLNavigationController" customModule="circles" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="yqr-H5-GXo"/>
+                    <tabBarItem key="tabBarItem" title="动态" image="logobar" id="yqr-H5-GXo"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Yqb-Mf-Szh">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -95,11 +173,11 @@
             </objects>
             <point key="canvasLocation" x="-2261" y="505"/>
         </scene>
-        <!--Item-->
+        <!--圈子-->
         <scene sceneID="htp-Er-0nw">
             <objects>
                 <navigationController id="SqX-NY-4QC" customClass="NavigationController" customModule="circles" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="LpH-xk-vv1"/>
+                    <tabBarItem key="tabBarItem" title="圈子" image="logobar" id="LpH-xk-vv1"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="eDr-Ai-6fh">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -112,11 +190,11 @@
             </objects>
             <point key="canvasLocation" x="-1300" y="505"/>
         </scene>
-        <!--Item-->
+        <!--我的-->
         <scene sceneID="9Fr-xq-9Lc">
             <objects>
                 <navigationController id="wad-Bb-sfd" customClass="NavigationController" customModule="circles" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="HVH-2z-vJh"/>
+                    <tabBarItem key="tabBarItem" title="我的" image="logobar" id="HVH-2z-vJh"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="BYe-Ty-EQV">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -131,6 +209,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="logo" width="456" height="400"/>
         <image name="logobar" width="25" height="22"/>
+        <image name="爱你.png" width="32" height="32"/>
     </resources>
 </document>
