@@ -73,11 +73,8 @@ class FocusCirclesViewController: UIViewController {
     
     @objc func handleRefresh3(_ sender: UIRefreshControl) {
         print("pull refresh")
+        self.api.initOrRefreshData(vc: self)
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 1) {
-            //self.getResumes(num: 3, isEnd: false, state: 1)
-            self.api.refreshMyCircles(vc: self, state: 2)
-            let api2 = ApiDataUtil.init()
-            api2.getUserNumOfCircles(vc: self, state: 1)
             DispatchQueue.main.async {
                 self.circlesDataList = ApiDataUtil.circlesDataList
                 self.tableView.reloadData()

@@ -46,8 +46,19 @@ public class ApiDataUtil: NSObject, URLSessionDelegate {
         setupSession()
     }
     
-    func initData() {
-        //从coredata读取数据
+    func initOrRefreshData(vc: UIViewController) {
+        if checkNetwork() {
+            self.refreshMyCircles(vc: vc, state: 2)
+            let api2 = ApiDataUtil.init()
+            api2.getUserNumOfCircles(vc: vc, state: 1)
+        } else {
+            //从coredata读取数据
+            let dbUtil = DbUtil()
+            ApiDataUtil.circlesDataList = dbUtil.readFocusCircles(userName: userName)
+            ApiDataUtil.userNumCirclesMap = dbUtil.readUserNumOfCircles()
+            
+            CommonService.showMsgbox(vc: vc, _message: "网络无法连接")
+        }
     }
     
     func checkNetwork() -> Bool {
@@ -106,6 +117,12 @@ public class ApiDataUtil: NSObject, URLSessionDelegate {
             }
             if let error = error {
                 print("DataTask error: " + error.localizedDescription + "\n")
+                print("从本地读取数据")
+                let dbUtil = DbUtil()
+                ApiDataUtil.circlesDataList = dbUtil.readFocusCircles(userName: self.userName)
+                DispatchQueue.main.async {
+                    CommonService.showMsgbox(vc: vc, _message: "服务器开小差了～\n请稍后重试")
+                }
             } else if let data = data,
                 let response = response as? HTTPURLResponse, response.statusCode == 200 {
                 do {
@@ -137,6 +154,12 @@ public class ApiDataUtil: NSObject, URLSessionDelegate {
             }
             if let error = error {
                 print("DataTask error: " + error.localizedDescription + "\n")
+                print("从本地读取数据")
+                let dbUtil = DbUtil()
+                ApiDataUtil.userNumCirclesMap = dbUtil.readUserNumOfCircles()
+                DispatchQueue.main.async {
+                    CommonService.showMsgbox(vc: vc, _message: "服务器开小差了～\n请稍后重试")
+                }
             } else if let data = data,
                 let response = response as? HTTPURLResponse, response.statusCode == 200 {
                 do {
@@ -179,7 +202,9 @@ public class ApiDataUtil: NSObject, URLSessionDelegate {
             }
             if let error = error {
                 print("DataTask error: " + error.localizedDescription + "\n")
-                CommonService.showMsgbox(vc: vc, _message: "网络较慢，请稍后重试")
+                DispatchQueue.main.async {
+                    CommonService.showMsgbox(vc: vc, _message: "服务器开小差了～\n请稍后重试")
+                }
             } else if let data = data,
                 let response = response as? HTTPURLResponse, response.statusCode == 200 {
                 print(String(data: data, encoding: .utf8) ?? "")
@@ -226,7 +251,9 @@ public class ApiDataUtil: NSObject, URLSessionDelegate {
             }
             if let error = error {
                 print("DataTask error: " + error.localizedDescription + "\n")
-                CommonService.showMsgbox(vc: vc, _message: "网络较慢，请稍后重试")
+                DispatchQueue.main.async {
+                    CommonService.showMsgbox(vc: vc, _message: "服务器开小差了～\n请稍后重试")
+                }
             } else if let data = data,
                 let response = response as? HTTPURLResponse, response.statusCode == 200 {
                 print(String(data: data, encoding: .utf8) ?? "")
