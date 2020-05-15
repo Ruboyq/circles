@@ -14,6 +14,12 @@ struct CirclesResponseData: Codable {
     var data: [String] = [String]()
 }
 
+struct UserNumCirclesResponseData: Codable {
+    var code: Int = 0
+    var msg: String = ""
+    var data: [String: Int] = [String:Int]()
+}
+
 struct CommonResponseData: Codable {
     var code: Int = 0
     var msg: String = ""
@@ -29,17 +35,30 @@ public class ApiDataUtil: NSObject, URLSessionDelegate {
     
     public static var trendsListData: [String] = [String]()
     public static var circlesDataList: [String] = [String]()
+    public static var userNumCirclesMap:[String: Int] = [String:Int]()
     
     let reachability = try! Reachability()
     var urlSession: URLSession!
     var dataTask: URLSessionDataTask?
     
-    func initUtil() {
+    public override init() {
+        super.init()
         setupSession()
     }
     
-    func initData() {
-        //从coredata读取数据
+    func initOrRefreshData(vc: UIViewController) {
+        if checkNetwork() {
+            self.refreshMyCircles(vc: vc, state: 2)
+            let api2 = ApiDataUtil.init()
+            api2.getUserNumOfCircles(vc: vc, state: 1)
+        } else {
+            //从coredata读取数据
+            let dbUtil = DbUtil()
+            ApiDataUtil.circlesDataList = dbUtil.readFocusCircles(userName: userName)
+            ApiDataUtil.userNumCirclesMap = dbUtil.readUserNumOfCircles()
+            
+            CommonService.showMsgbox(vc: vc, _message: "网络无法连接")
+        }
     }
     
     func checkNetwork() -> Bool {
@@ -98,12 +117,55 @@ public class ApiDataUtil: NSObject, URLSessionDelegate {
             }
             if let error = error {
                 print("DataTask error: " + error.localizedDescription + "\n")
+                print("从本地读取数据")
+                let dbUtil = DbUtil()
+                ApiDataUtil.circlesDataList = dbUtil.readFocusCircles(userName: self.userName)
+                DispatchQueue.main.async {
+                    CommonService.showMsgbox(vc: vc, _message: "服务器开小差了～\n请稍后重试")
+                }
             } else if let data = data,
                 let response = response as? HTTPURLResponse, response.statusCode == 200 {
                 do {
                     print(String(data: data, encoding: .utf8) ?? "")
                     let tmpModel = try JSONDecoder().decode(CirclesResponseData.self, from: data)
                     ApiDataUtil.circlesDataList = tmpModel.data
+                } catch {
+                    print("Error: \(error)")
+                }
+            }
+            DispatchQueue.main.async {
+                if state == 1 {
+                    vc.viewDidAppear(true)
+                }
+            }
+        })
+        dataTask?.resume()
+    }
+    
+    func getUserNumOfCircles(vc: UIViewController, state: Int) {
+        dataTask?.cancel()
+        let url = URL(string: baseurl+"circles/userNumOfCircle")
+        var request = URLRequest(url: url!, cachePolicy: .reloadIgnoringCacheData)
+        request.httpMethod = "POST"
+        
+        dataTask = urlSession.dataTask(with: request, completionHandler: { (data, response, error) in
+            defer {
+                self.dataTask = nil
+            }
+            if let error = error {
+                print("DataTask error: " + error.localizedDescription + "\n")
+                print("从本地读取数据")
+                let dbUtil = DbUtil()
+                ApiDataUtil.userNumCirclesMap = dbUtil.readUserNumOfCircles()
+                DispatchQueue.main.async {
+                    CommonService.showMsgbox(vc: vc, _message: "服务器开小差了～\n请稍后重试")
+                }
+            } else if let data = data,
+                let response = response as? HTTPURLResponse, response.statusCode == 200 {
+                do {
+                    print(String(data: data, encoding: .utf8) ?? "")
+                    let tmpModel = try JSONDecoder().decode(UserNumCirclesResponseData.self, from: data)
+                    ApiDataUtil.userNumCirclesMap = tmpModel.data
                 } catch {
                     print("Error: \(error)")
                 }
@@ -140,7 +202,9 @@ public class ApiDataUtil: NSObject, URLSessionDelegate {
             }
             if let error = error {
                 print("DataTask error: " + error.localizedDescription + "\n")
-                CommonService.showMsgbox(vc: vc, _message: "网络较慢，请稍后重试")
+                DispatchQueue.main.async {
+                    CommonService.showMsgbox(vc: vc, _message: "服务器开小差了～\n请稍后重试")
+                }
             } else if let data = data,
                 let response = response as? HTTPURLResponse, response.statusCode == 200 {
                 print(String(data: data, encoding: .utf8) ?? "")
@@ -152,6 +216,9 @@ public class ApiDataUtil: NSObject, URLSessionDelegate {
                         break
                     }
                     i += 1
+                }
+                if ApiDataUtil.userNumCirclesMap[circle] ?? 0 > 0 {
+                    ApiDataUtil.userNumCirclesMap[circle] = ApiDataUtil.userNumCirclesMap[circle]! - 1
                 }
                 DispatchQueue.main.async {
                     vc.viewDidAppear(true)
@@ -184,12 +251,15 @@ public class ApiDataUtil: NSObject, URLSessionDelegate {
             }
             if let error = error {
                 print("DataTask error: " + error.localizedDescription + "\n")
-                CommonService.showMsgbox(vc: vc, _message: "网络较慢，请稍后重试")
+                DispatchQueue.main.async {
+                    CommonService.showMsgbox(vc: vc, _message: "服务器开小差了～\n请稍后重试")
+                }
             } else if let data = data,
                 let response = response as? HTTPURLResponse, response.statusCode == 200 {
                 print(String(data: data, encoding: .utf8) ?? "")
                 
                 ApiDataUtil.circlesDataList.append(circle)
+                ApiDataUtil.userNumCirclesMap[circle] = ApiDataUtil.userNumCirclesMap[circle]! + 1
                 DispatchQueue.main.async {
                     vc.viewDidAppear(true)
                 }

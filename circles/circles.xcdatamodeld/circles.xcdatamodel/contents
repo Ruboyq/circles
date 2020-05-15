@@ -14,7 +14,17 @@
         <attribute name="trendId" optional="YES" attributeType="String"/>
         <attribute name="uId" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="FocusCircles" representedClassName="FocusCircles" syncable="YES" codeGenerationType="class">
+        <attribute name="circlesList" optional="YES" attributeType="String"/>
+        <attribute name="userName" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="UserNumOfCircles" representedClassName="UserNumOfCircles" syncable="YES" codeGenerationType="class">
+        <attribute name="circle" optional="YES" attributeType="String"/>
+        <attribute name="userNum" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
     <elements>
         <element name="Trend" positionX="-63" positionY="-18" width="128" height="223"/>
+        <element name="UserNumOfCircles" positionX="-63" positionY="-18" width="128" height="73"/>
+        <element name="FocusCircles" positionX="-54" positionY="9" width="128" height="73"/>
     </elements>
 </model>
