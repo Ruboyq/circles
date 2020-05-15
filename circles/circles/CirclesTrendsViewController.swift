@@ -23,10 +23,12 @@ class CirclesTrendsViewController: UIViewController {
         
         //navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "编辑", style: .plain, target: self, action: #selector(editAction))
         self.presenter.getCircleOfTrends(completeBlock: { (dataArray, layoutArray) in
-            TrendTableCell.dataArray = dataArray
-            TrendTableCell.layoutArray = layoutArray
             self.tableView.reloadData()
         }, circle: circle)
+        self.presenter.fullTextBlock = { (indexPath) in
+            //self.tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
+            self.tableView.reloadData()
+        }
         
         self.initUI()
         NotificationCenter.default.addObserver(self, selector: #selector(receiverNotification), name: UIDevice.orientationDidChangeNotification, object: nil)
@@ -76,8 +78,6 @@ class CirclesTrendsViewController: UIViewController {
         ApiDataUtil.initOrRefreshData(vc: self)
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 1) {
             self.presenter.getCircleOfTrends (completeBlock: { (dataArray, layoutArray) in
-                TrendTableCell.dataArray = dataArray
-                TrendTableCell.layoutArray = layoutArray
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                     self.refreshControl.endRefreshing()
@@ -123,7 +123,8 @@ extension CirclesTrendsViewController: UITableViewDelegate{
         if indexPath.section == 0 {
             return 200
         } else {
-            return 100
+            let height = TrendTableCell.getFullHeight(layoutArray: self.presenter.layoutArray)
+            return height
         }
     }
     

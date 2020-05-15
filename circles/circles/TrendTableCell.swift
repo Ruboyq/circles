@@ -14,6 +14,13 @@ import GDPerformanceView_Swift
 import Kingfisher
 
 class TrendTableCell: UITableViewCell {
+    
+    public static var MyTrendsData = NSMutableArray()
+    public static var MyTrendsLayout = NSMutableArray()
+    
+    public static var TrendsOfCirclesData = [String: NSMutableArray]()
+    public static var TrendsOfCirclesLayout = [String: NSMutableArray]()
+    
     //懒加载
     lazy var tableView : UITableView = {
         let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 20)
@@ -32,24 +39,19 @@ class TrendTableCell: UITableViewCell {
     }()
     //中介 负责处理数据和事件
     var presenter : SLPresenter!
-    static var dataArray = NSMutableArray()
-    static var layoutArray = NSMutableArray()
     
     public static var uId:String?
 
     // MARK: UI
     func initTrendsCell(presenter : SLPresenter!) {
         self.presenter = presenter
-        self.presenter.fullTextBlock = { (indexPath) in
-            self.tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
-        }
     
         //限制内存高速缓存大小为50MB
         ImageCache.default.memoryStorage.config.totalCostLimit = 50 * 1024 * 1024
         //限制内存缓存最多可容纳150张图像
         ImageCache.default.memoryStorage.config.countLimit = 150
         
-        let height = TrendTableCell.getFullHeight(layoutArray: TrendTableCell.layoutArray)
+        let height = TrendTableCell.getFullHeight(layoutArray: self.presenter.layoutArray)
         self.tableView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: height)
         self.contentView.addSubview(self.tableView)
         
@@ -93,11 +95,11 @@ extension TrendTableCell : UITableViewDelegate, UITableViewDataSource {
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return TrendTableCell.dataArray.count
+        return self.presenter.dataArray.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row > TrendTableCell.layoutArray.count - 1 { return 0 }
-        let layout : SLLayout = TrendTableCell.layoutArray[indexPath.row] as! SLLayout
+        if indexPath.row > self.presenter.layoutArray.count - 1 { return 0 }
+        let layout : SLLayout = self.presenter.layoutArray[indexPath.row] as! SLLayout
         return layout.cellHeight
     }
     func tableView(_ tableVdiew: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -114,10 +116,10 @@ extension TrendTableCell : UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:SLTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! SLTableViewCell
-        let model:SLModel = TrendTableCell.dataArray[indexPath.row] as! SLModel
+        let model:SLModel = self.presenter.dataArray[indexPath.row] as! SLModel
         var layout:SLLayout?
-        if indexPath.row <= TrendTableCell.layoutArray.count - 1 {
-            layout = TrendTableCell.layoutArray[indexPath.row] as? SLLayout
+        if indexPath.row <= self.presenter.layoutArray.count - 1 {
+            layout = self.presenter.layoutArray[indexPath.row] as? SLLayout
         }
         cell.delegate = self.presenter
         cell.cellIndexPath = indexPath

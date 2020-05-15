@@ -172,7 +172,7 @@ class SLPresenter: NSObject{
         //async异步追加Block块（async函数不做任何等待）
         DispatchQueue.global(qos: .default).async {
             //处理耗时操作的代码块...
-            let para:[String:Any] = ["userName":"test"]
+            let para:[String:Any] = ["userName":"\(MineViewController.username)"]
             Alamofire.request(baseUrl+"circles/myTrends", method: HTTPMethod.get, parameters: para, encoding: URLEncoding.default).responseJSON { (dataResponse) in
                 //                print(dataResponse)
                 if (dataResponse.result.isSuccess){
@@ -247,7 +247,7 @@ class SLPresenter: NSObject{
         //async异步追加Block块（async函数不做任何等待）
         DispatchQueue.global(qos: .default).async {
             //处理耗时操作的代码块...
-            let para:[String:Any] = ["userName":"test", "circle":"\(circle)"]
+            let para:[String:Any] = ["userName":"\(MineViewController.username)", "circle":"\(circle)"]
             Alamofire.request(baseUrl+"circles/circleOfTrends", method: HTTPMethod.get, parameters: para, encoding: URLEncoding.default).responseJSON { (dataResponse) in
                 //                print(dataResponse)
                 if (dataResponse.result.isSuccess){
