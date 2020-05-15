@@ -3,7 +3,7 @@ import UIKit
 import HandyJSON
 import Alamofire
 
-let baseUrl:String = "http://192.168.1.6:8080/"
+let baseUrl:String = "http://192.168.2.121:8080/"
 // 数据模型
 struct SLModel : HandyJSON {
     var headPic: String = ""
@@ -165,6 +165,156 @@ class SLPresenter: NSObject{
             //            DispatchQueue.main.async {
             //                completeBlock(self.dataArray, self.layoutArray)
             //            }
+        }
+    }
+    
+    func getMyCirclesTrends(completeBlock: @escaping SLGetDataCompleteBlock) {
+        //async异步追加Block块（async函数不做任何等待）
+        DispatchQueue.global(qos: .default).async {
+            //处理耗时操作的代码块...
+            let para:[String:Any] = ["userName":"test"]
+            Alamofire.request(baseUrl+"circles/myTrends", method: HTTPMethod.get, parameters: para, encoding: URLEncoding.default).responseJSON { (dataResponse) in
+                //                print(dataResponse)
+                if (dataResponse.result.isSuccess){
+                    let value = dataResponse.result.value as? [String: Any]
+                    let rows = value!["data"] as! [[String: Any]]
+                    //                print(rows[0]["content"])
+                    self.dataArray.removeAllObjects()
+                    self.layoutArray.removeAllObjects()
+                    rows.forEach({ (row) in
+                        var model = SLModel()
+                        model.nickName = row["uname"] as? String
+                        model.time = row["createTime"] as? String
+                        model.headPic = row["uicon"] as! String
+                        model.praiseNum = "\(row["thumbsnum"]!)"
+                        model.commentNum = "\(row["remarknum"]!)"
+                        model.shareNum = "\(row["forwardingnum"]!)"
+                        model.title = row["content"] as? String
+                        model.source = row["circle"] as? String
+                        model.isPraised = row["isThumb"] as? Int
+                        model.trendId =  "\(row["pid"]!)"
+                        model.uId =  "\(row["uid"]!)"
+                        let arr = (row["images"] as? String)?.split(separator: ",")
+                        arr?.forEach({ (img) in
+                            model.images.append(String(img))
+                        })
+                        self.dataArray.add(model)
+                        
+                        let attStrAndHeight:(attributedString:NSMutableAttributedString, height:CGFloat) = self.matchesResultOfTitle(title: model.title!, expan: false)
+                        let layout:SLLayout = SLLayout(attributedString: attStrAndHeight.attributedString, cellHeight: (15 + 35 + 15 + attStrAndHeight.height + 15 + self.heightOfImages(images: model.images) + 35), expan: false)
+                        self.layoutArray.add(layout)
+                    })
+                    DispatchQueue.main.async {
+                        completeBlock(self.dataArray, self.layoutArray)
+                    }
+                }
+                else if(dataResponse.result.isFailure){
+                    let rows = self.data.fetchAll()
+                    self.dataArray.removeAllObjects()
+                    self.layoutArray.removeAllObjects()
+                    rows.forEach({ (row) in
+                        var model = SLModel()
+                        model.nickName = row.nickName
+                        model.time = row.time
+                        model.headPic = row.headPic!
+                        model.praiseNum = row.praiseNum
+                        model.commentNum = row.commentNum
+                        model.shareNum = row.shareNum
+                        model.title = row.title
+                        model.source = row.source
+                        model.isPraised = Int(row.isPraised)
+                        model.trendId =  row.trendId
+                        model.uId =  row.uId
+                        let arr = (row.images)?.split(separator: ",")
+                        arr?.forEach({ (img) in
+                            model.images.append(String(img))
+                        })
+                        self.dataArray.add(model)
+                        
+                        let attStrAndHeight:(attributedString:NSMutableAttributedString, height:CGFloat) = self.matchesResultOfTitle(title: model.title!, expan: false)
+                        let layout:SLLayout = SLLayout(attributedString: attStrAndHeight.attributedString, cellHeight: (15 + 35 + 15 + attStrAndHeight.height + 15 + self.heightOfImages(images: model.images) + 35), expan: false)
+                        self.layoutArray.add(layout)
+                    })
+                    DispatchQueue.main.async {
+                        completeBlock(self.dataArray, self.layoutArray)
+                    }
+                }
+            }
+        }
+    }
+    
+    func getCircleOfTrends(completeBlock: @escaping SLGetDataCompleteBlock, circle: String) {
+        //async异步追加Block块（async函数不做任何等待）
+        DispatchQueue.global(qos: .default).async {
+            //处理耗时操作的代码块...
+            let para:[String:Any] = ["userName":"test", "circle":"\(circle)"]
+            Alamofire.request(baseUrl+"circles/circleOfTrends", method: HTTPMethod.get, parameters: para, encoding: URLEncoding.default).responseJSON { (dataResponse) in
+                //                print(dataResponse)
+                if (dataResponse.result.isSuccess){
+                    let value = dataResponse.result.value as? [String: Any]
+                    let rows = value!["data"] as! [[String: Any]]
+                    //                print(rows[0]["content"])
+                    self.dataArray.removeAllObjects()
+                    self.layoutArray.removeAllObjects()
+                    rows.forEach({ (row) in
+                        var model = SLModel()
+                        model.nickName = row["uname"] as? String
+                        model.time = row["createTime"] as? String
+                        model.headPic = row["uicon"] as! String
+                        model.praiseNum = "\(row["thumbsnum"]!)"
+                        model.commentNum = "\(row["remarknum"]!)"
+                        model.shareNum = "\(row["forwardingnum"]!)"
+                        model.title = row["content"] as? String
+                        model.source = row["circle"] as? String
+                        model.isPraised = row["isThumb"] as? Int
+                        model.trendId =  "\(row["pid"]!)"
+                        model.uId =  "\(row["uid"]!)"
+                        let arr = (row["images"] as? String)?.split(separator: ",")
+                        arr?.forEach({ (img) in
+                            model.images.append(String(img))
+                        })
+                        self.dataArray.add(model)
+                        
+                        let attStrAndHeight:(attributedString:NSMutableAttributedString, height:CGFloat) = self.matchesResultOfTitle(title: model.title!, expan: false)
+                        let layout:SLLayout = SLLayout(attributedString: attStrAndHeight.attributedString, cellHeight: (15 + 35 + 15 + attStrAndHeight.height + 15 + self.heightOfImages(images: model.images) + 35), expan: false)
+                        self.layoutArray.add(layout)
+                    })
+                    DispatchQueue.main.async {
+                        completeBlock(self.dataArray, self.layoutArray)
+                    }
+                }
+                else if(dataResponse.result.isFailure){
+                    let rows = self.data.fetchAll()
+                    self.dataArray.removeAllObjects()
+                    self.layoutArray.removeAllObjects()
+                    rows.forEach({ (row) in
+                        var model = SLModel()
+                        model.nickName = row.nickName
+                        model.time = row.time
+                        model.headPic = row.headPic!
+                        model.praiseNum = row.praiseNum
+                        model.commentNum = row.commentNum
+                        model.shareNum = row.shareNum
+                        model.title = row.title
+                        model.source = row.source
+                        model.isPraised = Int(row.isPraised)
+                        model.trendId =  row.trendId
+                        model.uId =  row.uId
+                        let arr = (row.images)?.split(separator: ",")
+                        arr?.forEach({ (img) in
+                            model.images.append(String(img))
+                        })
+                        self.dataArray.add(model)
+                        
+                        let attStrAndHeight:(attributedString:NSMutableAttributedString, height:CGFloat) = self.matchesResultOfTitle(title: model.title!, expan: false)
+                        let layout:SLLayout = SLLayout(attributedString: attStrAndHeight.attributedString, cellHeight: (15 + 35 + 15 + attStrAndHeight.height + 15 + self.heightOfImages(images: model.images) + 35), expan: false)
+                        self.layoutArray.add(layout)
+                    })
+                    DispatchQueue.main.async {
+                        completeBlock(self.dataArray, self.layoutArray)
+                    }
+                }
+            }
         }
     }
     

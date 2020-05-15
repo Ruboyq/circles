@@ -7,6 +7,8 @@ class CirclesViewController: UIViewController {
     var refreshControl: UIRefreshControl!
     var isLoading: Bool = false
     
+    var presenter = SLPresenter()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -18,7 +20,13 @@ class CirclesViewController: UIViewController {
         
         ApiDataUtil.initOrRefreshData(vc: self)
         
-        initUI()
+        self.presenter.getMyCirclesTrends { (dataArray, layoutArray) in
+            TrendTableCell.dataArray = dataArray
+            TrendTableCell.layoutArray = layoutArray
+            self.tableView.reloadData()
+        }
+        
+        //initUI()
         NotificationCenter.default.addObserver(self, selector: #selector(receiverNotification), name: UIDevice.orientationDidChangeNotification, object: nil)
         
         //通过使用通知中心，实现监听和处理程序退出事件的功能
@@ -60,7 +68,7 @@ class CirclesViewController: UIViewController {
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
         tableView.register(FocusCirclesTableCell.self, forCellReuseIdentifier: "FocusCirclesTableCell")
-        tableView.register(OneFocusCircleTableCell.self, forCellReuseIdentifier: "OneFocusCircleTableCell")
+        tableView.register(TrendTableCell.self, forCellReuseIdentifier: "TrendTableCell")
         tableView.register(LoadMoreTableCell.self, forCellReuseIdentifier: "LoadMoreTableCell")
         tableView.tableFooterView = UIView()
         
@@ -68,6 +76,7 @@ class CirclesViewController: UIViewController {
         self.view.addSubview(tableView)
         
         addPullToRefresh()
+        
     }
     
     @objc func receiverNotification(){
@@ -105,14 +114,14 @@ class CirclesViewController: UIViewController {
 
 extension CirclesViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0{
             return 2
         } else if section == 1{
-            return ApiDataUtil.trendsListData.count
+            return 2
         } else {
             return 1
         }
@@ -140,9 +149,9 @@ extension CirclesViewController: UITableViewDataSource {
                 //cell.selectionStyle = .default
                 return cell
             } else {
-                let cell =  tableView.dequeueReusableCell(withIdentifier: "OneFocusCircleTableCell", for: indexPath) as! OneFocusCircleTableCell
-                cell.imageview.image = UIImage(named: "logo")
+                let cell =  tableView.dequeueReusableCell(withIdentifier: "TrendTableCell", for: indexPath) as! TrendTableCell
                 //cell.selectionStyle = .default
+                cell.initTrendsCell(presenter: self.presenter)
                 return cell
             }
         } else {
@@ -165,7 +174,9 @@ extension CirclesViewController: UITableViewDelegate{
             if indexPath.row == 0 {
                 return 50
             } else {
-                return 60
+                //if indexPath.row > TrendTableCell.layoutArray.count - 1 { return 0 }
+                let height = TrendTableCell.getFullHeight(layoutArray: TrendTableCell.layoutArray)
+                return height
             }
         } else {
             return 50
@@ -173,7 +184,7 @@ extension CirclesViewController: UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
+        //tableView.deselectRow(at: indexPath, animated: false)
         print(indexPath.row)
         if indexPath.section == 0 {
             if indexPath.row == 0 {
@@ -209,9 +220,14 @@ extension CirclesViewController {
         print("pull refresh")
         ApiDataUtil.initOrRefreshData(vc: self)
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 1) {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.refreshControl.endRefreshing()
+            self.presenter.getMyCirclesTrends { (dataArray, layoutArray) in
+                //            print("刷新")
+                TrendTableCell.dataArray = dataArray
+                TrendTableCell.layoutArray = layoutArray
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    self.refreshControl.endRefreshing()
+                }
             }
         }
     }
