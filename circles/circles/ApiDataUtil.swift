@@ -118,9 +118,9 @@ public class ApiDataUtil: NSObject, URLSessionDelegate {
             }
             if let error = error {
                 print("DataTask error: " + error.localizedDescription + "\n")
-                //print("从本地读取数据")
-                //let dbUtil = DbUtil()
-                //ApiDataUtil.circlesDataList = dbUtil.readFocusCircles(userName: self.userName)
+                print("从本地读取数据")
+                let dbUtil = DbUtil()
+                ApiDataUtil.circlesDataList = dbUtil.readFocusCircles(userName: self.userName)
                 DispatchQueue.main.async {
                     CommonService.showMsgbox(vc: vc, _message: "服务器开小差了～\n请稍后重试")
                 }
@@ -155,9 +155,9 @@ public class ApiDataUtil: NSObject, URLSessionDelegate {
             }
             if let error = error {
                 print("DataTask error: " + error.localizedDescription + "\n")
-                //print("从本地读取数据")
-                //let dbUtil = DbUtil()
-                //ApiDataUtil.userNumCirclesMap = dbUtil.readUserNumOfCircles()
+                print("从本地读取数据")
+                let dbUtil = DbUtil()
+                ApiDataUtil.userNumCirclesMap = dbUtil.readUserNumOfCircles()
                 DispatchQueue.main.async {
                     CommonService.showMsgbox(vc: vc, _message: "服务器开小差了～\n请稍后重试")
                 }
