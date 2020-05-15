@@ -24,6 +24,19 @@ class TrendCoreDataHandler {
         return [Trend]()
     }
     
+    
+    func fetchTrendsOfCircle(circle: String) -> [Trend] {
+        let fetchRequest: NSFetchRequest = Trend.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "source == %@", circle)
+        do {
+            let result = try context.fetch(fetchRequest)
+            return result
+        } catch let err {
+            print("core data fetch error:", err)
+        }
+        return [Trend]()
+    }
+    
 //    func fetchResume(name: String) -> [Trend] {
 //        let fetchRequest: NSFetchRequest = Trend.fetchRequest()
 //        fetchRequest.predicate = NSPredicate(format: "name == %@", name)

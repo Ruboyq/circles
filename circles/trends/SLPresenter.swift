@@ -214,26 +214,28 @@ class SLPresenter: NSObject{
                     self.layoutArray.removeAllObjects()
                     rows.forEach({ (row) in
                         var model = SLModel()
-                        model.nickName = row.nickName
-                        model.time = row.time
-                        model.headPic = row.headPic!
-                        model.praiseNum = row.praiseNum
-                        model.commentNum = row.commentNum
-                        model.shareNum = row.shareNum
-                        model.title = row.title
-                        model.source = row.source
-                        model.isPraised = Int(row.isPraised)
-                        model.trendId =  row.trendId
-                        model.uId =  row.uId
-                        let arr = (row.images)?.split(separator: ",")
-                        arr?.forEach({ (img) in
-                            model.images.append(String(img))
-                        })
-                        self.dataArray.add(model)
-                        
-                        let attStrAndHeight:(attributedString:NSMutableAttributedString, height:CGFloat) = self.matchesResultOfTitle(title: model.title!, expan: false)
-                        let layout:SLLayout = SLLayout(attributedString: attStrAndHeight.attributedString, cellHeight: (15 + 35 + 15 + attStrAndHeight.height + 15 + self.heightOfImages(images: model.images) + 35), expan: false)
-                        self.layoutArray.add(layout)
+                        if ApiDataUtil.circlesDataList.contains(row.source ?? "") {
+                            model.nickName = row.nickName
+                            model.time = row.time
+                            model.headPic = row.headPic!
+                            model.praiseNum = row.praiseNum
+                            model.commentNum = row.commentNum
+                            model.shareNum = row.shareNum
+                            model.title = row.title
+                            model.source = row.source
+                            model.isPraised = Int(row.isPraised)
+                            model.trendId =  row.trendId
+                            model.uId =  row.uId
+                            let arr = (row.images)?.split(separator: ",")
+                            arr?.forEach({ (img) in
+                                model.images.append(String(img))
+                            })
+                            self.dataArray.add(model)
+                            
+                            let attStrAndHeight:(attributedString:NSMutableAttributedString, height:CGFloat) = self.matchesResultOfTitle(title: model.title!, expan: false)
+                            let layout:SLLayout = SLLayout(attributedString: attStrAndHeight.attributedString, cellHeight: (15 + 35 + 15 + attStrAndHeight.height + 15 + self.heightOfImages(images: model.images) + 35), expan: false)
+                            self.layoutArray.add(layout)
+                        }
                     })
                     DispatchQueue.main.async {
                         completeBlock(self.dataArray, self.layoutArray)
@@ -284,7 +286,7 @@ class SLPresenter: NSObject{
                     }
                 }
                 else if(dataResponse.result.isFailure){
-                    let rows = self.data.fetchAll()
+                    let rows = self.data.fetchTrendsOfCircle(circle: circle)
                     self.dataArray.removeAllObjects()
                     self.layoutArray.removeAllObjects()
                     rows.forEach({ (row) in
