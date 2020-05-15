@@ -14,16 +14,19 @@ class CirclesTrendsViewController: UIViewController {
     var trendsListData: [String] = [String]()
     var circle: String!
     
+    var presenter = SLPresenter()
     var refreshControl: UIRefreshControl!
-    var api: ApiDataUtil!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         //navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "编辑", style: .plain, target: self, action: #selector(editAction))
-        
-        api = ApiDataUtil.init()
+        self.presenter.getCircleOfTrends(completeBlock: { (dataArray, layoutArray) in
+            TrendTableCell.dataArray = dataArray
+            TrendTableCell.layoutArray = layoutArray
+            self.tableView.reloadData()
+        }, circle: circle)
         
         self.initUI()
         NotificationCenter.default.addObserver(self, selector: #selector(receiverNotification), name: UIDevice.orientationDidChangeNotification, object: nil)
@@ -43,7 +46,7 @@ class CirclesTrendsViewController: UIViewController {
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.singleLine
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         tableView.register(CircleTableCell.self, forCellReuseIdentifier: "CircleTableCell")
-        tableView.register(OneFocusCircleTableCell.self, forCellReuseIdentifier: "OneFocusCircleTableCell")
+        tableView.register(TrendTableCell.self, forCellReuseIdentifier: "TrendTableCell")
         tableView.tableFooterView = UIView()
         
         tableView.setEditing(false, animated: false)
@@ -70,12 +73,16 @@ class CirclesTrendsViewController: UIViewController {
     
     @objc func handleRefresh2(_ sender: UIRefreshControl) {
         print("pull refresh")
-        self.api.initOrRefreshData(vc: self)
+        ApiDataUtil.initOrRefreshData(vc: self)
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 1) {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.refreshControl.endRefreshing()
-            }
+            self.presenter.getCircleOfTrends (completeBlock: { (dataArray, layoutArray) in
+                TrendTableCell.dataArray = dataArray
+                TrendTableCell.layoutArray = layoutArray
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    self.refreshControl.endRefreshing()
+                }
+            }, circle: self.circle)
         }
     }
 }
@@ -90,7 +97,7 @@ extension CirclesTrendsViewController: UITableViewDataSource {
             return 1
         } else {
             //return trendsListData.count
-            return 2
+            return 1
         }
     }
     
@@ -103,12 +110,8 @@ extension CirclesTrendsViewController: UITableViewDataSource {
             //cell.selectionStyle = .default
             return cell
         } else {
-            let cell =  tableView.dequeueReusableCell(withIdentifier: "OneFocusCircleTableCell", for: indexPath) as! OneFocusCircleTableCell
-            cell.circle = circle
-            cell.imageView?.image = UIImage(named: String(circle))
-            cell.numTextLabel.text = (ApiDataUtil.userNumCirclesMap[circle]?.description ?? "0")+"人关注"
-            cell.circleTextLabel.text = circle
-            //self.navigationController
+            let cell =  tableView.dequeueReusableCell(withIdentifier: "TrendTableCell", for: indexPath) as! TrendTableCell
+            cell.initTrendsCell(presenter: self.presenter)
             return cell
             
         }

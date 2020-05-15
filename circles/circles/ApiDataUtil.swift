@@ -46,15 +46,16 @@ public class ApiDataUtil: NSObject, URLSessionDelegate {
         setupSession()
     }
     
-    func initOrRefreshData(vc: UIViewController) {
-        if checkNetwork() {
-            self.refreshMyCircles(vc: vc, state: 2)
+    static func initOrRefreshData(vc: UIViewController) {
+        let api = ApiDataUtil.init()
+        if api.checkNetwork() {
+            api.refreshMyCircles(vc: vc, state: 1)
             let api2 = ApiDataUtil.init()
             api2.getUserNumOfCircles(vc: vc, state: 1)
         } else {
             //从coredata读取数据
             let dbUtil = DbUtil()
-            ApiDataUtil.circlesDataList = dbUtil.readFocusCircles(userName: userName)
+            ApiDataUtil.circlesDataList = dbUtil.readFocusCircles(userName: api.userName)
             ApiDataUtil.userNumCirclesMap = dbUtil.readUserNumOfCircles()
             
             CommonService.showMsgbox(vc: vc, _message: "网络无法连接")
@@ -117,9 +118,9 @@ public class ApiDataUtil: NSObject, URLSessionDelegate {
             }
             if let error = error {
                 print("DataTask error: " + error.localizedDescription + "\n")
-                print("从本地读取数据")
-                let dbUtil = DbUtil()
-                ApiDataUtil.circlesDataList = dbUtil.readFocusCircles(userName: self.userName)
+                //print("从本地读取数据")
+                //let dbUtil = DbUtil()
+                //ApiDataUtil.circlesDataList = dbUtil.readFocusCircles(userName: self.userName)
                 DispatchQueue.main.async {
                     CommonService.showMsgbox(vc: vc, _message: "服务器开小差了～\n请稍后重试")
                 }
@@ -154,9 +155,9 @@ public class ApiDataUtil: NSObject, URLSessionDelegate {
             }
             if let error = error {
                 print("DataTask error: " + error.localizedDescription + "\n")
-                print("从本地读取数据")
-                let dbUtil = DbUtil()
-                ApiDataUtil.userNumCirclesMap = dbUtil.readUserNumOfCircles()
+                //print("从本地读取数据")
+                //let dbUtil = DbUtil()
+                //ApiDataUtil.userNumCirclesMap = dbUtil.readUserNumOfCircles()
                 DispatchQueue.main.async {
                     CommonService.showMsgbox(vc: vc, _message: "服务器开小差了～\n请稍后重试")
                 }
