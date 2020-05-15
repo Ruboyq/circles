@@ -185,7 +185,13 @@ class TrendsPublishController: UIViewController, UIImagePickerControllerDelegate
         }
         let session = URLSession.shared
         session.dataTask(with: request) { (data, response, error) in
-            print(data ?? "ok")
+            if let error = error {
+                DispatchQueue.main.async {
+                    CommonService.showMsgbox(vc: self, _message: "服务器开小差了～\n请稍后重试")
+                }
+            }else{
+                print(data ?? "ok")
+            }
         }.resume()
         let alertController = UIAlertController(title: "提示", message: "发布成功",preferredStyle: .alert)
         let cancelAction1 = UIAlertAction(title: "确定", style: .default, handler: {action in self.navigationController?.popViewController(animated: true)})

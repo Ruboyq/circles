@@ -34,6 +34,11 @@ class MineViewController: UIViewController, CLLocationManagerDelegate, UIGesture
         tap.numberOfTouchesRequired = 1
         headImage.addGestureRecognizer(tap)
         reLocationAction()
+        logoutBtn.addTarget(self, action: #selector(logoutEvent), for: .touchDown)
+    }
+    
+    @objc func logoutEvent() {
+        self.dismiss(animated: true, completion:nil)
     }
     
     @objc func tapGesture(tap:UITapGestureRecognizer) {
