@@ -20,12 +20,6 @@ class CirclesViewController: UIViewController {
         
         ApiDataUtil.initOrRefreshData(vc: self)
         
-        self.presenter.getMyCirclesTrends { (dataArray, layoutArray) in
-            TrendTableCell.dataArray = dataArray
-            TrendTableCell.layoutArray = layoutArray
-            self.tableView.reloadData()
-        }
-        
         //initUI()
         NotificationCenter.default.addObserver(self, selector: #selector(receiverNotification), name: UIDevice.orientationDidChangeNotification, object: nil)
         
@@ -41,7 +35,7 @@ class CirclesViewController: UIViewController {
         print("Saving data before exit.")
         //从coredata存储数据
         let dbUtil = DbUtil()
-        dbUtil.writeFocusCircles(userName: "test", circlesDataList: ApiDataUtil.circlesDataList)
+        dbUtil.writeFocusCircles(userName: MineViewController.username, circlesDataList: ApiDataUtil.circlesDataList)
         dbUtil.writeUserNumCircles(userNumCirclesMap: ApiDataUtil.userNumCirclesMap)
     }
     
@@ -77,6 +71,13 @@ class CirclesViewController: UIViewController {
         
         addPullToRefresh()
         
+        self.presenter.getMyCirclesTrends { (dataArray, layoutArray) in
+            self.tableView.reloadData()
+        }
+        self.presenter.fullTextBlock = { (indexPath) in
+            //self.tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
+            self.tableView.reloadData()
+        }
     }
     
     @objc func receiverNotification(){
@@ -175,7 +176,7 @@ extension CirclesViewController: UITableViewDelegate{
                 return 50
             } else {
                 //if indexPath.row > TrendTableCell.layoutArray.count - 1 { return 0 }
-                let height = TrendTableCell.getFullHeight(layoutArray: TrendTableCell.layoutArray)
+                let height = TrendTableCell.getFullHeight(layoutArray: self.presenter.layoutArray)
                 return height
             }
         } else {
@@ -221,9 +222,6 @@ extension CirclesViewController {
         ApiDataUtil.initOrRefreshData(vc: self)
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 1) {
             self.presenter.getMyCirclesTrends { (dataArray, layoutArray) in
-                //            print("刷新")
-                TrendTableCell.dataArray = dataArray
-                TrendTableCell.layoutArray = layoutArray
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                     self.refreshControl.endRefreshing()
