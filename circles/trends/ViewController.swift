@@ -39,7 +39,7 @@ class ViewController: UIViewController {
     var dataArray = NSMutableArray()
     var layoutArray = NSMutableArray()
     var refreshControl: UIRefreshControl!
-    public static var uId:String?
+    public static var uId:String!
     @objc func showPublish(){
         let sb = UIStoryboard(name: "TrendsPublish", bundle: nil)
         let destination = sb.instantiateViewController(withIdentifier: "PublishView")
@@ -49,7 +49,6 @@ class ViewController: UIViewController {
     // MARK: UI
     override func viewDidLoad() {
         super.viewDidLoad()
-        ViewController.uId = "1"
         let logo = UIImage(named: "logo");
         let imageView = UIImageView(image: logo);
         imageView.contentMode = .scaleAspectFit

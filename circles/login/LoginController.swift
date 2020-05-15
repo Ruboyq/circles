@@ -41,6 +41,7 @@ class LoginController: UIViewController, URLSessionDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         if MineViewController.uid != "-1" {
+            ViewController.uId = MineViewController.uid
             let sb = UIStoryboard(name: "MainIn", bundle: nil)
             let destination = sb.instantiateViewController(withIdentifier: "Mainboard")
             destination.modalPresentationStyle = UIModalPresentationStyle.fullScreen
@@ -115,6 +116,7 @@ class LoginController: UIViewController, URLSessionDelegate {
                         MineViewController.sex = tmpModel.data!.sex!
                         MineViewController.headImageStr = tmpModel.data!.icon!
                         MineViewController.uid = String(tmpModel.data!.uid!)
+                        ViewController.uId = String(tmpModel.data!.uid!)
                         DispatchQueue.main.async {
                             let sb = UIStoryboard(name: "MainIn", bundle: nil)
                             let destination = sb.instantiateViewController(withIdentifier: "Mainboard")
@@ -184,6 +186,7 @@ class LoginController: UIViewController, URLSessionDelegate {
                         MineViewController.sex = tmpModel.data!.sex!
                         MineViewController.headImageStr = tmpModel.data!.icon!
                         MineViewController.uid = String(tmpModel.data!.uid!)
+                        ViewController.uId = String(tmpModel.data!.uid!)
                         DispatchQueue.main.async {
                             let sb = UIStoryboard(name: "MainIn", bundle: nil)
                             let destination = sb.instantiateViewController(withIdentifier: "Mainboard")

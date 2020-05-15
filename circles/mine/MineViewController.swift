@@ -45,6 +45,7 @@ class MineViewController: UIViewController, CLLocationManagerDelegate, UIGesture
     
     @objc func logoutEvent() {
         MineViewController.uid = "-1"
+        ViewController.uId = "1"
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedObjectContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
