@@ -3,7 +3,7 @@ import CoreLocation
 
 class MineViewController: UIViewController, CLLocationManagerDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate  {
     
-    static var uid:String = "1"
+    static var uid:String = "-1"
     static var username:String = "helloworld"
     static var sex:String = "男"
     static var headImageStr:String = ""

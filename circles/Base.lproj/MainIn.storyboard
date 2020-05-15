@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Mine View Controller-->
+        <!--我的-->
         <scene sceneID="xTz-GR-E2T">
             <objects>
                 <viewController id="2rb-zp-Wgs" customClass="MineViewController" customModule="circles" customModuleProvider="target" sceneMemberID="viewController">
@@ -93,7 +93,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Pa8-nW-KtL"/>
                     </view>
-                    <navigationItem key="navigationItem" id="wQS-dS-3q3"/>
+                    <navigationItem key="navigationItem" title="我的" id="wQS-dS-3q3"/>
                     <connections>
                         <outlet property="headImage" destination="cjd-zR-Vny" id="ZWD-l7-kl1"/>
                         <outlet property="logoutBtn" destination="zuv-ic-t7A" id="2yk-7K-YY2"/>
