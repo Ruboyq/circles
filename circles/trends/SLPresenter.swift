@@ -3,7 +3,7 @@ import UIKit
 import HandyJSON
 import Alamofire
 
-let baseUrl:String = "http://192.168.3.4:8080/"
+let baseUrl:String = "http://192.168.1.6:8080/"
 // 数据模型
 struct SLModel : HandyJSON {
     var headPic: String = ""
@@ -69,7 +69,7 @@ class SLPresenter: NSObject{
         //async异步追加Block块（async函数不做任何等待）
         DispatchQueue.global(qos: .default).async {
             //处理耗时操作的代码块...
-            let para:[String:Any] = ["userId":"1"]
+            let para:[String:Any] = ["userId":ViewController.uId!]
             Alamofire.request(baseUrl+"trend/list", method: HTTPMethod.get, parameters: para, encoding: URLEncoding.default).responseJSON { (dataResponse) in
                 //                print(dataResponse)
                 if (dataResponse.result.isSuccess){
