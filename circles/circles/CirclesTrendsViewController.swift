@@ -15,15 +15,12 @@ class CirclesTrendsViewController: UIViewController {
     var circle: String!
     
     var refreshControl: UIRefreshControl!
-    var api: ApiDataUtil!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         //navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "编辑", style: .plain, target: self, action: #selector(editAction))
-        
-        api = ApiDataUtil.init()
         
         self.initUI()
         NotificationCenter.default.addObserver(self, selector: #selector(receiverNotification), name: UIDevice.orientationDidChangeNotification, object: nil)
@@ -70,7 +67,7 @@ class CirclesTrendsViewController: UIViewController {
     
     @objc func handleRefresh2(_ sender: UIRefreshControl) {
         print("pull refresh")
-        self.api.initOrRefreshData(vc: self)
+        ApiDataUtil.initOrRefreshData(vc: self)
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 1) {
             DispatchQueue.main.async {
                 self.tableView.reloadData()

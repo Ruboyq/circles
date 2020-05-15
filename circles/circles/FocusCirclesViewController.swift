@@ -16,14 +16,11 @@ class FocusCirclesViewController: UIViewController {
     var supervc: CirclesViewController!
     var refreshControl: UIRefreshControl!
     
-    var api: ApiDataUtil!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         //navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "编辑", style: .plain, target: self, action: #selector(editAction))
-        api = ApiDataUtil.init()
         initUI()
         NotificationCenter.default.addObserver(self, selector: #selector(receiverNotification), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
@@ -73,7 +70,7 @@ class FocusCirclesViewController: UIViewController {
     
     @objc func handleRefresh3(_ sender: UIRefreshControl) {
         print("pull refresh")
-        self.api.initOrRefreshData(vc: self)
+        ApiDataUtil.initOrRefreshData(vc: self)
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 1) {
             DispatchQueue.main.async {
                 self.circlesDataList = ApiDataUtil.circlesDataList

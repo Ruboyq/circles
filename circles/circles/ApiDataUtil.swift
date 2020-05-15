@@ -46,15 +46,16 @@ public class ApiDataUtil: NSObject, URLSessionDelegate {
         setupSession()
     }
     
-    func initOrRefreshData(vc: UIViewController) {
-        if checkNetwork() {
-            self.refreshMyCircles(vc: vc, state: 2)
+    static func initOrRefreshData(vc: UIViewController) {
+        let api = ApiDataUtil.init()
+        if api.checkNetwork() {
+            api.refreshMyCircles(vc: vc, state: 2)
             let api2 = ApiDataUtil.init()
             api2.getUserNumOfCircles(vc: vc, state: 1)
         } else {
             //从coredata读取数据
             let dbUtil = DbUtil()
-            ApiDataUtil.circlesDataList = dbUtil.readFocusCircles(userName: userName)
+            ApiDataUtil.circlesDataList = dbUtil.readFocusCircles(userName: api.userName)
             ApiDataUtil.userNumCirclesMap = dbUtil.readUserNumOfCircles()
             
             CommonService.showMsgbox(vc: vc, _message: "网络无法连接")

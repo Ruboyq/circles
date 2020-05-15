@@ -34,7 +34,7 @@ class OneFocusCircleTableCell: UITableViewCell {
         
         circleTextLabel = UILabel()
         circleTextLabel.textColor = .black
-        circleTextLabel.frame = CGRect(x: imageview.frame.maxX + 5, y: 5, width: 40, height: 50)
+        circleTextLabel.frame = CGRect(x: imageview.frame.maxX + 5, y: 5, width: 60, height: 50)
         self.contentView.addSubview(circleTextLabel)
         numTextLabel = UILabel()
         numTextLabel.textColor = .gray
