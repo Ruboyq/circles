@@ -1,15 +1,9 @@
-//
-//  SLPresenter.swift
-//  SwiftStudy
-//
-//  Created by wsl on 2019/6/5.
-//  Copyright © 2019 https://github.com/wsl2ls All rights reserved.
-//
 
 import UIKit
 import HandyJSON
 import Alamofire
 
+let baseUrl:String = "http://192.168.1.6:8080/"
 // 数据模型
 struct SLModel : HandyJSON {
     var headPic: String = ""
@@ -76,7 +70,7 @@ class SLPresenter: NSObject{
         DispatchQueue.global(qos: .default).async {
             //处理耗时操作的代码块...
             let para:[String:Any] = ["userId":"1"]
-            Alamofire.request("http://192.168.1.6:8080/trend/list", method: HTTPMethod.get, parameters: para, encoding: URLEncoding.default).responseJSON { (dataResponse) in
+            Alamofire.request(baseUrl+"trend/list", method: HTTPMethod.get, parameters: para, encoding: URLEncoding.default).responseJSON { (dataResponse) in
                 //                print(dataResponse)
                 if (dataResponse.result.isSuccess){
                 let value = dataResponse.result.value as? [String: Any]
