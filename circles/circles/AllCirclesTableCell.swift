@@ -20,7 +20,7 @@ class AllCirclesTableCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        cirClesDateList = ["数码", "影视", "时尚", "体育", "校园", "亲子", "科学", "动漫", "游戏", "法律", "故事", "萌宠"]
+        cirClesDateList = ["数码", "影视", "时尚", "体育", "校园", "亲子", "科学", "动漫", "游戏", "法律", "故事", "CHAO"]
         
         let inOrient = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation
         if inOrient?.isPortrait ?? true {

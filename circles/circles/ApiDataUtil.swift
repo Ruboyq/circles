@@ -31,7 +31,7 @@ public class ApiDataUtil: NSObject, URLSessionDelegate {
     var baseurl: String = "http://192.168.2.121:8080/"
     var userName: String = "test"
     
-    public static var circlesMap: [String: String] = ["数码": "digit", "影视": "tv", "时尚": "fashion", "体育": "pe", "校园": "campus", "亲子": "pchild", "科学": "science", "动漫": "cartoon", "游戏": "game", "法律": "law", "故事": "story", "萌宠": "chao"]
+    public static var circlesMap: [String: String] = ["数码": "digit", "影视": "tv", "时尚": "fashion", "体育": "pe", "校园": "campus", "亲子": "pchild", "科学": "science", "动漫": "cartoon", "游戏": "game", "法律": "law", "故事": "story", "CHAO": "chao"]
     
     public static var trendsListData: [String] = [String]()
     public static var circlesDataList: [String] = [String]()
