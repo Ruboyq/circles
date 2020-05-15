@@ -3,7 +3,7 @@ import UIKit
 import HandyJSON
 import Alamofire
 
-let baseUrl:String = "http://192.168.2.121:8080/"
+let baseUrl:String = "http://192.168.3.4:8080/"
 // 数据模型
 struct SLModel : HandyJSON {
     var headPic: String = ""

@@ -19,6 +19,12 @@
         <attribute name="uId" optional="YES" attributeType="String"/>
         <attribute name="useuid" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="User" representedClassName="User" syncable="YES">
+        <attribute name="headImageStr" optional="YES" attributeType="String"/>
+        <attribute name="sex" optional="YES" attributeType="String"/>
+        <attribute name="uid" optional="YES" attributeType="String"/>
+        <attribute name="username" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="UserNumOfCircles" representedClassName="UserNumOfCircles" syncable="YES" codeGenerationType="class">
         <attribute name="circle" optional="YES" attributeType="String"/>
         <attribute name="userNum" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -27,5 +33,6 @@
         <element name="FocusCircles" positionX="-54" positionY="9" width="128" height="73"/>
         <element name="Trend" positionX="-54" positionY="9" width="128" height="238"/>
         <element name="UserNumOfCircles" positionX="-63" positionY="-18" width="128" height="73"/>
+        <element name="User" positionX="-54" positionY="90" width="128" height="103"/>
     </elements>
 </model>

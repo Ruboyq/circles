@@ -1,13 +1,16 @@
 import UIKit
 import CoreLocation
+import CoreData
 
 class MineViewController: UIViewController, CLLocationManagerDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate  {
     
-    static var uid:String = "1"
+    static var uid:String = "-1"
     static var username:String = "helloworld"
     static var sex:String = "男"
     static var headImageStr:String = ""
     static var userCity:String = ""
+    
+    @IBOutlet weak var logoBK: UIImageView!
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -23,6 +26,9 @@ class MineViewController: UIViewController, CLLocationManagerDelegate, UIGesture
         super.viewDidLoad()
         usernameLable.text = MineViewController.username
         headImage.image = UIImage(data: Data(base64Encoded: MineViewController.headImageStr)!)
+        headImage.layer.cornerRadius = (headImage.frame.size.width / 2)-5
+        headImage.clipsToBounds = true
+        headImage.contentMode = .scaleAspectFill
         //设置tableview
         tableView.dataSource = self
         tableView.delegate = self
@@ -38,6 +44,18 @@ class MineViewController: UIViewController, CLLocationManagerDelegate, UIGesture
     }
     
     @objc func logoutEvent() {
+        MineViewController.uid = "-1"
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+        do {
+            if let fetchedResults = try managedObjectContext.fetch(fetchRequest) as? [NSManagedObject] {
+                for fetchedResult in fetchedResults {
+                    managedObjectContext.delete(fetchedResult)
+                }
+                try managedObjectContext.save()
+            }
+        } catch {}
         self.dismiss(animated: true, completion:nil)
     }
     
@@ -141,7 +159,7 @@ extension MineViewController: UITableViewDataSource {
         }else if indexPath.row == 1 {
             cell.textLabel?.text = "    密码：修改密码"
         }else if indexPath.row == 2 {
-            cell.textLabel?.text = "    性别 ：" + MineViewController.sex
+            cell.textLabel?.text = "    性别：" + MineViewController.sex
         }else if indexPath.row == 3 {
             cell.textLabel?.text = "    位置：" + MineViewController.userCity
         }
