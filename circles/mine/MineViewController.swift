@@ -11,6 +11,7 @@ class MineViewController: UIViewController, CLLocationManagerDelegate, UIGesture
     static var userCity:String = ""
     
     @IBOutlet weak var logoBK: UIImageView!
+    
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var headImage: UIImageView!
@@ -158,7 +159,7 @@ extension MineViewController: UITableViewDataSource {
         }else if indexPath.row == 1 {
             cell.textLabel?.text = "    密码：修改密码"
         }else if indexPath.row == 2 {
-            cell.textLabel?.text = "    性别 ：" + MineViewController.sex
+            cell.textLabel?.text = "    性别：" + MineViewController.sex
         }else if indexPath.row == 3 {
             cell.textLabel?.text = "    位置：" + MineViewController.userCity
         }

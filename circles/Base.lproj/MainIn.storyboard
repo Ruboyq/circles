@@ -27,8 +27,8 @@
                                             <constraint firstAttribute="height" constant="210" id="0c3-ha-a7h"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="昵称" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uPK-Bo-r9f">
-                                        <rect key="frame" x="162" y="169" width="85" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="昵称" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uPK-Bo-r9f">
+                                        <rect key="frame" x="186.5" y="165" width="41" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="n1L-Wa-1kc"/>
                                         </constraints>
@@ -52,8 +52,8 @@
                                             <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                     </button>
-                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="story_n" translatesAutoresizingMaskIntoConstraints="NO" id="cjd-zR-Vny">
-                                        <rect key="frame" x="160" y="63" width="85" height="85"/>
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="story_n" translatesAutoresizingMaskIntoConstraints="NO" id="cjd-zR-Vny">
+                                        <rect key="frame" x="161.5" y="60" width="85" height="85"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="85" id="FO7-kc-Naq"/>
                                             <constraint firstAttribute="height" constant="85" id="Y7d-dd-kw6"/>
