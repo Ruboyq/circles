@@ -259,10 +259,10 @@ extension TrendCommentController {
 //                        let reData = CoreDataHandler()
 //                        reData.addResume(name: resume.name, school: resume.school, grade: resume.grade, img: resume.img)
                         self.commentArray.append(comment)
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
-                            self.indicatorView.stopAnimating()
-                        }
+                    }
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                        self.indicatorView.stopAnimating()
                     }
                 } catch {
                     print("Error: \(error)")

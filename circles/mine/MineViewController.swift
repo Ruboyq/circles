@@ -9,6 +9,7 @@ class MineViewController: UIViewController, CLLocationManagerDelegate, UIGesture
     static var headImageStr:String = ""
     static var userCity:String = ""
     
+    @IBOutlet weak var logoBK: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var headImage: UIImageView!
@@ -23,6 +24,9 @@ class MineViewController: UIViewController, CLLocationManagerDelegate, UIGesture
         super.viewDidLoad()
         usernameLable.text = MineViewController.username
         headImage.image = UIImage(data: Data(base64Encoded: MineViewController.headImageStr)!)
+        headImage.layer.cornerRadius = (headImage.frame.size.width / 2)-5
+        headImage.clipsToBounds = true
+        headImage.contentMode = .scaleAspectFill
         //设置tableview
         tableView.dataSource = self
         tableView.delegate = self
