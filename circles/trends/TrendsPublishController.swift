@@ -124,10 +124,37 @@ class TrendsPublishController: UIViewController, UIImagePickerControllerDelegate
         }
     }
     
+    static func checkNetwork() -> Bool {
+        let reachability = try! Reachability()
+        reachability.whenReachable = { reachability in
+            if reachability.connection == .wifi {
+                print("Reachable via WiFi")
+            } else {
+                print("Reachable via Cellular")
+            }
+        }
+        reachability.whenUnreachable = { _ in
+            print("Not reachable")
+        }
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Unable to start notifier")
+        }
+        return reachability.connection != .unavailable
+    }
+    
     @objc func realPublish(){
         if contextTextView.text.isEmpty || selectLabel.text!.isEmpty {
             let alertController = UIAlertController(title: "提示", message: "需要填写内容并选择圈子哦～",preferredStyle: .alert)
             let cancelAction1 = UIAlertAction(title: "确定", style: .default, handler: nil)
+            alertController.addAction(cancelAction1)
+            self.present(alertController, animated: true, completion: nil)
+            return
+        }
+        if !TrendsPublishController.checkNetwork(){
+            let alertController = UIAlertController(title: "提示", message: "没有网络连接！",preferredStyle: .alert)
+            let cancelAction1 = UIAlertAction(title: "确定", style: .destructive, handler: nil)
             alertController.addAction(cancelAction1)
             self.present(alertController, animated: true, completion: nil)
             return
