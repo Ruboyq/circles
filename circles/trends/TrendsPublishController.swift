@@ -2,7 +2,7 @@ import UIKit
 
 class TrendsPublishController: UIViewController, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
-    static var apiurl:String = "http://192.168.3.4:8080"
+    static var apiurl:String = "http://192.168.1.6:8080"
     @IBOutlet weak var contextTextView: UITextView!
     
     @IBOutlet weak var pic0: UIImageView!

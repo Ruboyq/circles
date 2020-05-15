@@ -3,7 +3,7 @@ import CoreData
 
 class LoginController: UIViewController, URLSessionDelegate {
     
-    static var baseurl:String = "http://192.168.3.4:8080"
+    static var baseurl:String = "http://192.168.1.6:8080"
     
     @IBOutlet weak var usernameText: UITextField!
     
@@ -75,8 +75,22 @@ class LoginController: UIViewController, URLSessionDelegate {
         config.timeoutIntervalForRequest = 5
         //config.protocolClasses = [MyURLProtocol.self]
         urlSession = URLSession(configuration: config, delegate: self, delegateQueue: nil)
+        self.usernameText.delegate = self
+        self.pwdText.delegate = self
+        self.SetMutiBorderRoundingCorners(self.usernameText, corner: 8)
+        self.SetMutiBorderRoundingCorners(self.pwdText, corner: 8)
     }
-    
+    func SetMutiBorderRoundingCorners(_ view:UIView,corner:CGFloat)
+
+    {
+        let maskPath = UIBezierPath.init(roundedRect: view.bounds,
+                                         byRoundingCorners: [UIRectCorner.topLeft, UIRectCorner.topRight,UIRectCorner.bottomLeft,UIRectCorner.bottomRight],
+        cornerRadii: CGSize(width: corner, height: corner))
+        let maskLayer = CAShapeLayer()
+        maskLayer.frame = view.bounds
+        maskLayer.path = maskPath.cgPath
+        view.layer.mask = maskLayer
+    }
     @objc func loginEvent(){
         //登陆按钮点击后
         let url = URL(string: LoginController.baseurl+"/user/login")
@@ -199,4 +213,15 @@ class LoginController: UIViewController, URLSessionDelegate {
         dataTask?.resume()
     }
     
+}
+
+extension LoginController:UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if(textField.isEqual(self.usernameText)){
+            self.usernameText.endEditing(true)
+        }else if (textField.isEqual(self.pwdText)){
+            self.pwdText.endEditing(true)
+        }
+        return true
+    }
 }
