@@ -7,11 +7,18 @@
 //
 
 import UIKit
-
+import Alamofire
 class TrendCommentController: UIViewController {
     public static var trendId:String?
+    public static var uId:String?
 //    var tableView: UITableView!
     @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var commentTextView: UITextField!
+    
+    @IBOutlet weak var sendImgView: UIImageView!
+    
+    @IBOutlet weak var indicatorView: UIActivityIndicatorView!
     var refreshControl: UIRefreshControl!
     
     var commentArray: [CommentModel]!
@@ -31,6 +38,7 @@ class TrendCommentController: UIViewController {
         setupSession()
         setupData()
         setupTableView()
+        setupOtherViews()
     }
     
     override func viewSafeAreaInsetsDidChange() {
@@ -59,7 +67,7 @@ class TrendCommentController: UIViewController {
         tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
         tableView.separatorStyle = .singleLine
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        //        tableView.separatorColor = UIColor.red
+        tableView.separatorColor = BaseTool.UIColorRGB_Alpha(R: 202, G: 83, B: 128, alpha: 1)
         //        tableView.rowHeight = UITableView.automaticDimension
         //        tableView.estimatedRowHeight = 150
 //        tableView.rowHeight = 130
@@ -68,7 +76,41 @@ class TrendCommentController: UIViewController {
         
         addPullToRefresh()
     }
+    func setupOtherViews() {
+        commentTextView.delegate = self
+        commentTextView.setValue(NSNumber(value: 0), forKey: "paddingLeft")
+        commentTextView.setValue(NSNumber(value: 0), forKey: "paddingTop")
+        commentTextView.setValue(NSNumber(value: 0), forKey: "paddingRight")
+        commentTextView.setValue(NSNumber(value: 0), forKey: "paddingBottom")
+        sendImgView.contentMode = .scaleAspectFit
+        sendImgView.isUserInteractionEnabled = true
+        let sendTap: UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(tapSendImg(sendTap:)))
+        sendImgView.addGestureRecognizer(sendTap)
+//        sendImgView
+//        let height = UIScreen.main.bounds.size.height
+//        let width = UIScreen.main.bounds.size.width
+//        self.tableView.snp.makeConstraints { (make) in
+////            make.top.equalToSuperview().offset(15)
+//            make.bottom.equalToSuperview().offset(-50)
+//            make.height.equalTo(height - 115)
+//            make.width.equalTo(width)
+//        }
+//        self.commentTextView.snp.makeConstraints { (make) in
+//            make.left.equalToSuperview().offset(15)
+//            make.top.equalTo(self.tableView.snp.bottom).offset(15)
+//            make.height.equalTo(35)
+//        }
+    }
     
+    func animateViewMoving (up:Bool, moveValue :CGFloat){
+        let movementDuration:TimeInterval = 0.3
+        let movement:CGFloat = ( up ? -moveValue : moveValue)
+        UIView.beginAnimations( "animateView", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(movementDuration )
+        self.view.frame = self.view.frame.offsetBy(dx: 0,  dy: movement)
+        UIView.commitAnimations()
+    }
     func addPullToRefresh() {
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(handleRefresh(_:)), for: .valueChanged)
@@ -81,8 +123,39 @@ class TrendCommentController: UIViewController {
         let height : CGFloat =  attributedString.boundingRect(with: CGSize(width: UIScreen.main.bounds.size.width - 15 * 2, height: CGFloat(MAXFLOAT)), options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil).height
         return ceil(height)
     }
+    @objc func tapSendImg(sendTap: UITapGestureRecognizer) {
+        self.view.bringSubviewToFront(self.indicatorView)
+        self.indicatorView.startAnimating()
+        let comment = self.commentTextView.text
+        DispatchQueue.global(qos: .default).async {
+                    //处理耗时操作的代码块...
+            let para:[String:Any] = ["uid":ViewController.uId!,"pid":TrendCommentController.trendId!,"content":comment,"circle":"placeholder"]
+             let header = ["Content-Type": "application/json"]
+//            let jsonData = try! JSONSerialization.data(withJSONObject: para, options: .prettyPrinted)
+//            let jsonString = String(data: jsonData, encoding: String.Encoding.utf8)
+            Alamofire.request("http://192.168.1.6:8080/trend/comment", method: HTTPMethod.post, parameters:para, encoding: JSONEncoding.default,headers: header).responseJSON { (dataResponse) in
+                        print(dataResponse)
+                        self.indicatorView.stopAnimating()
+                        self.getComment()
+                        DispatchQueue.main.async {
+                            self.commentTextView.endEditing(true)
+                            self.animateViewMoving(up: false, moveValue: 340)
+                            self.commentTextView.text = ""
+                        }
+            }
+        }
+    }
 }
-
+extension TrendCommentController:UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.commentTextView.endEditing(true)
+        animateViewMoving(up: false, moveValue: 340)
+        return true
+    }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        animateViewMoving(up: true, moveValue: 340)
+    }
+}
 extension TrendCommentController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -113,7 +186,9 @@ extension TrendCommentController: UITableViewDataSource, UITableViewDelegate {
         }
         return cell
     }
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+    }
 //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 //        return UITableView.automaticDimension
 //    }
@@ -175,7 +250,7 @@ extension TrendCommentController {
 //                    print(String(data: data, encoding: .utf8) ?? "")
                     let tmpModel = try JSONDecoder().decode(CommentResponse.self, from: data)
                     let tmpList = tmpModel.data
-//                    commentArray.removeAll()
+                    self.commentArray.removeAll()
                     for comment in tmpList{
 //                        let reData = CoreDataHandler()
 //                        reData.addResume(name: resume.name, school: resume.school, grade: resume.grade, img: resume.img)

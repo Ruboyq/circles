@@ -47,6 +47,7 @@ class ViewController: UIViewController {
     var dataArray = NSMutableArray()
     var layoutArray = NSMutableArray()
     var refreshControl: UIRefreshControl!
+    public static var uId:String?
     @objc func showPublish(){
         let sb = UIStoryboard(name: "TrendsPublish", bundle: nil)
         let destination = sb.instantiateViewController(withIdentifier: "PublishView")
@@ -56,13 +57,14 @@ class ViewController: UIViewController {
     // MARK: UI
     override func viewDidLoad() {
         super.viewDidLoad()
+        ViewController.uId = "1"
         let logo = UIImage(named: "logo");
         let imageView = UIImageView(image: logo);
         imageView.contentMode = .scaleAspectFit
         self.navigationItem.titleView = imageView;
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "trends_edit"), style: .plain, target: self, action: #selector(showPublish))
         //性能监测工具
-//        PerformanceMonitor.shared().start()
+        //        PerformanceMonitor.shared().start()
         //中间者 处理数据和事件
         self.presenter.getData { (dataArray, layoutArray) in
             //            print("刷新")
@@ -94,8 +96,8 @@ class ViewController: UIViewController {
         }
     }
     func setupUI() {
-//        self.navigationItem.title = "One Piece"
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "ClearCache", style: UIBarButtonItem.Style.done, target: self, action: #selector(clearCache))
+        //        self.navigationItem.title = "One Piece"
+        //        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "ClearCache", style: UIBarButtonItem.Style.done, target: self, action: #selector(clearCache))
         self.view.addSubview(self.tableView)
         addPullToRefresh()
     }

@@ -8,7 +8,7 @@
 
 import UIKit
 import Kingfisher
-
+import Alamofire
 //定义枚举 富文本链接类型
 enum SLTextLinkType: Int {
     case Webpage
@@ -54,7 +54,7 @@ class SLTableViewCell: UITableViewCell {
     //昵称
     lazy var nickLabel: UILabel = {
         let nickName = UILabel()
-        nickName.textColor = UIColor.black;
+        nickName.textColor = BaseTool.UIColorRGB_Alpha(R: 202, G: 83, B: 128, alpha: 1)
         nickName.font = UIFont.systemFont(ofSize: 16)
         return nickName
     }()
@@ -150,6 +150,7 @@ class SLTableViewCell: UITableViewCell {
     // 是否点赞
     var isPraised:Int?
     var trendId:String?
+    var commonService = CommonService()
     //初始化
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
@@ -264,6 +265,9 @@ class SLTableViewCell: UITableViewCell {
         self.commentLabel.text = model.commentNum
         self.shareLabel.text = model.shareNum
         self.isPraised = model.isPraised
+        if(model.isPraised == 1){
+            self.praiseImg.image = UIImage(named: "trends_liked");
+        }
         self.circleLabel.text = "      "+model.source!+"     "
         self.trendId = model.trendId
         self.textView.attributedText = layout?.attributedString
@@ -365,19 +369,40 @@ class SLTableViewCell: UITableViewCell {
     // MARK: Events
     @objc func tapPraiseImg(praiseTap: UITapGestureRecognizer) {
         if (self.isPraised == 0){
-            self.praiseLabel.text = "\(Int(self.praiseLabel.text!)! + 1)";
-            self.praiseImg.image = UIImage(named: "trends_liked");
-            self.isPraised = 1
+            DispatchQueue.global(qos: .default).async {
+                                //处理耗时操作的代码块...
+                        let para:[String:Any] = ["uid":ViewController.uId!,"rid":self.trendId!,"circle":"placeholder"]
+                         let header = ["Content-Type": "application/json"]
+                        Alamofire.request("http://192.168.1.6:8080/trend/thumb/insert", method: HTTPMethod.post, parameters:para, encoding: JSONEncoding.default,headers: header).responseJSON { (dataResponse) in
+                                    print(dataResponse)
+                                    DispatchQueue.main.async {
+                                        self.praiseLabel.text = "\(Int(self.praiseLabel.text!)! + 1)";
+                                        self.praiseImg.image = UIImage(named: "trends_liked");
+                                        self.isPraised = 1
+                                    }
+                        }
+                    }
         } else if (self.isPraised == 1){
-            self.praiseLabel.text = "\(Int(self.praiseLabel.text!)! - 1)";
-            self.praiseImg.image = UIImage(named: "trends_like");
-            self.isPraised = 0
+            DispatchQueue.global(qos: .default).async {
+                        //处理耗时操作的代码块...
+                let para:[String:Any] = ["uid":ViewController.uId!,"rid":self.trendId!]
+                 let header = ["Content-Type": "application/json"]
+                Alamofire.request("http://192.168.1.6:8080/trend/thumb/delete", method: HTTPMethod.post, parameters:para, encoding: JSONEncoding.default,headers: header).responseJSON { (dataResponse) in
+                            print(dataResponse)
+                            DispatchQueue.main.async {
+                                self.praiseLabel.text = "\(Int(self.praiseLabel.text!)! - 1)";
+                                self.praiseImg.image = UIImage(named: "trends_like");
+                                self.isPraised = 0
+                            }
+                }
+            }
         }
     }
     @objc func tapCommentImg(commentTap: UITapGestureRecognizer) {
         self.delegate?.tableViewCell(self, tapCommentImg: self.trendId!, indexPath: self.cellIndexPath!)
     }
     @objc func tapShareImg(shareTap: UITapGestureRecognizer) {
+        
     }
     @objc func tapPicture(tap: UITapGestureRecognizer) {
         let animationView: AnimatedImageView = tap.view as! AnimatedImageView

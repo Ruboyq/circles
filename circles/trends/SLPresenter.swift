@@ -49,6 +49,7 @@ class SLPresenter: NSObject{
     
     var dataArray = NSMutableArray()
     var layoutArray = NSMutableArray()
+    var data = TrendCoreDataHandler()
     //    var completeBlock: SLGetDataCompleteBlock?
     var fullTextBlock: SLFullTextCompleteBlock?
     
@@ -76,11 +77,13 @@ class SLPresenter: NSObject{
             //处理耗时操作的代码块...
             let para:[String:Any] = ["userId":"1"]
             Alamofire.request("http://192.168.1.6:8080/trend/list", method: HTTPMethod.get, parameters: para, encoding: URLEncoding.default).responseJSON { (dataResponse) in
-//                print(dataResponse)
+                //                print(dataResponse)
+                if (dataResponse.result.isSuccess){
                 let value = dataResponse.result.value as? [String: Any]
-//                print(value?["data"])
                 let rows = value!["data"] as! [[String: Any]]
-//                print(rows[0]["content"])
+                //                print(rows[0]["content"])
+                self.dataArray.removeAllObjects()
+                self.layoutArray.removeAllObjects()
                 rows.forEach({ (row) in
                     var model = SLModel()
                     model.nickName = row["uname"] as? String
@@ -107,35 +110,67 @@ class SLPresenter: NSObject{
                 DispatchQueue.main.async {
                     completeBlock(self.dataArray, self.layoutArray)
                 }
-//                                if dataResponse.value != nil
-//                                {
-//                              let values = dataResponse.result.value as! NSDictionary
-//                              let messageDic = values["message"]as! NSDictionary
-//                              let questionContentArr = messageDic["questionContent"] as! [[String : Any]]
-//                              if questionContentArr.count != 0 {
-//                              for dict in questionContentArr
-//                                {
-//                                    let model = Mapper<ChildInforModel>().map(JSON: dict as! [String:AnyObject])
-//                                    self.childrenModelArray.append(model!)
-//                                }
+                }
+                else if(dataResponse.result.isFailure){
+                    let rows = self.data.fetchAll()
+                    self.dataArray.removeAllObjects()
+                    self.layoutArray.removeAllObjects()
+                    rows.forEach({ (row) in
+                        var model = SLModel()
+                        model.nickName = row.nickName
+                        model.time = row.time
+                        model.headPic = row.headPic!
+                        model.praiseNum = row.praiseNum
+                        model.commentNum = row.commentNum
+                        model.shareNum = row.shareNum
+                        model.title = row.title
+                        model.source = row.source
+                        model.isPraised = Int(row.isPraised)
+                        model.trendId =  row.trendId
+                        model.uId =  row.uId
+                        let arr = (row.images as? String)?.split(separator: ",")
+                        arr?.forEach({ (img) in
+                            model.images.append(String(img))
+                        })
+                        self.dataArray.add(model)
+                        
+                        let attStrAndHeight:(attributedString:NSMutableAttributedString, height:CGFloat) = self.matchesResultOfTitle(title: model.title!, expan: false)
+                        let layout:SLLayout = SLLayout(attributedString: attStrAndHeight.attributedString, cellHeight: (15 + 35 + 15 + attStrAndHeight.height + 15 + self.heightOfImages(images: model.images) + 35), expan: false)
+                        self.layoutArray.add(layout)
+                    })
+                    DispatchQueue.main.async {
+                        completeBlock(self.dataArray, self.layoutArray)
+                    }
+                }
+                //                                if dataResponse.value != nil
+                //                                {
+                //                              let values = dataResponse.result.value as! NSDictionary
+                //                              let messageDic = values["message"]as! NSDictionary
+                //                              let questionContentArr = messageDic["questionContent"] as! [[String : Any]]
+                //                              if questionContentArr.count != 0 {
+                //                              for dict in questionContentArr
+                //                                {
+                //                                    let model = Mapper<ChildInforModel>().map(JSON: dict as! [String:AnyObject])
+                //                                    self.childrenModelArray.append(model!)
+                //                                }
             }
-//            let path:String? = Bundle.main.path(forResource: "Data", ofType: "plist")
-//            let array: [Dictionary] = NSArray(contentsOfFile: path!) as! [Dictionary<String, Any>]
-//            for dict in array {
-//                var model = SLModel()
-//                if let object = SLModel.deserialize(from: dict) {
-//                    model = object
-//                }
-//                self.dataArray.add(model)
-//                //元组
-//                let attStrAndHeight:(attributedString:NSMutableAttributedString, height:CGFloat) = self.matchesResultOfTitle(title: model.title!, expan: false)
-//                let layout:SLLayout = SLLayout(attributedString: attStrAndHeight.attributedString, cellHeight: (15 + 35 + 15 + attStrAndHeight.height + 15 + self.heightOfImages(images: model.images) + 35), expan: false)
-//                self.layoutArray.add(layout)
-//            }
+            //            let path:String? = Bundle.main.path(forResource: "Data", ofType: "plist")
+            //            let array: [Dictionary] = NSArray(contentsOfFile: path!) as! [Dictionary<String, Any>]
+            //            for dict in array {
+            //                var model = SLModel()
+            //                if let object = SLModel.deserialize(from: dict) {
+            //                    model = object
+            //                }
+            //                self.dataArray.add(model)
+            //                //元组
+            //                let attStrAndHeight:(attributedString:NSMutableAttributedString, height:CGFloat) = self.matchesResultOfTitle(title: model.title!, expan: false)
+            //                let layout:SLLayout = SLLayout(attributedString: attStrAndHeight.attributedString, cellHeight: (15 + 35 + 15 + attStrAndHeight.height + 15 + self.heightOfImages(images: model.images) + 35), expan: false)
+            //                self.layoutArray.add(layout)
+            //            }
             //操作完成，调用主线程来刷新界面
-//            DispatchQueue.main.async {
-//                completeBlock(self.dataArray, self.layoutArray)
-//            }
+            //            DispatchQueue.main.async {
+            //                completeBlock(self.dataArray, self.layoutArray)
+            //            }
         }
     }
     
@@ -310,7 +345,7 @@ extension SLPresenter : SLTableViewCellDelegate {
     //图片点击
     func tableViewCell(_ tableViewCell: SLTableViewCell, tapImageAction indexOfImages: NSInteger, indexPath: IndexPath) {
         let pictureBrowsingViewController:SLPictureBrowsingViewController = SLPictureBrowsingViewController.init()
-//        let navigationController: SLNavigationController = (UIApplication.shared.windows[0].rootViewController)! as! SLNavigationController
+        //        let navigationController: SLNavigationController = (UIApplication.shared.windows[0].rootViewController)! as! SLNavigationController
         let navigationController: SLNavigationController = UIViewController.currentViewController()?.navigationController as! SLNavigationController
         //        print("\(viewController)")
         let model:SLModel = self.dataArray[indexPath.row] as! SLModel

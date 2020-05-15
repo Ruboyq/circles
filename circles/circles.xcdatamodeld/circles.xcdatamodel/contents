@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Trend" representedClassName="Trend" syncable="YES" codeGenerationType="class">
+        <attribute name="commentNum" optional="YES" attributeType="String"/>
+        <attribute name="headPic" optional="YES" attributeType="String"/>
+        <attribute name="images" optional="YES" attributeType="String"/>
+        <attribute name="isPraised" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="nickName" optional="YES" attributeType="String"/>
+        <attribute name="praiseNum" optional="YES" attributeType="String"/>
+        <attribute name="shareNum" optional="YES" attributeType="String"/>
+        <attribute name="source" optional="YES" attributeType="String"/>
+        <attribute name="time" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="trendId" optional="YES" attributeType="String"/>
+        <attribute name="uId" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="Trend" positionX="-63" positionY="-18" width="128" height="223"/>
+    </elements>
 </model>
