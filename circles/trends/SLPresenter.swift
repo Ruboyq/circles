@@ -506,7 +506,10 @@ extension SLPresenter : SLTableViewCellDelegate {
         TrendCommentController.trendId = trendId
         let sb = UIStoryboard(name: "TrendComment", bundle: nil)
         let destination = sb.instantiateViewController(withIdentifier: "TrendCommentNavi") as! TrendCommentNavi
-        let navigationController: SLNavigationController = UIViewController.currentViewController()?.navigationController as! SLNavigationController
-        navigationController.topViewController?.present(destination, animated: true, completion: nil)
+        if let topVC = UIViewController.currentViewController(){
+            topVC.navigationController?.topViewController?.present(destination,animated: true,completion: nil)
+        }
+//        let navigationController: SLNavigationController = UIViewController.currentViewController()?.navigationController as! SLNavigationController
+//        navigationController.topViewController?.present(destination, animated: true, completion: nil)
     }
 }
